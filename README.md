@@ -1,6 +1,6 @@
 # Bikashit Baruah portfolio
 
-This repository contains the same 13 website files as the public Netlify portfolio build of September 28, 2026. The site content, images, interactions, and outbound links are unchanged.
+This repository contains the same 13 website files as the public Netlify portfolio build of September 28, 2026. The site content, interactions, and outbound links are unchanged. The portrait is visually preserved in a smaller WebP file for reliable GitHub delivery.
 
 ## Publish with GitHub Pages
 

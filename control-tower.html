@@ -1,0 +1,1165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NorthEast HealthLink — Control Tower Redesign</title>
+  <meta name="description" content="Recruiter-focused interactive OTIF and inventory risk control tower mockup.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23070c16'/%3E%3Cpath d='M15 42V22h7v20h-7zm13 0V12h8v30h-8zm14 0V28h7v14h-7z' fill='%23a7f432'/%3E%3C/svg%3E">
+  <style>
+    :root{--bg:#070c16;--side:#0b1220;--panel:#101a2a;--panel2:#142237;--line:#25354d;--ink:#f4f7fb;--muted:#91a2b9;--acid:#a7f432;--cyan:#47dec9;--red:#ff6b6b;--amber:#ffc861;--blue:#6fa8ff;--r:18px}
+    *{box-sizing:border-box}html{height:100%}body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font:15px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,a{font:inherit}button{color:inherit}a{color:inherit;text-decoration:none}.app{min-height:100vh;display:grid;grid-template-columns:240px minmax(0,1fr)}.sidebar{background:var(--side);border-right:1px solid var(--line);padding:22px 16px;display:flex;flex-direction:column;position:sticky;top:0;height:100vh}.logo{display:flex;gap:10px;align-items:center;font-weight:850;line-height:1.1;padding:3px 8px 24px}.logo i{width:13px;height:13px;background:var(--acid);border-radius:4px;box-shadow:0 0 22px #a7f43266}.logo small{display:block;font-weight:600;color:var(--muted);font-size:.68rem;margin-top:4px}.status{margin:0 8px 24px;border:1px solid #2b4c46;background:#14342c;color:#8ef0d1;border-radius:10px;padding:9px 10px;font-size:.72rem}.nav-label{color:#607189;text-transform:uppercase;letter-spacing:.12em;font-size:.65rem;font-weight:800;padding:0 10px;margin:7px 0}.nav-btn{border:0;background:transparent;display:flex;align-items:center;gap:11px;width:100%;padding:11px 10px;border-radius:10px;color:var(--muted);cursor:pointer;text-align:left;margin:2px 0}.nav-btn:hover{background:#111d30;color:var(--ink)}.nav-btn.active{background:#1a2a40;color:var(--ink);box-shadow:inset 3px 0 var(--acid)}.nav-btn span:first-child{width:20px;text-align:center}.nav-btn em{margin-left:auto;font-style:normal;font-size:.67rem;background:#2a1f25;color:#ffadad;border:1px solid #51333a;border-radius:999px;padding:2px 6px}.side-foot{margin-top:auto;padding:16px 8px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.7rem}.side-foot a{display:block;color:var(--ink);margin-top:10px}.main{min-width:0}.topbar{height:74px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;background:#070c16e8;backdrop-filter:blur(14px);z-index:5}.top-title b{display:block}.top-title span{font-size:.72rem;color:var(--muted)}.filters{display:flex;gap:8px;align-items:center}.select,.icon-btn{border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:9px 12px;border-radius:10px}.icon-btn{cursor:pointer}.proof{font-size:.68rem;color:#161b23;background:var(--acid);padding:7px 10px;border-radius:999px;font-weight:850;text-transform:uppercase;letter-spacing:.08em}.content{padding:24px 28px 48px;max-width:1540px;margin:auto}.view{display:none}.view.active{display:block;animation:fade .3s ease}.page-head{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:22px}.page-head h1{font-size:clamp(1.65rem,3vw,2.5rem);letter-spacing:-.045em;line-height:1;margin:0}.page-head p{color:var(--muted);margin:8px 0 0;max-width:680px}.timestamp{color:var(--muted);font-size:.74rem;white-space:nowrap}.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:14px}.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r)}.kpi{padding:17px;position:relative;overflow:hidden;min-height:108px}.kpi:after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--accent,var(--cyan))}.kpi-label{display:flex;justify-content:space-between;color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.07em}.kpi strong{display:block;font-size:1.8rem;letter-spacing:-.05em;margin-top:10px}.kpi small{color:var(--muted)}.down{color:var(--red)!important}.up{color:var(--cyan)!important}.grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(330px,.75fr);gap:14px}.stack{display:grid;gap:14px}.card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:18px 18px 0}.card-head h2{font-size:.94rem;margin:0}.card-head span{font-size:.7rem;color:var(--muted)}.chart-card{min-height:315px}.chart-wrap{padding:12px 18px 18px}.legend{display:flex;gap:18px;color:var(--muted);font-size:.7rem;margin:4px 0 10px}.legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;background:var(--cyan)}.legend .target i{background:var(--acid)}svg{display:block;width:100%;height:auto}.cause-list{padding:14px 18px 18px}.cause{display:grid;grid-template-columns:130px 1fr 42px;gap:10px;align-items:center;margin:15px 0;font-size:.74rem}.track{height:8px;background:#1b2a3d;border-radius:99px;overflow:hidden}.track i{display:block;height:100%;border-radius:99px;background:var(--red)}.decision-strip{margin-top:14px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center;gap:15px;border-color:#40542b;background:linear-gradient(90deg,#17251a,#101a2a)}.decision-strip b{color:var(--acid)}.decision-strip p{margin:3px 0 0;color:var(--muted);font-size:.78rem}.btn{border:1px solid var(--line);background:#17243a;color:var(--ink);padding:9px 12px;border-radius:10px;cursor:pointer;font-weight:750}.btn.primary{background:var(--acid);color:#111;border-color:var(--acid)}.table-card{margin-top:14px;overflow:hidden}.table-head{padding:17px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}.table-head h2{font-size:.94rem;margin:0}.table-head small{color:var(--muted)}.table-scroll{overflow:auto}table{border-collapse:collapse;width:100%;min-width:760px}th,td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--line);font-size:.78rem}th{color:var(--muted);font-weight:650;text-transform:uppercase;letter-spacing:.06em;font-size:.65rem;background:#0d1726}tr:last-child td{border-bottom:0}.queue-row{cursor:pointer}.queue-row:hover td{background:#142238}.risk{display:inline-flex;align-items:center;gap:6px;font-weight:800}.risk:before{content:"";width:7px;height:7px;background:var(--red);border-radius:50%;box-shadow:0 0 0 4px #ff6b6b18}.priority{font-weight:850;color:var(--acid)}.pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:4px 8px;color:#c7d1df}.split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:18px}.stat{border:1px solid var(--line);background:#0c1523;border-radius:12px;padding:13px}.stat b{font-size:1.35rem;display:block}.stat span{font-size:.68rem;color:var(--muted)}.bar-list{padding:8px 18px 20px}.bar-item{display:grid;grid-template-columns:minmax(120px,1fr) 2fr 50px;gap:10px;align-items:center;margin:14px 0;font-size:.75rem}.bar-item .track i{background:var(--cyan)}.bar-item.bad .track i{background:var(--red)}.customer-hero{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}.customer-hero .card{padding:22px}.customer-hero strong{font-size:2rem}.customer-hero span{display:block;color:var(--muted);font-size:.74rem}.timeline{padding:18px}.milestone{display:grid;grid-template-columns:110px 28px 1fr;gap:10px;align-items:center;min-height:62px}.milestone>span{font-size:.72rem;color:var(--muted);text-align:right}.dot-line{height:100%;display:flex;justify-content:center;position:relative}.dot-line:before{content:"";position:absolute;width:1px;height:100%;background:var(--line);left:50%}.dot-line i{z-index:1;margin-top:20px;width:10px;height:10px;border:2px solid var(--cyan);background:var(--panel);border-radius:50%}.milestone b{font-size:.82rem}.milestone small{display:block;color:var(--muted)}.automation-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding:20px}.flow-step{border:1px solid var(--line);background:#0d1726;border-radius:14px;padding:15px;min-height:120px;position:relative}.flow-step:not(:last-child):after{content:"→";position:absolute;right:-10px;top:45%;z-index:2;color:var(--acid);background:var(--panel);width:20px;text-align:center}.flow-step span{font-size:.65rem;color:var(--muted);text-transform:uppercase}.flow-step b{display:block;margin-top:9px}.flow-step small{display:block;color:var(--cyan);margin-top:12px}.trace{padding:18px}.trace-line{display:grid;grid-template-columns:38px 110px 1fr auto;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);align-items:center;font-size:.75rem}.trace-line:last-child{border:0}.trace-line>span:first-child{width:28px;height:28px;border-radius:50%;background:#183246;color:var(--cyan);display:grid;place-items:center;font-weight:800}.trace-line em{font-style:normal;color:var(--muted)}.ok{color:var(--cyan);font-weight:800}.trust-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:14px}.trust-score{padding:28px}.ring{width:160px;height:160px;border-radius:50%;background:conic-gradient(var(--acid) 0 82%,#1c2b3e 82%);display:grid;place-items:center;margin:10px auto 22px}.ring:before{content:"";width:122px;height:122px;background:var(--panel);border-radius:50%;position:absolute}.ring b{position:relative;font-size:2.2rem}.checklist{padding:0;margin:0;list-style:none}.checklist li{padding:10px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:var(--muted)}.checklist strong{color:var(--cyan)}.model-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:18px}.model-card{border:1px solid var(--line);border-radius:13px;padding:14px;background:#0c1523}.model-card b{font-size:.82rem}.model-card strong{display:block;font-size:1.5rem;margin:10px 0}.model-card small{display:block;color:var(--muted)}.limit{border-left:3px solid var(--amber);background:#2b2516;padding:16px 18px;margin:14px 18px 18px;border-radius:0 12px 12px 0;color:#d9cfb7;font-size:.78rem}.roadmap{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:18px}.week{padding:14px;border:1px solid var(--line);border-radius:12px;background:#0d1726;min-height:110px}.week span{font-size:.65rem;color:var(--cyan);font-weight:800}.week.partial span{color:var(--amber)}.week b{display:block;margin-top:9px;font-size:.8rem}.week small{display:block;color:var(--muted);margin-top:5px}.drawer{position:fixed;right:0;top:0;height:100%;width:min(440px,100%);background:#0c1422;border-left:1px solid var(--line);z-index:20;transform:translateX(100%);transition:.28s ease;box-shadow:-24px 0 80px #0008;padding:26px;overflow:auto}.drawer.open{transform:none}.drawer-top{display:flex;justify-content:space-between;align-items:center}.drawer-top button{background:transparent;border:1px solid var(--line);border-radius:9px;padding:6px 10px;cursor:pointer}.drawer h2{font-size:1.6rem;letter-spacing:-.04em}.drawer .big-risk{font-size:3.4rem;color:var(--red);font-weight:850;letter-spacing:-.07em}.drawer-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.drawer-grid div{padding:12px;border:1px solid var(--line);border-radius:10px}.drawer-grid small{display:block;color:var(--muted)}.drawer h3{font-size:.84rem;margin-top:25px}.action-box{border:1px solid #3b5527;background:#182414;border-radius:12px;padding:15px}.action-box b{color:var(--acid)}.overlay{position:fixed;inset:0;background:#0007;z-index:19;display:none}.overlay.on{display:block}@keyframes fade{from{opacity:.4;transform:translateY(5px)}to{opacity:1;transform:none}}
+    @media(max-width:1100px){.kpis{grid-template-columns:repeat(3,1fr)}.grid,.trust-grid{grid-template-columns:1fr}.automation-flow{grid-template-columns:repeat(3,1fr)}.flow-step:nth-child(3):after{display:none}.roadmap{grid-template-columns:repeat(3,1fr)}}
+    @media(max-width:760px){.app{display:block}.sidebar{height:auto;position:static;padding:14px}.logo{padding-bottom:12px}.status,.nav-label,.side-foot{display:none}.sidebar nav{display:flex;overflow:auto;gap:5px}.nav-btn{width:auto;white-space:nowrap;padding:9px}.nav-btn span:first-child{display:none}.nav-btn em{display:none}.topbar{padding:0 14px}.filters .select,.filters .proof{display:none}.content{padding:18px 14px 38px}.page-head{align-items:flex-start;flex-direction:column}.kpis{grid-template-columns:1fr 1fr}.grid,.split,.customer-hero{grid-template-columns:1fr}.automation-flow{grid-template-columns:1fr}.flow-step:not(:last-child):after{content:"↓";right:auto;left:50%;top:auto;bottom:-11px}.roadmap{grid-template-columns:1fr 1fr}.model-cards{grid-template-columns:1fr}.trace-line{grid-template-columns:32px 1fr}.trace-line em,.trace-line .ok{grid-column:2}.decision-strip{align-items:flex-start;flex-direction:column}}
+    @media(max-width:430px){.kpis,.roadmap{grid-template-columns:1fr}.top-title span{display:none}}
+    @media(prefers-reduced-motion:reduce){.view.active{animation:none}.drawer{transition:none}}
+</style>
+  <style>
+    .ring{background:conic-gradient(var(--acid) 0 100%,#1c2b3e 100%)}
+    .ring b{font-size:2.05rem}
+    .evidence{margin-top:14px;overflow:hidden}
+    .evidence details{border-bottom:1px solid var(--line)}
+    .evidence details:last-child{border-bottom:0}
+    .evidence summary{cursor:pointer;padding:17px 18px;font-weight:800;list-style:none;display:flex;justify-content:space-between}
+    .evidence summary::-webkit-details-marker{display:none}
+    .evidence summary:after{content:"＋";color:var(--acid)}
+    .evidence details[open] summary:after{content:"−"}
+    .evidence-body{padding:0 18px 18px;color:#b7c3d2;font-size:.8rem}
+    .evidence-body ul{margin:0;padding-left:20px}
+    .evidence-body li{margin:8px 0}
+    .evidence-table{overflow:auto}
+    .evidence-table table{min-width:680px}
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <a class="logo" href="index.html">
+<i>
+</i>
+<span>NorthEast HealthLink<small>OTIF decision control tower</small>
+</span>
+</a>
+    <div class="status">● Synthetic proof of concept</div>
+    <nav aria-label="Control tower views">
+      <div class="nav-label">Monitor</div>
+      <button class="nav-btn active" data-view="executive">
+<span>◫</span>Executive</button>
+      <button class="nav-btn" data-view="customers">
+<span>◎</span>Customer SLA <em>169</em>
+</button>
+      <button class="nav-btn" data-view="queue">
+<span>⚑</span>Action queue <em>3,535</em>
+</button>
+      <button class="nav-btn" data-view="inventory">
+<span>▦</span>Inventory risk</button>
+      <button class="nav-btn" data-view="execution">
+<span>↗</span>Execution</button>
+      <div class="nav-label">Prove</div>
+      <button class="nav-btn" data-view="automation">
+<span>⌁</span>Automation</button>
+      <button class="nav-btn" data-view="trust">
+<span>✓</span>Trust center</button>
+    </nav>
+    <div class="side-foot">Seed 20260915 · 24 months<br>Last refresh: 26 Sep 2026<a href="index.html">← Portfolio mockup</a>
+</div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+<div class="top-title">
+<b>OTIF Control Tower</b>
+<span>Early warning → prioritized human action</span>
+</div>
+<div class="filters">
+<select class="select" aria-label="Warehouse">
+<option>All warehouses</option>
+<option>WH-TSK</option>
+<option>WH-DBR</option>
+<option>WH-JOR</option>
+<option>WH-GHY</option>
+</select>
+<button class="icon-btn" title="Data is fixed for this proof of concept">24 months⌄</button>
+<span class="proof">Validated POC</span>
+</div>
+</header>
+    <div class="content">
+      <section class="view active" id="executive">
+        <header class="page-head">
+<div>
+<h1>Network health</h1>
+<p>Service performance, operational risk and the next best intervention—on one decision surface.</p>
+</div>
+<span class="timestamp">95,912 eligible completed · 99,433 total records</span>
+</header>
+        <div class="kpis">
+          <article class="card kpi" style="--accent:var(--amber)">
+<div class="kpi-label">
+<span>On time</span>
+<span>OT</span>
+</div>
+<strong>85.61%</strong>
+<small>On-time component rate</small>
+</article>
+          <article class="card kpi" style="--accent:var(--blue)">
+<div class="kpi-label">
+<span>In full</span>
+<span>IF</span>
+</div>
+<strong>89.69%</strong>
+<small>Order level</small>
+</article>
+          <article class="card kpi" style="--accent:var(--red)">
+<div class="kpi-label">
+<span>Joint service</span>
+<span>OTIF</span>
+</div>
+<strong>76.96%</strong>
+<small class="down">15.04pp below 92%</small>
+</article>
+          <article class="card kpi" style="--accent:var(--red)">
+<div class="kpi-label">
+<span>Below SLA target</span>
+<span>SLA</span>
+</div>
+<strong>169</strong>
+<small>of 200 active customers</small>
+</article>
+          <article class="card kpi" style="--accent:var(--acid)">
+<div class="kpi-label">
+<span>Open alerts</span>
+<span>ACT</span>
+</div>
+<strong>3,535</strong>
+<small class="up">83.1% recoverable</small>
+</article>
+        </div>
+        <div class="grid">
+          <article class="card chart-card">
+<div class="card-head">
+<div>
+<h2>12-week OTIF trajectory</h2>
+<span>Every week remains below the 92% commitment</span>
+</div>
+<span>Weekly · final test period</span>
+</div>
+<div class="chart-wrap">
+<div class="legend">
+<span>
+<i>
+</i>Actual OTIF</span>
+<span class="target">
+<i>
+</i>Target 92%</span>
+</div>
+<svg viewBox="0 0 760 220" role="img" aria-label="Weekly OTIF trend from 74.4 to 78.6 percent, below 92 percent target">
+<defs>
+<linearGradient id="area" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#47dec9" stop-opacity=".35"/>
+<stop offset="1" stop-color="#47dec9" stop-opacity="0"/>
+</linearGradient>
+</defs>
+<g stroke="#26364c" stroke-width="1">
+<line x1="38" y1="35" x2="740" y2="35"/>
+<line x1="38" y1="90" x2="740" y2="90"/>
+<line x1="38" y1="145" x2="740" y2="145"/>
+<line x1="38" y1="200" x2="740" y2="200"/>
+</g>
+<line x1="38" y1="48" x2="740" y2="48" stroke="#a7f432" stroke-dasharray="6 6"/>
+<path d="M38 200 L38 156 L102 139 L166 151 L230 163 L294 172 L358 178 L422 157 L486 150 L550 141 L614 137 L678 147 L740 140 L740 200Z" fill="url(#area)"/>
+<polyline points="38,156 102,139 166,151 230,163 294,172 358,178 422,157 486,150 550,141 614,137 678,147 740,140" fill="none" stroke="#47dec9" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<g fill="#47dec9">
+<circle cx="38" cy="156" r="4"/>
+<circle cx="102" cy="139" r="4"/>
+<circle cx="166" cy="151" r="4"/>
+<circle cx="230" cy="163" r="4"/>
+<circle cx="294" cy="172" r="4"/>
+<circle cx="358" cy="178" r="4"/>
+<circle cx="422" cy="157" r="4"/>
+<circle cx="486" cy="150" r="4"/>
+<circle cx="550" cy="141" r="4"/>
+<circle cx="614" cy="137" r="4"/>
+<circle cx="678" cy="147" r="4"/>
+<circle cx="740" cy="140" r="4"/>
+</g>
+<g fill="#8294ac" font-size="11">
+<text x="38" y="218">Oct 13</text>
+<text x="282" y="218">Nov 10</text>
+<text x="540" y="218">Dec 08</text>
+<text x="700" y="218">Dec 29</text>
+</g>
+</svg>
+</div>
+</article>
+          <div class="stack">
+<article class="card">
+<div class="card-head">
+<div>
+<h2>Failure contribution</h2>
+<span>Open queue · dominant governed reason</span>
+</div>
+</div>
+<div class="cause-list">
+<div class="cause">
+<span>Inbound delay</span>
+<div class="track">
+<i style="width:46%">
+</i>
+</div>
+<b>2,263</b>
+</div>
+<div class="cause">
+<span>Stock shortage</span>
+<div class="track">
+<i style="width:42%">
+</i>
+</div>
+<b>2,072</b>
+</div>
+<div class="cause">
+<span>No dominant reason</span>
+<div class="track">
+<i style="width:12%;background:var(--amber)">
+</i>
+</div>
+<b>597</b>
+</div>
+</div>
+</article>
+<article class="card decision-strip">
+<div>
+<b>Highest-value next move</b>
+<p>Prioritize Platinum orders with stock shortage and less than 32 hours remaining.</p>
+</div>
+<button class="btn primary" data-jump="queue">Review 6 urgent →</button>
+</article>
+</div>
+        </div>
+        <article class="card table-card">
+<div class="table-head">
+<div>
+<h2>Urgent intervention queue</h2>
+<small>Ranked by failure probability × urgency × value × recoverability</small>
+</div>
+<button class="btn" data-jump="queue">Full queue →</button>
+</div>
+<div class="table-scroll">
+<table>
+<thead>
+<tr>
+<th>Order</th>
+<th>Warehouse</th>
+<th>Customer</th>
+<th>Risk</th>
+<th>Likely driver</th>
+<th>Time left</th>
+<th>Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr class="queue-row">
+<td>ORD-0089628</td>
+<td>WH-TSK</td>
+<td>
+<span class="pill">Platinum</span>
+</td>
+<td>
+<span class="risk">High</span>
+</td>
+<td>Stock shortage</td>
+<td>25.8h</td>
+<td class="priority">5.10</td>
+</tr>
+<tr class="queue-row">
+<td>ORD-0088994</td>
+<td>WH-TSK</td>
+<td>
+<span class="pill">Platinum</span>
+</td>
+<td>
+<span class="risk">High</span>
+</td>
+<td>Stock shortage</td>
+<td>20.3h</td>
+<td class="priority">4.72</td>
+</tr>
+<tr class="queue-row">
+<td>ORD-0086320</td>
+<td>WH-JOR</td>
+<td>
+<span class="pill">Platinum</span>
+</td>
+<td>
+<span class="risk">High</span>
+</td>
+<td>Shortage + inbound delay</td>
+<td>30.8h</td>
+<td class="priority">4.46</td>
+</tr>
+</tbody>
+</table>
+</div>
+</article>
+      </section>
+
+      <section class="view" id="customers">
+<header class="page-head">
+<div>
+<h1>Customer SLA exposure</h1>
+<p>Find the accounts where service gaps and commercial importance intersect.</p>
+</div>
+<span class="timestamp">Values are 24-month order value—not open exposure</span>
+</header>
+<div class="customer-hero">
+<article class="card">
+<span>Customers below target</span>
+<strong>169 / 200</strong>
+<small class="down">84.5% below target</small>
+</article>
+<article class="card">
+<span>Average target gap</span>
+<strong>-8.4pp</strong>
+<small>Across below-target accounts</small>
+</article>
+<article class="card">
+<span>Largest Platinum gap</span>
+<strong>-48.4pp</strong>
+<small>Hospital Account 0096</small>
+</article>
+</div>
+<article class="card table-card">
+<div class="table-head">
+<div>
+<h2>Largest gaps by order value</h2>
+<small>Sort logic keeps commercially important accounts visible</small>
+</div>
+</div>
+<div class="table-scroll">
+<table>
+<thead>
+<tr>
+<th>Customer</th>
+<th>Tier</th>
+<th>OTIF</th>
+<th>Target</th>
+<th>Gap</th>
+<th>24-month value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hospital Account 0096</td>
+<td>
+<span class="pill">Platinum</span>
+</td>
+<td>48.6%</td>
+<td>97%</td>
+<td class="down">-48.4pp</td>
+<td>₹38,36,728</td>
+</tr>
+<tr>
+<td>Institutional Account 0033</td>
+<td>Silver</td>
+<td>79.9%</td>
+<td>90%</td>
+<td class="down">-10.1pp</td>
+<td>₹35,25,921</td>
+</tr>
+<tr>
+<td>Retail Account 0112</td>
+<td>Silver</td>
+<td>85.9%</td>
+<td>90%</td>
+<td class="down">-4.1pp</td>
+<td>₹34,04,471</td>
+</tr>
+<tr>
+<td>Retail Account 0160</td>
+<td>Gold</td>
+<td>87.4%</td>
+<td>94%</td>
+<td class="down">-6.6pp</td>
+<td>₹23,51,112</td>
+</tr>
+<tr>
+<td>Institutional Account 0015</td>
+<td>Silver</td>
+<td>81.3%</td>
+<td>90%</td>
+<td class="down">-8.7pp</td>
+<td>₹18,48,810</td>
+</tr>
+</tbody>
+</table>
+</div>
+</article>
+</section>
+
+      <section class="view" id="queue">
+<header class="page-head">
+<div>
+<h1>Human action queue</h1>
+<p>A transparent, capacity-aware ranking—not a list of every high-risk order.</p>
+</div>
+<span class="timestamp">Review capacity: 25 orders/day</span>
+</header>
+<div class="kpis">
+<article class="card kpi">
+<div class="kpi-label">Open alerts</div>
+<strong>3,535</strong>
+<small>Across 3 checkpoints</small>
+</article>
+<article class="card kpi">
+<div class="kpi-label">Failure probability</div>
+<strong>75.2%</strong>
+<small>Average flagged risk</small>
+</article>
+<article class="card kpi">
+<div class="kpi-label">Recoverable</div>
+<strong>83.1%</strong>
+<small class="up">Action remains feasible</small>
+</article>
+<article class="card kpi">
+<div class="kpi-label">Precision @ capacity</div>
+<strong>70.3%</strong>
+<small>Allocation checkpoint</small>
+</article>
+<article class="card kpi">
+<div class="kpi-label">Median lead time</div>
+<strong>81.7h</strong>
+<small>Before commitment</small>
+</article>
+</div>
+<article class="card table-card">
+<div class="table-head">
+<div>
+<h2>Ranked interventions</h2>
+<small>Select any row to inspect evidence and recommended action</small>
+</div>
+<span class="pill">Showing top 6</span>
+</div>
+<div class="table-scroll">
+<table>
+<thead>
+<tr>
+<th>Order</th>
+<th>WH</th>
+<th>Tier</th>
+<th>Risk</th>
+<th>Reason</th>
+<th>Time left</th>
+<th>Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr class="queue-row">
+<td>ORD-0089628</td>
+<td>WH-TSK</td>
+<td>Platinum</td>
+<td>
+<span class="risk">High</span>
+</td>
+<td>Stock shortage</td>
+<td>25.8h</td>
+<td class="priority">5.10</td>
+</tr>
+<tr class="queue-row">
+<td>ORD-0088994</td>
+<td>WH-TSK</td>
+<td>Platinum</td>
+<td>
+<span class="risk">High</span>
+</td>
+<td>Stock shortage</td>
+<td>20.3h</td>
+<td class="priority">4.72</td>
+</tr>
+<tr class="queue-row">
+<td>ORD-0086320</td>
+<td>WH-JOR</td>
+<td>Platinum</td>
+<td>
+<span class="risk">High</span>
+</td>
+<td>Shortage + inbound delay</td>
+<td>30.8h</td>
+<td class="priority">4.46</td>
+</tr>
+<tr class="queue-row">
+<td>ORD-0090011</td>
+<td>WH-DBR</td>
+<td>Platinum</td>
+<td>
+<span class="risk">High</span>
+</td>
+<td>Shortage + inbound delay</td>
+<td>32.2h</td>
+<td class="priority">4.40</td>
+</tr>
+<tr class="queue-row">
+<td>ORD-0092077</td>
+<td>WH-DBR</td>
+<td>Platinum</td>
+<td>
+<span class="risk">High</span>
+</td>
+<td>Stock shortage</td>
+<td>38.4h</td>
+<td class="priority">4.38</td>
+</tr>
+<tr class="queue-row">
+<td>ORD-0082660</td>
+<td>WH-DBR</td>
+<td>Platinum</td>
+<td>
+<span class="risk">High</span>
+</td>
+<td>Shortage + inbound delay</td>
+<td>26.5h</td>
+<td class="priority">4.19</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="limit">Priority is a capped product of failure probability × time urgency × essential-product weight × customer-tier weight × exposure weight × recoverability. The ranking has no hidden input.</div>
+</article>
+</section>
+
+      <section class="view" id="inventory">
+<header class="page-head">
+<div>
+<h1>Inventory risk</h1>
+<p>Short-horizon supply visibility for essential-category SKUs.</p>
+</div>
+<span class="timestamp">Descriptive only · no reorder recommendation</span>
+</header>
+<div class="split">
+<article class="card">
+<div class="stat-row">
+<div class="stat">
+<b>295,474</b>
+<span>Network on-hand units</span>
+</div>
+<div class="stat">
+<b>56.5d</b>
+<span>Average days of supply</span>
+</div>
+<div class="stat">
+<b class="down">6+</b>
+<span>SKUs below 10 days</span>
+</div>
+</div>
+<div class="bar-list">
+<div class="bar-item bad">
+<span>Respiratory · 0169</span>
+<div class="track">
+<i style="width:40%">
+</i>
+</div>
+<b>4.0d</b>
+</div>
+<div class="bar-item bad">
+<span>Gastrointestinal · 0211</span>
+<div class="track">
+<i style="width:52%">
+</i>
+</div>
+<b>5.2d</b>
+</div>
+<div class="bar-item bad">
+<span>Cardiovascular · 0437</span>
+<div class="track">
+<i style="width:54%">
+</i>
+</div>
+<b>5.4d</b>
+</div>
+<div class="bar-item bad">
+<span>OTC · 0011</span>
+<div class="track">
+<i style="width:57%">
+</i>
+</div>
+<b>5.7d</b>
+</div>
+<div class="bar-item bad">
+<span>Electrolytes · 0474</span>
+<div class="track">
+<i style="width:63%">
+</i>
+</div>
+<b>6.3d</b>
+</div>
+</div>
+</article>
+<article class="card">
+<div class="card-head">
+<div>
+<h2>Flagged sample by warehouse</h2>
+<span>Count among the six shortest days-of-supply rows</span>
+</div>
+</div>
+<div class="chart-wrap">
+<svg viewBox="0 0 520 280" role="img" aria-label="Warehouse inventory risk matrix">
+<g fill="#101d2e" stroke="#2b3b52">
+<rect x="20" y="30" width="110" height="210" rx="12"/>
+<rect x="145" y="30" width="110" height="210" rx="12"/>
+<rect x="270" y="30" width="110" height="210" rx="12"/>
+<rect x="395" y="30" width="110" height="210" rx="12"/>
+</g>
+<g fill="#ff6b6b">
+<circle cx="75" cy="170" r="18"/>
+<circle cx="200" cy="115" r="38"/>
+<circle cx="325" cy="95" r="18"/>
+<circle cx="450" cy="150" r="10" fill="#607189"/>
+</g>
+<g fill="#f4f7fb" font-size="14" text-anchor="middle">
+<text x="75" y="266">TSK</text>
+<text x="200" y="266">JOR</text>
+<text x="325" y="266">GHY</text>
+<text x="450" y="266">DBR</text>
+</g>
+<g fill="#0b111b" font-size="14" font-weight="800" text-anchor="middle">
+<text x="75" y="175">1</text>
+<text x="200" y="120">4</text>
+<text x="325" y="100">1</text>
+<text x="450" y="155">0</text>
+</g>
+</svg>
+</div>
+</article>
+</div>
+</section>
+
+      <section class="view" id="execution">
+<header class="page-head">
+<div>
+<h1>Execution health</h1>
+<p>Separate warehouse, carrier and supplier signals so intervention reaches the right owner.</p>
+</div>
+<span class="timestamp">24-month average / sampled PO ledger</span>
+</header>
+<div class="split">
+<article class="card">
+<div class="card-head">
+<div>
+<h2>Warehouse processing</h2>
+<span>Backlog ratio / average hours</span>
+</div>
+</div>
+<div class="bar-list">
+<div class="bar-item">
+<span>WH-DBR · 6.60h</span>
+<div class="track">
+<i style="width:80%">
+</i>
+</div>
+<b>8%</b>
+</div>
+<div class="bar-item">
+<span>WH-GHY · 6.61h</span>
+<div class="track">
+<i style="width:60%">
+</i>
+</div>
+<b>6%</b>
+</div>
+<div class="bar-item">
+<span>WH-TSK · 6.60h</span>
+<div class="track">
+<i style="width:60%">
+</i>
+</div>
+<b>6%</b>
+</div>
+<div class="bar-item">
+<span>WH-JOR · 6.60h</span>
+<div class="track">
+<i style="width:40%">
+</i>
+</div>
+<b>4%</b>
+</div>
+</div>
+</article>
+<article class="card">
+<div class="card-head">
+<div>
+<h2>Carrier on-time performance</h2>
+<span>Observed carrier spread: 2.2pp</span>
+</div>
+</div>
+<div class="bar-list">
+<div class="bar-item">
+<span>Tea Route Express</span>
+<div class="track">
+<i style="width:86.8%">
+</i>
+</div>
+<b>86.8%</b>
+</div>
+<div class="bar-item">
+<span>Highland Cargo</span>
+<div class="track">
+<i style="width:86.5%">
+</i>
+</div>
+<b>86.5%</b>
+</div>
+<div class="bar-item">
+<span>Brahmaputra</span>
+<div class="track">
+<i style="width:86%">
+</i>
+</div>
+<b>86.0%</b>
+</div>
+<div class="bar-item">
+<span>Kaziranga</span>
+<div class="track">
+<i style="width:84.6%">
+</i>
+</div>
+<b>84.6%</b>
+</div>
+</div>
+</article>
+</div>
+<article class="card table-card">
+<div class="table-head">
+<div>
+<h2>Weakest supplier receipt performance</h2>
+<small>Sampled purchase-order ledger</small>
+</div>
+</div>
+<div class="table-scroll">
+<table>
+<thead>
+<tr>
+<th>Supplier</th>
+<th>POs sampled</th>
+<th>On-time</th>
+<th>Average fill</th>
+<th>Signal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SUP-017</td>
+<td>31</td>
+<td class="down">25.8%</td>
+<td>85.1%</td>
+<td>
+<span class="risk">Escalate</span>
+</td>
+</tr>
+<tr>
+<td>SUP-007</td>
+<td>31</td>
+<td class="down">35.5%</td>
+<td>97.5%</td>
+<td>Timing risk</td>
+</tr>
+<tr>
+<td>SUP-014</td>
+<td>39</td>
+<td class="down">35.9%</td>
+<td>91.1%</td>
+<td>Timing risk</td>
+</tr>
+<tr>
+<td>SUP-002</td>
+<td>27</td>
+<td class="down">37.0%</td>
+<td>85.3%</td>
+<td>Dual risk</td>
+</tr>
+</tbody>
+</table>
+</div>
+</article>
+</section>
+
+      <section class="view" id="automation">
+<header class="page-head">
+<div>
+<h1>Prediction → approved action</h1>
+<p>A real scored order moved through a governed workflow with a PostgreSQL audit trail.</p>
+</div>
+<span class="timestamp">Run run-20260926T141000Z-44e3ad</span>
+</header>
+<div class="kpis">
+<article class="card kpi">
+<div class="kpi-label">Release PR-AUC</div>
+<strong>0.3516</strong>
+<small>Base rate 11.66%</small>
+</article>
+<article class="card kpi">
+<div class="kpi-label">Top-decile lift</div>
+<strong>3.613×</strong>
+<small>Against random selection</small>
+</article>
+<article class="card kpi">
+<div class="kpi-label">Automated tests</div>
+<strong>60 / 60</strong>
+<small class="up">Passing</small>
+</article>
+<article class="card kpi">
+<div class="kpi-label">PostgreSQL</div>
+<strong>16 + 9</strong>
+<small>Tables + views</small>
+</article>
+<article class="card kpi">
+<div class="kpi-label">n8n workflows</div>
+<strong>6</strong>
+<small>Structurally validated</small>
+</article>
+</div>
+<article class="card">
+<div class="card-head">
+<div>
+<h2>Live order journey</h2>
+<span>NHL-LIVE-20260926141000 · 72.2% risk · High</span>
+</div>
+<span class="pill">PICK_PRIORITY</span>
+</div>
+<div class="automation-flow">
+<div class="flow-step">
+<span>01 · Webhook</span>
+<b>Order received</b>
+<small>Schema valid</small>
+</div>
+<div class="flow-step">
+<span>02 · Context</span>
+<b>Real SQL query</b>
+<small>Not previously scored</small>
+</div>
+<div class="flow-step">
+<span>03 · Score</span>
+<b>POST /v1/predict</b>
+<small>200 · 10.9ms</small>
+</div>
+<div class="flow-step">
+<span>04 · Govern</span>
+<b>Human approval</b>
+<small>Approved</small>
+</div>
+<div class="flow-step">
+<span>05 · Audit</span>
+<b>Trigger fired</b>
+<small>Pending → Approved</small>
+</div>
+</div>
+</article>
+<div class="split" style="margin-top:14px">
+<article class="card">
+<div class="card-head">
+<div>
+<h2>State-changing trace</h2>
+<span>14 of 32 executed nodes</span>
+</div>
+</div>
+<div class="trace">
+<div class="trace-line">
+<span>1</span>
+<b>Order webhook</b>
+<em>Correlation assigned</em>
+<span class="ok">SUCCESS</span>
+</div>
+<div class="trace-line">
+<span>2</span>
+<b>Feature retrieval</b>
+<em>Live PostgreSQL</em>
+<span class="ok">SUCCESS</span>
+</div>
+<div class="trace-line">
+<span>3</span>
+<b>Scoring API</b>
+<em>p = 0.7222</em>
+<span class="ok">200 OK</span>
+</div>
+<div class="trace-line">
+<span>4</span>
+<b>Intervention</b>
+<em>iv-abe51e5067f94f7b</em>
+<span class="ok">CREATED</span>
+</div>
+<div class="trace-line">
+<span>5</span>
+<b>Approval</b>
+<em>Human reviewer</em>
+<span class="ok">APPROVED</span>
+</div>
+<div class="trace-line">
+<span>6</span>
+<b>Audit event</b>
+<em>DB trigger</em>
+<span class="ok">RECORDED</span>
+</div>
+</div>
+</article>
+<article class="card">
+<div class="card-head">
+<div>
+<h2>Honesty ledger</h2>
+<span>Component completion is graded, not flattened</span>
+</div>
+</div>
+<div class="cause-list">
+<div class="cause">
+<span>Implemented + tested</span>
+<div class="track">
+<i style="width:78%;background:var(--cyan)">
+</i>
+</div>
+<b>7</b>
+</div>
+<div class="cause">
+<span>Built · gap noted</span>
+<div class="track">
+<i style="width:33%;background:var(--amber)">
+</i>
+</div>
+<b>3</b>
+</div>
+<div class="cause">
+<span>Future enhancement</span>
+<div class="track">
+<i style="width:12%;background:var(--muted)">
+</i>
+</div>
+<b>1</b>
+</div>
+</div>
+<div class="limit">n8n runtime and Docker base images were unavailable in the sandbox. The exact workflow graph was executed against a live API and PostgreSQL; the email acknowledgement remained demonstration-only.</div>
+</article>
+</div>
+<article class="card evidence">
+  <details>
+    <summary>Why Phase 5 model metrics differ</summary>
+    <div class="evidence-body">This is a separately retrained release-checkpoint logistic-regression model with 23 features, seed 20260926 and a different temporal split. Its PR-AUC 0.3516, ROC-AUC 0.7078, recall 34.99%, 1,137 false negatives and 3.613× top-decile lift are reported separately from the earlier release model's PR-AUC 0.475. Selection followed Brier gate → PR-AUC → lower false-negative count, never accuracy alone.</div>
+  </details>
+  <details>
+    <summary>Real bugs found and fixed</summary>
+    <div class="evidence-body"><ul><li>Non-deterministic feature-column ordering silently broke a persisted scaler; fixed with ordered tuples and verified through a full rerun.</li><li>psql literal-quoting substitution failed in single-command mode; switched to script mode and rechecked with an SQL-injection probe.</li><li>Migration replay attempted to shrink a PostgreSQL view; added migration tracking and verified on live and fresh databases.</li></ul></div>
+  </details>
+  <details>
+    <summary>Component status ledger</summary>
+    <div class="evidence-body"><ul><li><strong>Implemented and tested:</strong> canonical contract and leakage gate; release ML pipeline; threshold and priority policy; 5-endpoint Flask/Pydantic API; action catalogue; 16-table/9-view PostgreSQL layer; 6 structurally validated n8n workflows.</li><li><strong>Built with gaps noted:</strong> Docker Compose parsed but images could not be pulled; Power BI specs and live CSV exist but the native .pbix page needs Desktop; second-company onboarding is documented but not externally tested.</li><li><strong>Future enhancement:</strong> allocation-complete and dispatch automation checkpoints.</li></ul></div>
+  </details>
+</article>
+</section>
+
+      <section class="view" id="trust">
+<header class="page-head">
+<div>
+<h1>Trust center</h1>
+<p>Metric contracts, model validation, leakage checks and limitations—visible without obscuring the operational story.</p>
+</div>
+<span class="timestamp">Synthetic-data proof of concept</span>
+</header>
+<div class="trust-grid">
+<article class="card trust-score">
+<div class="card-head" style="padding:0">
+<div>
+<h2>Verification results</h2>
+<span>Reconciled and reproducible evidence</span>
+</div>
+</div>
+<div class="ring">
+<b>17 / 17</b>
+</div>
+<ul class="checklist">
+<li>Python KPI acceptance <strong>9 / 9</strong>
+</li>
+<li>SQL reconciliation <strong>8 / 8</strong>
+</li>
+<li>Prohibited features <strong>0 × 3</strong>
+</li>
+<li>SQL ↔ Python OTIF <strong>MATCH</strong>
+</li>
+</ul>
+</article>
+<article class="card">
+<div class="card-head">
+<div>
+<h2>Temporal test performance</h2>
+<span>All checkpoints beat naive and rule baselines</span>
+</div>
+</div>
+<div class="model-cards">
+<div class="model-card">
+<b>RELEASE</b>
+<strong>0.475</strong>
+<small>PR-AUC · 5.31× lift<br>83.5h lead time</small>
+</div>
+<div class="model-card">
+<b>ALLOCATION</b>
+<strong>0.767</strong>
+<small>PR-AUC · 4.28× lift<br>81.2h lead time</small>
+</div>
+<div class="model-card">
+<b>DISPATCH</b>
+<strong>0.495</strong>
+<small>PR-AUC · 3.94× lift<br>70.5h lead time</small>
+</div>
+</div>
+<div class="limit">
+<strong>What cannot be claimed:</strong> this validates a proof of concept on synthetic data—not real-world accuracy, OTIF improvement, stockout reduction or intervention effectiveness. NLEM names, OSM routes and the DataCo/Olist benchmark were not available in the original build.</div>
+</article>
+</div>
+<article class="card" style="margin-top:14px">
+<div class="card-head">
+<div>
+<h2>12-week delivery record</h2>
+<span>8 complete · 4 partial with explicit open items</span>
+</div>
+</div>
+<div class="roadmap">
+<div class="week">
+<span>W01 COMPLETE</span>
+<b>KPI contract</b>
+<small>9/9 acceptance tests</small>
+</div>
+<div class="week">
+<span>W02 COMPLETE</span>
+<b>Data contracts + ERD</b>
+<small>Grain and availability mapped</small>
+</div>
+<div class="week">
+<span>W03–05 COMPLETE</span>
+<b>Generation + SQL</b>
+<small>1.46M inventory rows · 0 mismatches</small>
+</div>
+<div class="week">
+<span>W07–09 COMPLETE</span>
+<b>Models + queue</b>
+<small>Leakage-safe and calibrated</small>
+</div>
+<div class="week partial">
+<span>W06 PARTIAL</span>
+<b>EDA</b>
+<small>No standalone notebook</small>
+</div>
+<div class="week partial">
+<span>W10 PARTIAL</span>
+<b>Power BI</b>
+<small>Implementation pack, no native .pbix</small>
+</div>
+<div class="week partial">
+<span>W11 PARTIAL</span>
+<b>Stress + benchmark</b>
+<small>Ablation and external benchmark open</small>
+</div>
+<div class="week partial">
+<span>W12 PARTIAL</span>
+<b>Release assets</b>
+<small>No demo recording in original build</small>
+</div>
+</div>
+</article>
+<article class="card evidence">
+  <details>
+    <summary>Exact KPI contract</summary>
+    <div class="evidence-body evidence-table"><table><thead><tr><th>Metric</th><th>Governed definition</th></tr></thead><tbody><tr><td>Eligible order</td><td>Completed order in SLA reporting; cancelled and test orders excluded and reported separately.</td></tr><tr><td>Line IF</td><td>accepted_qty ≥ ordered_qty, with no cross-SKU offset.</td></tr><tr><td>Order IF</td><td>Minimum eligible-line IF flag.</td></tr><tr><td>Order OT</td><td>Final required line ≤ original committed timestamp; revised promise is never the SLA baseline.</td></tr><tr><td>Order OTIF</td><td>IF=1 AND OT=1—never (OT%+IF%)/2.</td></tr></tbody></table></div>
+  </details>
+  <details>
+    <summary>Full temporal model metrics</summary>
+    <div class="evidence-body evidence-table"><table><thead><tr><th>Checkpoint</th><th>Model</th><th>PR-AUC</th><th>Naive</th><th>Rule</th><th>ROC-AUC</th><th>Recall@cap</th><th>Prec@cap</th><th>Brier</th><th>ECE</th><th>Lift</th><th>Lead time</th></tr></thead><tbody><tr><td>Release</td><td>Logistic regression</td><td>0.475</td><td>0.100</td><td>0.361</td><td>0.841</td><td>69.3%</td><td>37.4%</td><td>0.066</td><td>0.006</td><td>5.31×</td><td>83.5h</td></tr><tr><td>Allocation-complete</td><td>Gradient boosting</td><td>0.767</td><td>0.226</td><td>0.565</td><td>0.863</td><td>63.9%</td><td>70.3%</td><td>0.099</td><td>0.036</td><td>4.28×</td><td>81.2h</td></tr><tr><td>Dispatch</td><td>Gradient boosting</td><td>0.495</td><td>0.142</td><td>0.294</td><td>0.855</td><td>56.1%</td><td>50.4%</td><td>0.091</td><td>0.008</td><td>3.94×</td><td>70.5h</td></tr></tbody></table><p>Review capacity: 25 orders/day; thresholds were set on validation. All three checkpoints beat both baselines on held-out test data.</p></div>
+  </details>
+  <details>
+    <summary>Scope and reproducibility</summary>
+    <div class="evidence-body">NorthEast HealthLink Distributors Pvt. Ltd. is entirely hypothetical. All orders, customers, products and outcomes were generated by a seeded simulation (seed 20260915). Scale: 99,433 total order records—95,912 completed, 3,026 cancelled and 495 test—plus 301,757 order lines, 1,462,000 inventory rows, 500 products, 200 customers, 25 suppliers, 6 carriers and 4 warehouses. <code>./run_pipeline.sh</code> rebuilds the project. The original build did not create a native .pbix, use NLEM medicine names or OSM routes, run the DataCo/Olist benchmark, or record screenshots and a demo video.</div>
+  </details>
+</article>
+</section>
+    </div>
+  </main>
+</div>
+
+<div class="overlay" id="overlay">
+</div>
+<aside class="drawer" id="drawer" aria-hidden="true" aria-label="Order diagnostic">
+<div class="drawer-top">
+<span class="proof">Order diagnostic</span>
+<button id="closeDrawer" aria-label="Close diagnostic">✕</button>
+</div>
+<h2 id="drawerOrder">ORD-0089628</h2>
+<div class="big-risk">High</div>
+<p style="color:var(--muted);margin-top:-8px">Predicted OTIF failure risk band</p>
+<div class="drawer-grid">
+<div>
+<small>Warehouse</small>
+<b>WH-TSK</b>
+</div>
+<div>
+<small>Customer</small>
+<b>Platinum</b>
+</div>
+<div>
+<small>Time remaining</small>
+<b>25.8 hours</b>
+</div>
+<div>
+<small>Priority score</small>
+<b>5.10</b>
+</div>
+</div>
+<h3>Likely driver</h3>
+<p>Stock shortage at release. The accepted quantity does not cover the full ordered quantity; no cross-SKU offset is permitted by the KPI contract.</p>
+<h3>Order timeline</h3>
+<div class="timeline">
+<div class="milestone">
+<span>T+0h</span>
+<div class="dot-line">
+<i>
+</i>
+</div>
+<div>
+<b>Order placed + released</b>
+<small>Risk scored using only release-available features</small>
+</div>
+</div>
+<div class="milestone">
+<span>T+1–4h</span>
+<div class="dot-line">
+<i>
+</i>
+</div>
+<div>
+<b>Pick window</b>
+<small>Quantity shortfall remains recoverable</small>
+</div>
+</div>
+<div class="milestone">
+<span>T+6.6h</span>
+<div class="dot-line">
+<i>
+</i>
+</div>
+<div>
+<b>Expected dispatch</b>
+<small>Original promise remains SLA baseline</small>
+</div>
+</div>
+</div>
+<h3>Governed recommendation</h3>
+<div class="action-box">
+<b>ALLOCATION REVIEW</b>
+<p>Candidate intervention shown for this mockup: prioritize review of essential lines. Any final action requires human approval; the system does not autonomously change the order.</p>
+</div>
+</aside>
+
+<script>
+  const views=[...document.querySelectorAll('.view')], nav=[...document.querySelectorAll('.nav-btn')];
+  function show(id){views.forEach(v=>v.classList.toggle('active',v.id===id));nav.forEach(b=>b.classList.toggle('active',b.dataset.view===id));window.scrollTo({top:0,behavior:'smooth'});}
+  nav.forEach(b=>b.addEventListener('click',()=>show(b.dataset.view)));
+  document.querySelectorAll('[data-jump]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.jump)));
+  const drawer=document.getElementById('drawer'),overlay=document.getElementById('overlay'),drawerOrder=document.getElementById('drawerOrder');
+  function openDrawer(order){drawerOrder.textContent=order;drawer.classList.add('open');overlay.classList.add('on');drawer.setAttribute('aria-hidden','false');}
+  function closeDrawer(){drawer.classList.remove('open');overlay.classList.remove('on');drawer.setAttribute('aria-hidden','true');}
+  document.querySelectorAll('.queue-row').forEach(r=>r.addEventListener('click',()=>openDrawer(r.cells[0].textContent)));
+  document.getElementById('closeDrawer').addEventListener('click',closeDrawer);overlay.addEventListener('click',closeDrawer);document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer()});
+</script>
+</body>
+</html>
