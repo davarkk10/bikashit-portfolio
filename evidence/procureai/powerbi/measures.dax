@@ -1,0 +1,162 @@
+// @measure Total Spend | Spend
+Total Spend =
+CALCULATE ( SUM ( 'Fact Invoice Line'[line_net_amount] ), 'Fact Invoice Line'[invoice_status] = "Posted" )
+
+// @measure Gross Spend | Spend
+Gross Spend =
+CALCULATE ( SUM ( 'Fact Invoice Line'[line_gross_amount] ), 'Fact Invoice Line'[invoice_status] = "Posted" )
+
+// @measure Total PO Value | Spend
+Total PO Value = SUM ( 'Fact PO Line'[line_net_amount] )
+
+// @measure Invoice Count | Invoice
+Invoice Count = DISTINCTCOUNT ( 'Fact Invoice Line'[invoice_id] )
+
+// @measure Average Invoice Value | Invoice
+Average Invoice Value = DIVIDE ( [Gross Spend], [Invoice Count] )
+
+// @measure Exception Invoice Count | Invoice
+Exception Invoice Count =
+CALCULATE ( DISTINCTCOUNT ( 'Invoice Match'[invoice_id] ), 'Invoice Match'[exception_count] > 0 )
+
+// @measure Invoice Exception Rate | Invoice
+Invoice Exception Rate = DIVIDE ( [Exception Invoice Count], DISTINCTCOUNT ( 'Invoice Match'[invoice_id] ) )
+
+// @measure Duplicate Exposure | Invoice
+Duplicate Exposure =
+CALCULATE ( SUM ( 'Invoice Match'[invoice_gross_amount] ), 'Invoice Match'[probable_duplicate_flag] = TRUE () )
+
+// @measure Price Variance Exposure | Invoice
+Price Variance Exposure = SUM ( 'Invoice Match'[price_variance_amount] )
+
+// @measure Bank Change Exposure | Invoice
+Bank Change Exposure =
+CALCULATE ( SUM ( 'Invoice Match'[invoice_gross_amount] ), 'Invoice Match'[bank_detail_change_flag] = TRUE () )
+
+// @measure Contracted Spend | Contract
+Contracted Spend =
+CALCULATE ( [Total Spend], 'Fact Invoice Line'[contract_valid_at_order_flag] = TRUE () )
+
+// @measure Off Contract Spend | Contract
+Off Contract Spend = [Total Spend] - [Contracted Spend]
+
+// @measure Off Contract Spend % | Contract
+Off Contract Spend % = DIVIDE ( [Off Contract Spend], [Total Spend] )
+
+// @measure Spend Under Management % | Contract
+Spend Under Management % = DIVIDE ( [Contracted Spend], [Total Spend] )
+
+// @measure Active Contracts | Contract
+Active Contracts = CALCULATE ( DISTINCTCOUNT ( 'Dim Contract'[contract_id] ), 'Dim Contract'[contract_status] = "Active" )
+
+// @measure Contracts Expiring 90 Days | Contract
+Contracts Expiring 90 Days =
+CALCULATE ( DISTINCTCOUNT ( 'Contract Portfolio'[contract_id] ), 'Contract Portfolio'[days_to_expiry] >= 0, 'Contract Portfolio'[days_to_expiry] <= 90 )
+
+// @measure Supplier Count | Supplier
+Supplier Count = DISTINCTCOUNT ( 'Dim Supplier'[supplier_id] )
+
+// @measure On Time % | Supplier
+On Time % = AVERAGE ( 'Supplier Performance'[on_time_rate] )
+
+// @measure In Full % | Supplier
+In Full % = AVERAGE ( 'Supplier Performance'[in_full_rate] )
+
+// @measure OTIF % | Supplier
+OTIF % =
+DIVIDE (
+    SUMX ( 'Supplier Performance', 'Supplier Performance'[otif_rate] * 'Supplier Performance'[eligible_po_lines] ),
+    SUM ( 'Supplier Performance'[eligible_po_lines] )
+)
+
+// @measure Rejection % | Supplier
+Rejection % = AVERAGE ( 'Supplier Performance'[rejection_rate] )
+
+// @measure Average Days Late | Supplier
+Average Days Late = AVERAGE ( 'Supplier Performance'[average_days_late] )
+
+// @measure Paid Amount | Payment
+Paid Amount = SUM ( 'Fact Payment'[payment_amount] )
+
+// @measure Approval Event Count | Approval
+Approval Event Count = COUNTROWS ( 'Fact Approval' )
+
+// @measure Previous Month Spend | Time Intelligence
+Previous Month Spend = CALCULATE ( [Total Spend], DATEADD ( 'Dim Date'[full_date], -1, MONTH ) )
+
+// @measure Spend MoM % | Time Intelligence
+Spend MoM % = DIVIDE ( [Total Spend] - [Previous Month Spend], [Previous Month Spend] )
+
+// @measure Previous Year Spend | Time Intelligence
+Previous Year Spend = CALCULATE ( [Total Spend], SAMEPERIODLASTYEAR ( 'Dim Date'[full_date] ) )
+
+// @measure Spend YoY % | Time Intelligence
+Spend YoY % = DIVIDE ( [Total Spend] - [Previous Year Spend], [Previous Year Spend] )
+
+// @measure Selected Supplier Rank | Supplier
+Selected Supplier Rank = RANKX ( ALLSELECTED ( 'Dim Supplier'[supplier_name] ), [Total Spend], , DESC, Dense )
+
+// @measure Data As Of | Monitoring
+Data As Of = MAX ( 'Fact Invoice Line'[invoice_date] )
+
+// @measure Committed Spend | Spend
+Committed Spend = SUM ( 'Fact PO Line'[line_net_amount] )
+
+// @measure Purchase Price Variance | Spend
+Purchase Price Variance =
+SUMX ( 'Fact Invoice Line', ( 'Fact Invoice Line'[invoice_unit_price] - 'Fact Invoice Line'[po_unit_price] ) * 'Fact Invoice Line'[invoiced_quantity] )
+
+// @measure PPV % | Spend
+PPV % =
+DIVIDE ( [Purchase Price Variance], SUMX ( 'Fact Invoice Line', 'Fact Invoice Line'[po_unit_price] * 'Fact Invoice Line'[invoiced_quantity] ) )
+
+// @measure Active Suppliers | Supplier
+Active Suppliers = CALCULATE ( DISTINCTCOUNT ( 'Dim Supplier'[supplier_id] ), 'Dim Supplier'[status] = "Active" )
+
+// @measure Supplier Concentration Top 10 % | Supplier
+Supplier Concentration Top 10 % =
+VAR TopSuppliers = TOPN ( 10, ALLSELECTED ( 'Dim Supplier'[supplier_id] ), [Total Spend], DESC )
+RETURN DIVIDE ( CALCULATE ( [Total Spend], KEEPFILTERS ( TopSuppliers ) ), CALCULATE ( [Total Spend], ALLSELECTED ( 'Dim Supplier'[supplier_id] ) ) )
+
+// @measure Weighted On Time Rate | Supplier
+Weighted On Time Rate =
+DIVIDE ( SUMX ( 'Supplier Performance', 'Supplier Performance'[on_time_rate] * 'Supplier Performance'[eligible_po_lines] ), SUM ( 'Supplier Performance'[eligible_po_lines] ) )
+
+// @measure Weighted In Full Rate | Supplier
+Weighted In Full Rate =
+DIVIDE ( SUMX ( 'Supplier Performance', 'Supplier Performance'[in_full_rate] * 'Supplier Performance'[eligible_po_lines] ), SUM ( 'Supplier Performance'[eligible_po_lines] ) )
+
+// @measure Defect Rate | Quality
+Defect Rate = DIVIDE ( SUM ( 'Fact Receipt Line'[rejected_quantity] ), SUM ( 'Fact Receipt Line'[received_quantity] ) )
+
+// @measure Average Approval Cycle Hours | Approval
+Average Approval Cycle Hours = AVERAGE ( 'Approval Cycle'[approval_cycle_hours] )
+
+// @measure Exception Invoice Value | Invoice
+Exception Invoice Value = CALCULATE ( SUM ( 'Invoice Match'[invoice_gross_amount] ), 'Invoice Match'[exception_count] > 0 )
+
+// @measure High Risk Invoice Count | Invoice
+High Risk Invoice Count = CALCULATE ( COUNTROWS ( 'Invoice Risk Score' ), 'Invoice Risk Score'[risk_band] IN { "High", "Review queue" } )
+
+// @measure On Time Payment % | Payment
+On Time Payment % = DIVIDE ( CALCULATE ( COUNTROWS ( 'Payment Performance' ), 'Payment Performance'[days_vs_due] <= 0 ), COUNTROWS ( 'Payment Performance' ) )
+
+// @measure Early Payment Discount Opportunity | Payment
+Early Payment Discount Opportunity =
+SUMX (
+    FILTER ( 'Payment Performance', 'Payment Performance'[payment_timing] = "Unpaid" ),
+    VAR SupplierId = RELATED ( 'Dim Invoice'[supplier_id] )
+    VAR TermId = LOOKUPVALUE ( 'Dim Supplier'[payment_term_id], 'Dim Supplier'[supplier_id], SupplierId )
+    VAR DiscountPct = LOOKUPVALUE ( 'Dim Payment Term'[discount_pct], 'Dim Payment Term'[payment_term_id], TermId )
+    RETURN 'Payment Performance'[outstanding_amount] * DIVIDE ( DiscountPct, 100 )
+)
+
+// @measure Contracts Expiring 30 Days | Contract
+Contracts Expiring 30 Days = CALCULATE ( DISTINCTCOUNT ( 'Contract Portfolio'[contract_id] ), 'Contract Portfolio'[days_to_expiry] >= 0, 'Contract Portfolio'[days_to_expiry] <= 30 )
+
+// @measure Contracts Expiring 60 Days | Contract
+Contracts Expiring 60 Days = CALCULATE ( DISTINCTCOUNT ( 'Contract Portfolio'[contract_id] ), 'Contract Portfolio'[days_to_expiry] >= 0, 'Contract Portfolio'[days_to_expiry] <= 60 )
+
+// @measure Spend at Risk from Expiry | Contract
+Spend at Risk from Expiry =
+CALCULATE ( [Contracted Spend], 'Contract Portfolio'[days_to_expiry] >= 0, 'Contract Portfolio'[days_to_expiry] <= 90 )

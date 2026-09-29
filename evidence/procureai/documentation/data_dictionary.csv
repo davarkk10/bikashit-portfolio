@@ -1,0 +1,182 @@
+table,column,inferred_type,nullable_in_sample,description,source
+business_units,business_unit_id,TEXT,False,Business unit id,Deterministic synthetic generator
+business_units,business_unit_name,TEXT,False,Business unit name,Deterministic synthetic generator
+business_units,spend_scope,TEXT,False,Spend scope,Deterministic synthetic generator
+buyers,buyer_id,TEXT,False,Buyer id,Deterministic synthetic generator
+buyers,buyer_name,TEXT,False,Buyer name,Deterministic synthetic generator
+buyers,primary_category_id,TEXT,False,Primary category id,Deterministic synthetic generator
+buyers,business_unit_id,TEXT,False,Business unit id,Deterministic synthetic generator
+buyers,status,TEXT,False,Status,Deterministic synthetic generator
+categories,category_id,TEXT,False,Category id,Deterministic synthetic generator
+categories,category_name,TEXT,False,Category name,Deterministic synthetic generator
+categories,category_group,TEXT,False,Category group,Deterministic synthetic generator
+categories,default_tax_rate_pct,BIGINT,False,Default tax rate pct,Deterministic synthetic generator
+categories,annual_inflation_rate,"NUMERIC(18,4)",False,Annual inflation rate,Deterministic synthetic generator
+contract_events,contract_event_id,TEXT,False,Contract event id,Deterministic synthetic generator
+contract_events,contract_id,TEXT,False,Supplier contract identifier,Deterministic synthetic generator
+contract_events,event_date,DATE,False,Event date,Deterministic synthetic generator
+contract_events,event_type,TEXT,False,Event type,Deterministic synthetic generator
+contract_events,event_description,TEXT,False,Event description,Deterministic synthetic generator
+contract_items,contract_item_id,TEXT,False,Contracted material line identifier,Deterministic synthetic generator
+contract_items,contract_id,TEXT,False,Supplier contract identifier,Deterministic synthetic generator
+contract_items,material_id,TEXT,False,Stable material or service identifier,Deterministic synthetic generator
+contract_items,contract_unit_price,"NUMERIC(18,4)",False,Contract unit price,Deterministic synthetic generator
+contract_items,minimum_order_qty,BIGINT,False,Minimum order qty,Deterministic synthetic generator
+contract_items,price_tolerance_pct,"NUMERIC(18,4)",False,Price tolerance pct,Deterministic synthetic generator
+contracts,contract_id,TEXT,False,Supplier contract identifier,Deterministic synthetic generator
+contracts,supplier_id,TEXT,False,Stable synthetic supplier identifier,Deterministic synthetic generator
+contracts,contract_title,TEXT,False,Contract title,Deterministic synthetic generator
+contracts,contract_type,TEXT,False,Contract type,Deterministic synthetic generator
+contracts,start_date,DATE,False,Start date,Deterministic synthetic generator
+contracts,end_date,DATE,False,End date,Deterministic synthetic generator
+contracts,contract_status,TEXT,False,Contract status,Deterministic synthetic generator
+contracts,contract_value,"NUMERIC(18,4)",False,Contract value,Deterministic synthetic generator
+contracts,payment_term_id,TEXT,False,Payment term id,Deterministic synthetic generator
+contracts,price_escalation_cap_pct,"NUMERIC(18,4)",False,Price escalation cap pct,Deterministic synthetic generator
+contracts,termination_notice_days,BIGINT,False,Termination notice days,Deterministic synthetic generator
+contracts,auto_renewal_flag,BOOLEAN,False,Auto renewal flag,Deterministic synthetic generator
+contracts,governing_law_state,TEXT,False,Governing law state,Deterministic synthetic generator
+contracts,document_path,TEXT,False,Relative path to the supporting synthetic PDF when generated,Deterministic synthetic generator
+goods_receipt_headers,grn_id,TEXT,False,Goods receipt identifier,Deterministic synthetic generator
+goods_receipt_headers,po_id,TEXT,False,Purchase order identifier,Deterministic synthetic generator
+goods_receipt_headers,receipt_date,DATE,False,Receipt date,Deterministic synthetic generator
+goods_receipt_headers,warehouse_id,TEXT,False,Warehouse id,Deterministic synthetic generator
+goods_receipt_headers,supplier_id,TEXT,False,Stable synthetic supplier identifier,Deterministic synthetic generator
+goods_receipt_headers,grn_status,TEXT,False,Grn status,Deterministic synthetic generator
+goods_receipt_lines,grn_line_id,TEXT,False,Goods receipt line identifier,Deterministic synthetic generator
+goods_receipt_lines,grn_id,TEXT,False,Goods receipt identifier,Deterministic synthetic generator
+goods_receipt_lines,po_line_id,TEXT,False,Purchase order line identifier,Deterministic synthetic generator
+goods_receipt_lines,material_id,TEXT,False,Stable material or service identifier,Deterministic synthetic generator
+goods_receipt_lines,received_quantity,BIGINT,False,Quantity physically received,Deterministic synthetic generator
+goods_receipt_lines,accepted_quantity,BIGINT,False,Received quantity accepted after inspection,Deterministic synthetic generator
+goods_receipt_lines,rejected_quantity,BIGINT,False,Received quantity rejected,Deterministic synthetic generator
+goods_receipt_lines,uom,TEXT,False,Uom,Deterministic synthetic generator
+goods_receipt_lines,receipt_date,DATE,False,Receipt date,Deterministic synthetic generator
+goods_receipt_lines,receipt_disposition,TEXT,False,Receipt disposition,Deterministic synthetic generator
+invoice_approvals,approval_event_id,TEXT,False,Approval event id,Deterministic synthetic generator
+invoice_approvals,invoice_id,TEXT,False,Invoice identifier,Deterministic synthetic generator
+invoice_approvals,event_timestamp,TIMESTAMP,False,Event timestamp,Deterministic synthetic generator
+invoice_approvals,approval_status,TEXT,False,Approval status,Deterministic synthetic generator
+invoice_approvals,actor_role,TEXT,False,Actor role,Deterministic synthetic generator
+invoice_approvals,decision_comment,TEXT,False,Decision comment,Deterministic synthetic generator
+invoice_headers,invoice_id,TEXT,False,Invoice identifier,Deterministic synthetic generator
+invoice_headers,supplier_invoice_number,TEXT,False,Supplier invoice number,Deterministic synthetic generator
+invoice_headers,supplier_id,TEXT,False,Stable synthetic supplier identifier,Deterministic synthetic generator
+invoice_headers,po_id,TEXT,True,Purchase order identifier,Deterministic synthetic generator
+invoice_headers,invoice_date,DATE,False,Invoice date,Deterministic synthetic generator
+invoice_headers,due_date,DATE,False,Due date,Deterministic synthetic generator
+invoice_headers,invoice_net_amount,"NUMERIC(18,4)",False,Invoice net amount,Deterministic synthetic generator
+invoice_headers,invoice_tax_amount,"NUMERIC(18,4)",False,Invoice tax amount,Deterministic synthetic generator
+invoice_headers,invoice_gross_amount,"NUMERIC(18,4)",False,Invoice gross amount,Deterministic synthetic generator
+invoice_headers,currency,TEXT,False,Currency,Deterministic synthetic generator
+invoice_headers,invoice_status,TEXT,False,Invoice status,Deterministic synthetic generator
+invoice_headers,bank_detail_change_flag,BOOLEAN,False,Synthetic indicator that bank details changed near invoice submission,Deterministic synthetic generator
+invoice_headers,duplicate_of_invoice_id,TEXT,True,Original invoice copied by a deliberately injected probable duplicate,Deterministic synthetic generator
+invoice_headers,document_path,TEXT,True,Relative path to the supporting synthetic PDF when generated,Deterministic synthetic generator
+invoice_lines,invoice_line_id,TEXT,False,Invoice line identifier,Deterministic synthetic generator
+invoice_lines,invoice_id,TEXT,False,Invoice identifier,Deterministic synthetic generator
+invoice_lines,line_number,BIGINT,False,Line number,Deterministic synthetic generator
+invoice_lines,po_line_id,TEXT,True,Purchase order line identifier,Deterministic synthetic generator
+invoice_lines,material_id,TEXT,False,Stable material or service identifier,Deterministic synthetic generator
+invoice_lines,invoiced_quantity,BIGINT,False,Invoiced quantity,Deterministic synthetic generator
+invoice_lines,uom,TEXT,False,Uom,Deterministic synthetic generator
+invoice_lines,invoice_unit_price,"NUMERIC(18,4)",False,Invoice unit price in INR,Deterministic synthetic generator
+invoice_lines,tax_rate_pct,"NUMERIC(18,4)",False,Tax rate pct,Deterministic synthetic generator
+invoice_lines,line_net_amount,"NUMERIC(18,4)",False,Quantity multiplied by unit price before tax,Deterministic synthetic generator
+invoice_lines,line_tax_amount,"NUMERIC(18,4)",False,Calculated tax amount,Deterministic synthetic generator
+invoice_lines,line_gross_amount,"NUMERIC(18,4)",False,Net amount plus tax,Deterministic synthetic generator
+materials,material_id,TEXT,False,Stable material or service identifier,Deterministic synthetic generator
+materials,material_name,TEXT,False,Material name,Deterministic synthetic generator
+materials,category_id,TEXT,False,Category id,Deterministic synthetic generator
+materials,uom,TEXT,False,Uom,Deterministic synthetic generator
+materials,baseline_unit_price,"NUMERIC(18,4)",False,Baseline unit price,Deterministic synthetic generator
+materials,tax_rate_pct,BIGINT,False,Tax rate pct,Deterministic synthetic generator
+materials,status,TEXT,False,Status,Deterministic synthetic generator
+payment_terms,payment_term_id,TEXT,False,Payment term id,Deterministic synthetic generator
+payment_terms,payment_term_name,TEXT,False,Payment term name,Deterministic synthetic generator
+payment_terms,net_days,BIGINT,False,Net days,Deterministic synthetic generator
+payment_terms,discount_pct,"NUMERIC(18,4)",False,Discount pct,Deterministic synthetic generator
+payment_terms,discount_days,BIGINT,False,Discount days,Deterministic synthetic generator
+payments,payment_id,TEXT,False,Payment id,Deterministic synthetic generator
+payments,invoice_id,TEXT,False,Invoice identifier,Deterministic synthetic generator
+payments,payment_date,DATE,False,Payment date,Deterministic synthetic generator
+payments,payment_amount,"NUMERIC(18,4)",False,Payment amount,Deterministic synthetic generator
+payments,payment_method,TEXT,False,Payment method,Deterministic synthetic generator
+payments,payment_status,TEXT,False,Payment status,Deterministic synthetic generator
+products,product_id,TEXT,False,Product id,Deterministic synthetic generator
+products,material_id,TEXT,False,Stable material or service identifier,Deterministic synthetic generator
+products,product_name,TEXT,False,Product name,Deterministic synthetic generator
+products,brand,TEXT,False,Brand,Deterministic synthetic generator
+products,ownership_type,TEXT,False,Ownership type,Deterministic synthetic generator
+purchase_order_headers,po_id,TEXT,False,Purchase order identifier,Deterministic synthetic generator
+purchase_order_headers,order_date,DATE,False,Order date,Deterministic synthetic generator
+purchase_order_headers,supplier_id,TEXT,False,Stable synthetic supplier identifier,Deterministic synthetic generator
+purchase_order_headers,warehouse_id,TEXT,False,Warehouse id,Deterministic synthetic generator
+purchase_order_headers,buyer_id,TEXT,False,Buyer id,Deterministic synthetic generator
+purchase_order_headers,business_unit_id,TEXT,False,Business unit id,Deterministic synthetic generator
+purchase_order_headers,contract_id,TEXT,True,Supplier contract identifier,Deterministic synthetic generator
+purchase_order_headers,contract_valid_at_order_flag,BOOLEAN,False,Whether the linked contract covers the PO date,Deterministic synthetic generator
+purchase_order_headers,promised_delivery_date,DATE,False,Promised delivery date,Deterministic synthetic generator
+purchase_order_headers,po_status,TEXT,False,Po status,Deterministic synthetic generator
+purchase_order_headers,currency,TEXT,False,Currency,Deterministic synthetic generator
+purchase_order_headers,source_system,TEXT,False,Source system,Deterministic synthetic generator
+purchase_order_lines,po_line_id,TEXT,False,Purchase order line identifier,Deterministic synthetic generator
+purchase_order_lines,po_id,TEXT,False,Purchase order identifier,Deterministic synthetic generator
+purchase_order_lines,line_number,BIGINT,False,Line number,Deterministic synthetic generator
+purchase_order_lines,material_id,TEXT,False,Stable material or service identifier,Deterministic synthetic generator
+purchase_order_lines,contract_item_id,TEXT,True,Contracted material line identifier,Deterministic synthetic generator
+purchase_order_lines,ordered_quantity,BIGINT,False,Quantity ordered in the stated unit,Deterministic synthetic generator
+purchase_order_lines,uom,TEXT,False,Uom,Deterministic synthetic generator
+purchase_order_lines,unit_price,"NUMERIC(18,4)",False,Purchase order unit price in INR,Deterministic synthetic generator
+purchase_order_lines,tax_rate_pct,"NUMERIC(18,4)",False,Tax rate pct,Deterministic synthetic generator
+purchase_order_lines,line_net_amount,"NUMERIC(18,4)",False,Quantity multiplied by unit price before tax,Deterministic synthetic generator
+purchase_order_lines,line_tax_amount,"NUMERIC(18,4)",False,Calculated tax amount,Deterministic synthetic generator
+purchase_order_lines,line_gross_amount,"NUMERIC(18,4)",False,Net amount plus tax,Deterministic synthetic generator
+purchase_order_lines,original_promised_date,DATE,False,Original supplier promise date retained for service measurement,Deterministic synthetic generator
+quality_inspections,inspection_id,TEXT,False,Inspection id,Deterministic synthetic generator
+quality_inspections,grn_line_id,TEXT,False,Goods receipt line identifier,Deterministic synthetic generator
+quality_inspections,inspection_date,DATE,False,Inspection date,Deterministic synthetic generator
+quality_inspections,sample_quantity,BIGINT,False,Sample quantity,Deterministic synthetic generator
+quality_inspections,rejected_quantity,BIGINT,False,Received quantity rejected,Deterministic synthetic generator
+quality_inspections,inspection_result,TEXT,False,Inspection result,Deterministic synthetic generator
+quality_inspections,reason,TEXT,False,Reason,Deterministic synthetic generator
+supplier_incidents,incident_id,TEXT,False,Incident id,Deterministic synthetic generator
+supplier_incidents,supplier_id,TEXT,False,Stable synthetic supplier identifier,Deterministic synthetic generator
+supplier_incidents,po_id,TEXT,False,Purchase order identifier,Deterministic synthetic generator
+supplier_incidents,incident_date,DATE,False,Incident date,Deterministic synthetic generator
+supplier_incidents,incident_type,TEXT,False,Incident type,Deterministic synthetic generator
+supplier_incidents,severity,TEXT,False,Severity,Deterministic synthetic generator
+supplier_incidents,incident_status,TEXT,False,Incident status,Deterministic synthetic generator
+supplier_quotes,quote_line_id,TEXT,False,Quote line id,Deterministic synthetic generator
+supplier_quotes,rfq_id,TEXT,False,Rfq id,Deterministic synthetic generator
+supplier_quotes,supplier_id,TEXT,False,Stable synthetic supplier identifier,Deterministic synthetic generator
+supplier_quotes,material_id,TEXT,False,Stable material or service identifier,Deterministic synthetic generator
+supplier_quotes,quote_date,DATE,False,Quote date,Deterministic synthetic generator
+supplier_quotes,valid_until,DATE,False,Valid until,Deterministic synthetic generator
+supplier_quotes,quoted_quantity,BIGINT,False,Quoted quantity,Deterministic synthetic generator
+supplier_quotes,quoted_unit_price,"NUMERIC(18,4)",False,Quoted unit price,Deterministic synthetic generator
+supplier_quotes,quoted_lead_time_days,BIGINT,False,Quoted lead time days,Deterministic synthetic generator
+supplier_quotes,selection_status,TEXT,False,Selection status,Deterministic synthetic generator
+supplier_sites,supplier_site_id,TEXT,False,Supplier site id,Deterministic synthetic generator
+supplier_sites,supplier_id,TEXT,False,Stable synthetic supplier identifier,Deterministic synthetic generator
+supplier_sites,city,TEXT,False,City,Deterministic synthetic generator
+supplier_sites,country,TEXT,False,Country,Deterministic synthetic generator
+supplier_sites,state,TEXT,False,State,Deterministic synthetic generator
+supplier_sites,postal_code,BIGINT,False,Postal code,Deterministic synthetic generator
+suppliers,supplier_id,TEXT,False,Stable synthetic supplier identifier,Deterministic synthetic generator
+suppliers,supplier_name,TEXT,False,Supplier name,Deterministic synthetic generator
+suppliers,city,TEXT,False,City,Deterministic synthetic generator
+suppliers,country,TEXT,False,Country,Deterministic synthetic generator
+suppliers,primary_category_id,TEXT,False,Primary category id,Deterministic synthetic generator
+suppliers,payment_term_id,TEXT,False,Payment term id,Deterministic synthetic generator
+suppliers,base_reliability,"NUMERIC(18,4)",False,Base reliability,Deterministic synthetic generator
+suppliers,base_quality_rate,"NUMERIC(18,4)",False,Base quality rate,Deterministic synthetic generator
+suppliers,risk_tier,TEXT,False,Risk tier,Deterministic synthetic generator
+suppliers,status,TEXT,False,Status,Deterministic synthetic generator
+warehouses,warehouse_id,TEXT,False,Warehouse id,Deterministic synthetic generator
+warehouses,warehouse_name,TEXT,False,Warehouse name,Deterministic synthetic generator
+warehouses,city,TEXT,False,City,Deterministic synthetic generator
+warehouses,state,TEXT,False,State,Deterministic synthetic generator
+warehouses,latitude,"NUMERIC(18,4)",False,Latitude,Deterministic synthetic generator
+warehouses,longitude,"NUMERIC(18,4)",False,Longitude,Deterministic synthetic generator
+warehouses,capacity_pallets,BIGINT,False,Capacity pallets,Deterministic synthetic generator

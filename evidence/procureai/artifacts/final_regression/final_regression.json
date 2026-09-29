@@ -1,0 +1,92 @@
+{
+  "status": "PASS",
+  "gates": [
+    {
+      "gate": "source_validation",
+      "status": "PASS",
+      "return_code": 0,
+      "elapsed_seconds": 7.266,
+      "log": "artifacts/final_regression/source_validation.log"
+    },
+    {
+      "gate": "release_manifest",
+      "status": "PASS",
+      "return_code": 0,
+      "elapsed_seconds": 0.731,
+      "log": "artifacts/final_regression/release_manifest.log"
+    },
+    {
+      "gate": "warehouse_reference",
+      "status": "PASS",
+      "return_code": 0,
+      "elapsed_seconds": 17.728,
+      "log": "artifacts/final_regression/warehouse_reference.log"
+    },
+    {
+      "gate": "powerbi_contract",
+      "status": "PASS",
+      "return_code": 0,
+      "elapsed_seconds": 1.213,
+      "log": "artifacts/final_regression/powerbi_contract.log"
+    },
+    {
+      "gate": "model_training",
+      "status": "PASS",
+      "return_code": 0,
+      "elapsed_seconds": 8.852,
+      "log": "artifacts/final_regression/model_training.log"
+    },
+    {
+      "gate": "rag_evaluation",
+      "status": "PASS",
+      "return_code": 0,
+      "elapsed_seconds": 6.347,
+      "log": "artifacts/final_regression/rag_evaluation.log"
+    },
+    {
+      "gate": "api_tests",
+      "status": "PASS",
+      "return_code": 0,
+      "elapsed_seconds": 2.866,
+      "log": "artifacts/final_regression/api_tests.log"
+    },
+    {
+      "gate": "n8n_workflow",
+      "status": "PASS",
+      "return_code": 0,
+      "elapsed_seconds": 0.04,
+      "log": "artifacts/final_regression/n8n_workflow.log"
+    },
+    {
+      "gate": "power_automate",
+      "status": "PASS",
+      "return_code": 0,
+      "elapsed_seconds": 0.032,
+      "log": "artifacts/final_regression/power_automate.log"
+    },
+    {
+      "gate": "downstream_gap_audit",
+      "status": "PASS",
+      "return_code": 0,
+      "elapsed_seconds": 7.407,
+      "log": "artifacts/final_regression/downstream_gap_audit.log"
+    },
+    {
+      "gate": "operations_security",
+      "status": "PASS",
+      "return_code": 0,
+      "elapsed_seconds": 2.348,
+      "log": "artifacts/final_regression/operations_security.log"
+    }
+  ],
+  "passed": 11,
+  "total": 11,
+  "elapsed_seconds": 54.832,
+  "native_boundaries": [
+    "PostgreSQL 16 server execution",
+    "native PBIX assembly and refresh",
+    "live n8n credentials and run",
+    "Microsoft tenant approval solution",
+    "recorded cross-system demo"
+  ]
+}
