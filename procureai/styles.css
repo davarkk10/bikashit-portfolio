@@ -106,6 +106,7 @@ button { font: inherit; }
 .scroll-progress { position: fixed; z-index: 100; left: 0; right: 0; top: 0; height: 2px; background: transparent; }
 .scroll-progress span { display: block; width: 0; height: 100%; background: linear-gradient(90deg, var(--teal), var(--gold)); }
 .section-shell { max-width: 1440px; margin: 0 auto; padding-left: clamp(24px, 5vw, 78px); padding-right: clamp(24px, 5vw, 78px); }
+section[id] { scroll-margin-top: 76px; }
 
 .site-header { height: 76px; padding: 0 clamp(24px, 4vw, 64px); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); background: rgba(7, 17, 15, .86); backdrop-filter: blur(18px); position: sticky; top: 0; z-index: 50; }
 .brand, .brand + nav, .header-cta { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; }
@@ -310,6 +311,7 @@ footer > div { display: flex; align-items: center; gap: 12px; } footer b { color
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } .reveal { opacity: 1; transform: none; } }
 
 @media (max-width: 1050px) {
+  section[id] { scroll-margin-top: 125px; }
   .site-header { height: auto; min-height: 76px; flex-wrap: wrap; row-gap: 10px; padding-top: 12px; padding-bottom: 10px; }
   .site-header nav { order: 3; display: flex; width: 100%; overflow-x: auto; gap: 22px; white-space: nowrap; padding-bottom: 4px; scrollbar-width: thin; }
   .site-header nav a { flex: none; }
