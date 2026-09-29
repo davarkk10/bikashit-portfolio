@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07110f">
+  <meta name="description" content="ProcureAI FMCG — an end-to-end procurement intelligence case study by Bikashit Baruah.">
+  <meta name="author" content="Bikashit Baruah">
+  <title>ProcureAI FMCG — Bikashit Baruah</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2307110f'/%3E%3Cpath d='M14 45V19h17c9 0 15 5 15 13s-6 13-15 13H14Zm10-8h7c4 0 6-2 6-5s-2-5-6-5h-7v10Z' fill='%2346e8bd'/%3E%3Ccircle cx='48' cy='17' r='5' fill='%23ffcb66'/%3E%3C/svg%3E">
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to case study</a>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true"><span id="scrollBar"></span></div>
+
+  <header class="site-header" id="top">
+    <a class="brand" href="#top" aria-label="ProcureAI home">
+      <span class="brand-mark">P<span></span></span>
+      <span>BIKASHIT / CASE 03</span>
+    </a>
+    <nav aria-label="Case study navigation">
+      <a href="#cockpit">Cockpit</a>
+      <a href="#evidence">Evidence</a>
+      <a href="#system">System</a>
+      <a href="#roadmap">Phases</a>
+      <a href="#proof">Proof</a>
+      <a href="#impact">Recruiter lens</a>
+    </nav>
+    <a class="header-cta" href="#roadmap">Explore build <span>↘</span></a>
+  </header>
+
+  <main id="main-content">
+    <section class="hero section-shell" aria-labelledby="hero-title">
+      <div class="hero-kicker reveal">
+        <span class="status-dot"></span>
+        Independent portfolio case study · FMCG procurement intelligence
+      </div>
+
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow reveal">PROJECT 03 / DATA · AI · AUTOMATION</p>
+          <h1 id="hero-title" class="reveal">Procure<span>AI</span><br>FMCG</h1>
+          <p class="hero-lede reveal">A tested procurement intelligence system connecting reconciled spend analytics, time-aware risk models, citation-grounded contract retrieval and human-controlled workflows.</p>
+          <div class="hero-role reveal"><span>MY ROLE</span><b>Data &amp; AI solution architect · synthetic data engineer · implementation owner</b></div>
+          <div class="hero-actions reveal">
+            <a class="btn primary" href="#cockpit">Enter decision cockpit <span>↘</span></a>
+            <a class="btn ghost" href="#evidence">Audit the evidence</a>
+          </div>
+          <div class="review-lenses reveal" aria-label="Choose a review path">
+            <span>CHOOSE YOUR REVIEW</span>
+            <div>
+              <a href="#evidence"><b>90 sec</b> Recruiter</a>
+              <a href="#cockpit"><b>3 min</b> BI &amp; analytics</a>
+              <a href="#workstreams"><b>5 min</b> AI &amp; engineering</a>
+              <a href="#proof"><b>Deep</b> Technical audit</a>
+            </div>
+          </div>
+          <div class="build-line reveal">
+            <span>BUILT AROUND</span>
+            <div><b>Power BI</b><b>DAX</b><b>Power Query</b><b>SQL</b><b>Python</b><b>ML</b><b>RAG</b><b>FastAPI</b><b>n8n</b><b>Power Automate</b></div>
+          </div>
+        </div>
+
+        <div class="hero-orbit reveal" aria-label="System capability map">
+          <div class="orbit orbit-a"></div>
+          <div class="orbit orbit-b"></div>
+          <div class="orbit orbit-c"></div>
+          <div class="core">
+            <span>DECISION</span>
+            <strong>INTELLIGENCE</strong>
+            <small>human in control</small>
+          </div>
+          <div class="satellite s1"><i></i><span>SPEND<br>ANALYTICS</span></div>
+          <div class="satellite s2"><i></i><span>INVOICE<br>RISK</span></div>
+          <div class="satellite s3"><i></i><span>CONTRACT<br>RAG</span></div>
+          <div class="satellite s4"><i></i><span>SUPPLIER<br>RISK</span></div>
+          <div class="satellite s5"><i></i><span>APPROVAL<br>AGENTS</span></div>
+          <div class="coordinate c1">26.1445° N</div>
+          <div class="coordinate c2">91.7362° E</div>
+        </div>
+      </div>
+
+      <div class="metric-rail reveal" aria-label="Dataset scale">
+        <article><span>01</span><strong data-count="55000">55,000</strong><p>purchase orders</p></article>
+        <article><span>02</span><strong data-count="48000">48,000</strong><p>invoices</p></article>
+        <article><span>03</span><strong data-count="175">175</strong><p>suppliers</p></article>
+        <article><span>04</span><strong data-count="402">402</strong><p>searchable documents</p></article>
+        <article><span>05</span><strong data-count="46">46 / 46</strong><p>validation tests passed</p></article>
+      </div>
+      <div class="truth-rail reveal" aria-label="Project status and claim discipline">
+        <div><span>VERIFIED NOW</span><b>Warehouse logic · BI pack · ML · RAG · API · workflow fixtures</b></div>
+        <div><span>MEASURED EVIDENCE</span><b>11/11 final gates · 197/197 RAG · 33/33 API · 135 workflow cases</b></div>
+        <div><span>CLAIM DISCIPLINE</span><b>Synthetic proof of concept · not production deployment</b></div>
+      </div>
+    </section>
+
+    <section class="problem section-shell" id="problem">
+      <div class="section-index">01 / THE PROBLEM</div>
+      <div class="problem-grid">
+        <div>
+          <p class="eyebrow reveal">FROM FRAGMENTED OPERATIONS</p>
+          <h2 class="section-title reveal">Procurement teams see transactions.<br><em>They need decisions.</em></h2>
+        </div>
+        <div class="problem-copy reveal">
+          <p>Spend, receipts, supplier service, invoice exceptions and contracts usually live in separate systems. That separation makes it hard to identify leakage, prioritize risk or act with confidence.</p>
+          <p>ProcureAI connects those signals into one traceable path—from raw transaction to analytical insight, model evidence, cited clause and human decision.</p>
+        </div>
+      </div>
+
+      <div class="tension-grid reveal">
+        <article>
+          <span class="tension-no">01</span>
+          <div class="line-icon"><i></i><i></i><i></i></div>
+          <h3>Fragmented evidence</h3>
+          <p>POs, GRNs, invoices, approvals, contracts and supplier events do not naturally tell one story.</p>
+        </article>
+        <article>
+          <span class="tension-no">02</span>
+          <div class="line-icon alert"><i></i><i></i></div>
+          <h3>Unranked exceptions</h3>
+          <p>Analysts spend scarce review capacity on queues without calibrated priority or reason codes.</p>
+        </article>
+        <article>
+          <span class="tension-no">03</span>
+          <div class="line-icon doc"><i></i><i></i><i></i></div>
+          <h3>Buried contract terms</h3>
+          <p>Expiry, escalation, termination and payment clauses remain trapped inside long-form documents.</p>
+        </article>
+        <article>
+          <span class="tension-no">04</span>
+          <div class="line-icon flow"><i></i><i></i><i></i></div>
+          <h3>Automation without control</h3>
+          <p>Fast workflows become risky when approvals, evidence, idempotency and audit are afterthoughts.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="ownership section-shell" id="ownership">
+      <div class="section-index">02 / OWNERSHIP &amp; CURRENT STATE</div>
+      <div class="ownership-head">
+        <div>
+          <p class="eyebrow reveal">WHAT I PERSONALLY OWN</p>
+          <h2 class="section-title reveal">Clear contribution.<br><em>Honest status.</em></h2>
+        </div>
+        <p class="reveal">This case study separates validated artifacts from the downstream implementation roadmap, so every claim can survive technical interview scrutiny.</p>
+      </div>
+      <div class="ownership-grid reveal">
+        <article class="complete">
+          <span>VERIFIED DELIVERABLES</span>
+          <h3>Eight releases implemented and tested</h3>
+          <ul>
+            <li>Deterministic FMCG data generator and 23 operational tables</li>
+            <li>402 searchable, entity-linked procurement PDFs</li>
+            <li>Ground-truth anomaly and supplier-delay labels</li>
+            <li>18 conformed outputs, seven marts and transactional PostgreSQL contract</li>
+            <li>46/46 release validation and evidence workbook</li>
+            <li>Time-aware ML, hybrid RAG, FastAPI and controlled workflow evidence</li>
+          </ul>
+        </article>
+        <article class="roadmapped">
+          <span>VERIFIED IMPLEMENTATION</span>
+          <h3>Measured, tested and reproducible</h3>
+          <ul>
+            <li>Invoice anomaly model: 0.8817 PR-AUC on 2025 holdout</li>
+            <li>Supplier delay model: 0.5616 PR-AUC on 2025 holdout</li>
+            <li>402 PDFs indexed into 962 page-aware chunks</li>
+            <li>197/197 controlled RAG evaluation cases passed</li>
+            <li>33/33 API tests and 103 n8n path fixtures passed</li>
+            <li>11/11 monitoring and security checks passed</li>
+          </ul>
+        </article>
+        <article class="not-claimed">
+          <span>NOT CLAIMED</span>
+          <h3>Credibility over theatre</h3>
+          <ul>
+            <li>No real-company or confidential transaction data</li>
+            <li>No production deployment or active business users</li>
+            <li>No invented savings, ROI or fraud-prevention outcome</li>
+            <li>No native PBIX or tenant-connected Power Automate flow claimed</li>
+            <li>No autonomous payment, contract or supplier-master action</li>
+            <li>No anomaly presented as confirmed fraud</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="cockpit section-shell" id="cockpit">
+      <div class="section-index">03 / INTERACTIVE DECISION COCKPIT</div>
+      <div class="cockpit-head">
+        <div>
+          <p class="eyebrow reveal">EXPLORE THE SYSTEM, NOT A SCREENSHOT</p>
+          <h2 class="section-title reveal">One business signal.<br><em>Four decision views.</em></h2>
+        </div>
+        <p class="reveal">Switch perspectives to see how verified warehouse metrics become investigation evidence, cited contract context and a human-controlled action. Every value shown below comes from the current synthetic release.</p>
+      </div>
+
+      <div class="cockpit-shell reveal">
+        <div class="cockpit-bar">
+          <div class="cockpit-brand"><i></i><span>PROCUREAI / DECISION OS</span></div>
+          <div class="cockpit-status"><i></i> VERIFIED LOCAL RELEASE</div>
+          <div class="cockpit-asof">AS OF · 27 SEP 2026</div>
+        </div>
+        <div class="cockpit-tabs" role="tablist" aria-label="Decision cockpit views">
+          <button class="cockpit-tab active" role="tab" aria-selected="true" data-cockpit="0"><span>01</span>Executive pulse</button>
+          <button class="cockpit-tab" role="tab" aria-selected="false" data-cockpit="1"><span>02</span>Exception workbench</button>
+          <button class="cockpit-tab" role="tab" aria-selected="false" data-cockpit="2"><span>03</span>Contract evidence</button>
+          <button class="cockpit-tab" role="tab" aria-selected="false" data-cockpit="3"><span>04</span>Human approval</button>
+        </div>
+        <div class="cockpit-view" id="cockpitView" role="tabpanel" aria-live="polite">
+          <div class="pulse-kpis">
+            <article><small>REALIZED GROSS SPEND</small><strong>₹11.58B</strong><span>48,000 invoices</span></article>
+            <article><small>OFF-CONTRACT EXPOSURE</small><strong>₹4.27B</strong><span>investigate by category</span></article>
+            <article><small>LINE-WEIGHTED OTIF</small><strong>54.0%</strong><span>217,377 eligible lines</span></article>
+            <article><small>EXCEPTION VALUE</small><strong>₹5.32B</strong><span>20,256 invoice exceptions</span></article>
+          </div>
+          <div class="pulse-grid">
+            <article class="pulse-chart">
+              <div class="view-label"><span>DECISION SIGNAL</span><b>Service reliability needs intervention</b></div>
+              <div class="service-bars">
+                <div><span>On time</span><i><b style="--value:60.9%"></b></i><strong>60.9%</strong></div>
+                <div><span>In full</span><i><b style="--value:88.7%"></b></i><strong>88.7%</strong></div>
+                <div><span>OTIF</span><i><b class="critical" style="--value:54%"></b></i><strong>54.0%</strong></div>
+              </div>
+            </article>
+            <article class="priority-card">
+              <div class="view-label"><span>PRIORITY QUEUE</span><b>What should leadership ask next?</b></div>
+              <ol><li><b>01</b><span>Which suppliers drive missed OTIF?</span><i>Supplier 360 →</i></li><li><b>02</b><span>Where is off-contract spend concentrated?</span><i>Category view →</i></li><li><b>03</b><span>Which invoices need review first?</span><i>Exception queue →</i></li></ol>
+            </article>
+          </div>
+        </div>
+        <div class="cockpit-foot"><span>DATASET: DETERMINISTIC SYNTHETIC POC</span><span>46 DAX MEASURES · 13/13 CONTRACT CHECKS</span><span>NO PRODUCTION IMPACT CLAIMED</span></div>
+      </div>
+
+      <div class="decision-thread reveal">
+        <div class="thread-title"><span>FEATURED TRACE</span><b>INV0036211 · from anomaly signal to accountable decision</b><small>Synthetic test-window record</small></div>
+        <ol>
+          <li><small>01 · DETECT</small><strong>99.66%</strong><span>review priority</span></li>
+          <li><small>02 · EXPLAIN</small><strong>Missing PO</strong><span>+ quantity gap</span></li>
+          <li><small>03 · QUANTIFY</small><strong>₹1.50M</strong><span>gross exposure</span></li>
+          <li><small>04 · ROUTE</small><strong>Needs info</strong><span>114-hour cycle</span></li>
+          <li><small>05 · CONTROL</small><strong>Human gate</strong><span>no autonomous payment</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="evidence-room section-shell" id="evidence">
+      <div class="section-index">04 / LIVE EVIDENCE ROOM</div>
+      <div class="evidence-head">
+        <div>
+          <p class="eyebrow reveal">RED-TEAMED · REBUILT · RECHECKED</p>
+          <h2 class="section-title reveal">A critical reviewer can<br><em>challenge every layer.</em></h2>
+        </div>
+        <div class="regression-stamp reveal" aria-label="Final regression status">
+          <span>FINAL REGRESSION</span><strong>11 / 11</strong><b>GATES PASSED</b><small>&lt; 60 seconds · one reproducible chain</small>
+        </div>
+      </div>
+      <div class="evidence-scoreboard reveal" aria-label="Verified implementation metrics">
+        <article><span>WAREHOUSE</span><strong>22/22</strong><p>reconciliation gates</p></article>
+        <article><span>SEMANTIC LAYER</span><strong>46</strong><p>documented DAX measures</p></article>
+        <article><span>CONTRACT RAG</span><strong>197/197</strong><p>answers, citations &amp; safety</p></article>
+        <article><span>ANALYST API</span><strong>33/33</strong><p>service &amp; integration tests</p></article>
+        <article><span>AUTOMATION</span><strong>135</strong><p>n8n + approval fixtures</p></article>
+        <article><span>OPS &amp; SECURITY</span><strong>11/11</strong><p>local controls</p></article>
+      </div>
+      <div class="release-console reveal">
+        <div class="release-tabs" role="tablist" aria-label="Downstream release evidence">
+          <button class="release-tab active" role="tab" aria-selected="true" data-release="0">01 · Warehouse</button>
+          <button class="release-tab" role="tab" aria-selected="false" data-release="1">02 · Power BI</button>
+          <button class="release-tab" role="tab" aria-selected="false" data-release="2">03 · ML</button>
+          <button class="release-tab" role="tab" aria-selected="false" data-release="3">04 · RAG</button>
+          <button class="release-tab" role="tab" aria-selected="false" data-release="4">05 · API</button>
+          <button class="release-tab" role="tab" aria-selected="false" data-release="5">06 · n8n</button>
+          <button class="release-tab" role="tab" aria-selected="false" data-release="6">07 · Approval</button>
+          <button class="release-tab" role="tab" aria-selected="false" data-release="7">08 · Operations</button>
+        </div>
+        <div class="release-panel" id="releasePanel" role="tabpanel" aria-live="polite">
+          <div><span>RELEASE 01 · VERIFIED</span><h3>Decision-ready warehouse</h3><p>Conformed outputs, seven decision marts and reconciliation tests protect transaction grain from source through analysis.</p></div>
+          <dl><div><dt>EVIDENCE</dt><dd>18 core outputs · 7 marts</dd></div><div><dt>GATE</dt><dd>22 / 22 passed</dd></div><div><dt>BOUNDARY</dt><dd>PostgreSQL server run pending</dd></div></dl>
+        </div>
+      </div>
+      <div class="recruiter-path reveal">
+        <span>90-SECOND REVIEW PATH</span>
+        <ol><li><b>01</b>Scan the proof</li><li><b>02</b>Challenge one release</li><li><b>03</b>Trace one invoice</li><li><b>04</b>Check the honest boundary</li></ol>
+      </div>
+    </section>
+
+    <section class="system section-shell" id="system">
+      <div class="section-index">05 / THE SYSTEM</div>
+      <div class="system-head">
+        <div>
+          <p class="eyebrow reveal">ONE EVIDENCE CHAIN</p>
+          <h2 class="section-title reveal">From source record<br>to governed action.</h2>
+        </div>
+        <p class="system-note reveal">Every layer is designed to preserve grain, lineage, explainability and human accountability.</p>
+      </div>
+
+      <div class="architecture reveal" aria-label="ProcureAI architecture">
+        <div class="arch-column sources">
+          <span class="arch-label">01 · SOURCE</span>
+          <div class="arch-node"><b>CSV operations</b><small>23 tables</small></div>
+          <div class="arch-node"><b>Document corpus</b><small>402 PDFs</small></div>
+          <div class="arch-node"><b>Ground truth</b><small>25,200 labels</small></div>
+        </div>
+        <div class="arch-arrow"><span>→</span><small>INGEST</small></div>
+        <div class="arch-column foundation">
+          <span class="arch-label">02 · FOUNDATION</span>
+          <div class="arch-node accent"><b>PostgreSQL</b><small>raw → staging → core → mart</small></div>
+          <div class="arch-node"><b>Quality gates</b><small>keys · finance · workflow</small></div>
+          <div class="arch-node"><b>Vector index</b><small>hybrid retrieval</small></div>
+        </div>
+        <div class="arch-arrow"><span>→</span><small>MODEL</small></div>
+        <div class="arch-column intelligence">
+          <span class="arch-label">03 · INTELLIGENCE</span>
+          <div class="arch-node"><b>Power BI</b><small>semantic decision layer</small></div>
+          <div class="arch-node"><b>Machine learning</b><small>invoice + delay risk</small></div>
+          <div class="arch-node"><b>Contract RAG</b><small>citation-grounded answers</small></div>
+        </div>
+        <div class="arch-arrow"><span>→</span><small>ACT</small></div>
+        <div class="arch-column action">
+          <span class="arch-label">04 · CONTROL</span>
+          <div class="arch-node accent-gold"><b>n8n triage</b><small>rank · enrich · route</small></div>
+          <div class="arch-node"><b>Power Automate</b><small>human approval</small></div>
+          <div class="arch-node"><b>Audit trail</b><small>versioned evidence</small></div>
+        </div>
+      </div>
+
+      <div class="principle-strip reveal">
+        <span>DESIGN PRINCIPLES</span>
+        <b>Point-in-time correct</b>
+        <b>Cited, not guessed</b>
+        <b>Human-approved</b>
+        <b>Reproducible</b>
+      </div>
+      <div class="platform-rail reveal">
+        <span>INTEGRATION &amp; OPERATIONS</span>
+        <div><b>FastAPI</b><small>typed read-only interfaces</small></div>
+        <div><b>pgvector</b><small>page-aware retrieval index</small></div>
+        <div><b>Docker</b><small>reproducible local stack</small></div>
+        <div><b>Observability</b><small>data · model · RAG · workflow</small></div>
+      </div>
+      <div class="record-trace reveal">
+        <div><span>ONE RECORD · END-TO-END TRACE</span><b>A reviewer can follow evidence without losing transaction grain.</b></div>
+        <ol aria-label="Invoice decision trace">
+          <li><small>01</small><b>Purchase order</b></li>
+          <li><small>02</small><b>Accepted receipt</b></li>
+          <li><small>03</small><b>Invoice line</b></li>
+          <li><small>04</small><b>Contract clause</b></li>
+          <li><small>05</small><b>Risk reasons</b></li>
+          <li><small>06</small><b>Human decision</b></li>
+          <li><small>07</small><b>Audit record</b></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="data-story section-shell" id="data">
+      <div class="section-index">06 / DATA FOUNDATION</div>
+      <div class="data-layout">
+        <div class="data-copy">
+          <p class="eyebrow reveal">DETERMINISTIC SYNTHETIC CORPUS</p>
+          <h2 class="section-title reveal">Production-shaped.<br><em>Portfolio-safe.</em></h2>
+          <p class="reveal">The corpus recreates a two-year FMCG source-to-pay landscape in INR. Entities, transactions, exceptions, approvals and searchable documents reconcile across a shared operational model.</p>
+          <div class="data-tags reveal"><span>2024—2025</span><span>INR</span><span>SEED 20260927</span><span>ASSAM / INDIA</span></div>
+        </div>
+        <div class="data-visual reveal">
+          <div class="chart-head"><span>OPERATIONAL SCALE</span><small>log-scaled view</small></div>
+          <div class="bar-row"><span>PO lines</span><div><i style="--w:100%"></i></div><b>220K</b></div>
+          <div class="bar-row"><span>GRN lines</span><div><i style="--w:100%"></i></div><b>220K</b></div>
+          <div class="bar-row"><span>Invoice lines</span><div><i style="--w:91%"></i></div><b>192K</b></div>
+          <div class="bar-row"><span>Approvals</span><div><i style="--w:78%"></i></div><b>144K</b></div>
+          <div class="bar-row"><span>Inspections</span><div><i style="--w:62%"></i></div><b>91K</b></div>
+          <div class="bar-row"><span>Payments</span><div><i style="--w:45%"></i></div><b>44K</b></div>
+          <div class="chart-foot"><span>23 RAW TABLES</span><span>2 GROUND-TRUTH FILES</span></div>
+        </div>
+      </div>
+
+      <div class="evidence-row reveal">
+        <article><small>SUPPLY BASE</small><strong>175</strong><span>suppliers</span></article>
+        <article><small>CATALOG</small><strong>1,800</strong><span>materials</span></article>
+        <article><small>COMMERCIAL</small><strong>280</strong><span>contracts</span></article>
+        <article><small>OPERATIONS</small><strong>55,000</strong><span>receipts</span></article>
+        <article><small>EXCEPTIONS</small><strong>3,680</strong><span>anomaly labels</span></article>
+        <article><small>DELIVERY</small><strong>21,520</strong><span>delay outcomes</span></article>
+      </div>
+
+      <div class="document-manifest reveal">
+        <div class="manifest-title"><span>SEARCHABLE DOCUMENT CORPUS</span><strong>402 PDFs</strong></div>
+        <div><b>280</b><span>supplier contracts</span></div>
+        <div><b>80</b><span>invoice documents</span></div>
+        <div><b>40</b><span>quotation packs</span></div>
+        <div><b>2</b><span>procurement policies</span></div>
+      </div>
+
+      <div class="kpi-catalog reveal">
+        <div class="kpi-intro"><span>DECISION METRICS</span><b>One governed KPI contract</b></div>
+        <div><small>SPEND</small><p>Realized · committed · contracted · off-contract · PPV · concentration</p></div>
+        <div><small>SERVICE</small><p>On-time · in-full · OTIF · defects · supplier confidence</p></div>
+        <div><small>RISK</small><p>Exception value · high-risk count · duplicate value · reason codes</p></div>
+        <div><small>CONTRACT</small><p>30/60/90-day expiry · auto-renewal · spend at risk</p></div>
+        <div><small>CASH &amp; PROCESS</small><p>Payment timeliness · early-discount opportunity · approval cycle</p></div>
+      </div>
+    </section>
+
+    <section class="roadmap section-shell" id="roadmap">
+      <div class="section-index">07 / EXECUTION ROADMAP</div>
+      <div class="roadmap-head">
+        <div>
+          <p class="eyebrow reveal">12 PHASES · ONE QUALITY BAR</p>
+          <h2 class="section-title reveal">Built as a system,<br><em>verified as evidence.</em></h2>
+        </div>
+        <p class="reveal">Select a phase to inspect its build scope and definition of done.</p>
+      </div>
+
+      <div class="phase-explorer reveal">
+        <div class="phase-tabs" role="tablist" aria-label="Project phases">
+          <button class="phase-tab active" role="tab" aria-selected="true" data-phase="0"><span>00</span>Baseline</button>
+          <button class="phase-tab" role="tab" aria-selected="false" data-phase="1"><span>01</span>Profile</button>
+          <button class="phase-tab" role="tab" aria-selected="false" data-phase="2"><span>02</span>Warehouse</button>
+          <button class="phase-tab" role="tab" aria-selected="false" data-phase="3"><span>03</span>Power BI</button>
+          <button class="phase-tab" role="tab" aria-selected="false" data-phase="4"><span>04</span>Invoice ML</button>
+          <button class="phase-tab" role="tab" aria-selected="false" data-phase="5"><span>05</span>Supplier ML</button>
+          <button class="phase-tab" role="tab" aria-selected="false" data-phase="6"><span>06</span>Contract RAG</button>
+          <button class="phase-tab" role="tab" aria-selected="false" data-phase="7"><span>07</span>API</button>
+          <button class="phase-tab" role="tab" aria-selected="false" data-phase="8"><span>08</span>n8n agent</button>
+          <button class="phase-tab" role="tab" aria-selected="false" data-phase="9"><span>09</span>Power Automate</button>
+          <button class="phase-tab" role="tab" aria-selected="false" data-phase="10"><span>10</span>Observability</button>
+          <button class="phase-tab" role="tab" aria-selected="false" data-phase="11"><span>11</span>Portfolio proof</button>
+        </div>
+        <div class="phase-panel" id="phasePanel" role="tabpanel" aria-live="polite"></div>
+      </div>
+
+      <details class="full-spec reveal" id="fullSpecDetails">
+        <summary>
+          <span><small>COMPLETE SOURCE CONTENT</small><b>Open the full 584-line technical execution specification</b></span>
+          <i>+</i>
+        </summary>
+        <div class="spec-body">
+          <div class="spec-note"><span>UNCHANGED REFERENCE</span><p>The full project content is preserved here for technical reviewers. The visual case study above reorganizes it for recruiter readability without replacing the source specification.</p></div>
+          <pre id="fullSpecContent">Loading full specification…</pre>
+        </div>
+      </details>
+    </section>
+
+    <section class="workstreams section-shell" id="workstreams">
+      <div class="section-index">08 / INTELLIGENCE WORKSTREAMS</div>
+      <div class="workstream-grid">
+        <article class="work-card bi reveal">
+          <div class="card-top"><span>01</span><b>DECISION EXPERIENCE</b></div>
+          <h3>Power BI command center</h3>
+          <p>Eight governed pages move from executive risk to record-level evidence, with SQL-reconciled DAX and role-level security.</p>
+          <div class="mini-dashboard" aria-hidden="true">
+            <div class="mini-kpis"><i></i><i></i><i></i></div>
+            <div class="mini-chart"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            <div class="mini-table"><i></i><i></i><i></i></div>
+          </div>
+          <ul><li>Spend & category</li><li>Supplier 360</li><li>Exception workbench</li><li>Contract intelligence</li></ul>
+        </article>
+
+        <article class="work-card ml reveal">
+          <div class="card-top"><span>02</span><b>PREDICTIVE PRIORITY</b></div>
+          <h3>Risk models that explain</h3>
+          <p>Time-aware models rank invoice anomalies and supplier delays using point-in-time evidence and a chronological 2024/2025 split.</p>
+          <div class="risk-meter" aria-hidden="true">
+            <div class="meter-ring"><span>.882<small>PR-AUC</small></span></div>
+            <div class="reason-list"><i>PRICE Δ</i><i>QTY GAP</i><i>BANK CHANGE</i></div>
+          </div>
+          <ul><li>Chronological validation</li><li>Precision @ review capacity</li><li>Calibrated bands</li><li>Reason codes</li></ul>
+        </article>
+
+        <article class="work-card rag reveal">
+          <div class="card-top"><span>03</span><b>GROUNDED KNOWLEDGE</b></div>
+          <h3>Contract intelligence RAG</h3>
+          <p>Hybrid retrieval answers clause questions only when evidence supports them—and cites the exact filename and page.</p>
+          <div class="citation-box">
+            <span>QUERY</span>
+            <p>What is the termination notice period?</p>
+            <strong>45 days <small>[CTR00142.pdf, p. 1]</small></strong>
+          </div>
+          <ul><li>197 evaluation questions</li><li>100% citation accuracy</li><li>100% abstention accuracy</li><li>100% injection refusal</li></ul>
+        </article>
+
+        <article class="work-card agent reveal">
+          <div class="card-top"><span>04</span><b>CONTROLLED ACTION</b></div>
+          <h3>Human-approved agents</h3>
+          <p>n8n enriches and routes exceptions; Power Automate presents the evidence and enforces a named human decision.</p>
+          <div class="agent-flow" aria-hidden="true"><span>Score</span><i>→</i><span>Evidence</span><i>→</i><span class="human">Human</span><i>→</i><span>Audit</span></div>
+          <ul><li>103 n8n path fixtures</li><li>Retries &amp; dead-letter path</li><li>Wait/resume human gate</li><li>32 approval branch fixtures</li></ul>
+        </article>
+
+        <article class="work-card platform reveal">
+          <div class="card-top"><span>05</span><b>OPERATING FOUNDATION</b></div>
+          <div class="platform-card-grid">
+            <div>
+              <h3>API, monitoring &amp; release</h3>
+              <p>A typed read-only FastAPI layer carries record traces, risk scores and RAG citations into governed workflows—while monitoring keeps the full chain visible.</p>
+            </div>
+            <div class="endpoint-list" aria-label="Representative API endpoints">
+              <span><i>GET</i>/health</span>
+              <span><i>GET</i>/metrics/summary</span>
+              <span><i>GET</i>/v1/invoices/{id}/risk</span>
+              <span><i>GET</i>/v1/purchase-orders/{id}/delay-risk</span>
+              <span><i>POST</i>/v1/rag/query</span>
+            </div>
+          </div>
+          <ul><li>Docker Compose</li><li>Model cards</li><li>Drift &amp; calibration</li><li>Citation monitoring</li><li>SBOM &amp; secret scan</li><li>Rollback runbooks</li></ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="proof section-shell" id="proof">
+      <div class="section-index">09 / QUALITY PROOF</div>
+      <div class="proof-grid">
+        <div class="proof-score reveal">
+          <div class="score-ring"><strong>46<span>/46</span></strong><small>checks passed</small></div>
+          <p>Baseline release validation</p>
+        </div>
+        <div class="proof-copy">
+          <p class="eyebrow reveal">TRUST IS ENGINEERED</p>
+          <h2 class="section-title reveal">No silent joins.<br><em>No invented impact.</em></h2>
+          <p class="reveal">Evidence now spans source validation, warehouse reconciliation, chronological model evaluation, cited retrieval, API behavior, workflow branches, drift, latency and secret scanning.</p>
+          <div class="check-grid reveal">
+            <span><i>✓</i> Primary keys</span>
+            <span><i>✓</i> Foreign keys</span>
+            <span><i>✓</i> Financial reconciliation</span>
+            <span><i>✓</i> Workflow sequence</span>
+            <span><i>✓</i> Ground-truth integrity</span>
+            <span><i>✓</i> PDF text extraction</span>
+            <span><i>✓</i> 197/197 RAG cases</span>
+            <span><i>✓</i> 33/33 API tests</span>
+            <span><i>✓</i> 135 workflow cases</span>
+            <span><i>✓</i> 11/11 security checks</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="guardrail reveal">
+        <div><span>CONTROL 01</span><b>Anomaly ≠ fraud</b><p>Injected risk conditions are investigative leads, never proof of wrongdoing.</p></div>
+        <div><span>CONTROL 02</span><b>Retrieved text is untrusted</b><p>Document instructions cannot override the RAG system or invoke tools.</p></div>
+        <div><span>CONTROL 03</span><b>Human remains accountable</b><p>No autonomous payment, contract or supplier-master action is permitted.</p></div>
+        <div><span>CONTROL 04</span><b>Native artifacts stay honest</b><p>PBIX and cloud-flow work is labeled build-ready until assembled and verified in its native environment.</p></div>
+      </div>
+    </section>
+
+    <section class="impact section-shell" id="impact">
+      <div class="section-index">10 / RECRUITER LENS</div>
+      <div class="impact-head">
+        <p class="eyebrow reveal">ONE PROJECT · EIGHT CAPABILITIES</p>
+        <h2 class="section-title reveal">The portfolio proof behind<br><em>every skill claim.</em></h2>
+      </div>
+      <div class="skill-matrix reveal">
+        <div class="matrix-row header"><span>CAPABILITY</span><span>VISIBLE EVIDENCE</span><span>BUSINESS DECISION</span></div>
+        <div class="matrix-row"><strong>SQL</strong><span>Typed warehouse, analytical marts, reconciliation tests</span><span>Where is spend leakage occurring?</span></div>
+        <div class="matrix-row"><strong>Power BI + DAX</strong><span>Governed semantic model, eight decision pages, RLS</span><span>What requires leadership attention?</span></div>
+        <div class="matrix-row"><strong>Power Query</strong><span>Parameterized, repeatable ingestion and shaping</span><span>Can reporting refresh reliably?</span></div>
+        <div class="matrix-row"><strong>Python + ML</strong><span>Point-in-time features, calibrated risk, reason codes</span><span>Which case should be reviewed first?</span></div>
+        <div class="matrix-row"><strong>GenAI + RAG</strong><span>Hybrid retrieval, page citations, abstention tests</span><span>What does the contract actually say?</span></div>
+        <div class="matrix-row"><strong>n8n</strong><span>Idempotent enrichment and exception orchestration</span><span>How does evidence reach the right reviewer?</span></div>
+        <div class="matrix-row"><strong>Power Automate</strong><span>Approval card, escalation and callback design</span><span>Who authorizes the next action?</span></div>
+        <div class="matrix-row"><strong>Engineering</strong><span>API contracts, Docker, monitoring, test matrix</span><span>Can the system be reproduced and trusted?</span></div>
+      </div>
+      <div class="decision-users reveal">
+        <div><span>DECISION USERS</span><b>Designed around access, evidence and action</b></div>
+        <ul>
+          <li><b>Executive</b><small>exposure &amp; priorities</small></li>
+          <li><b>Procurement manager</b><small>compliance &amp; suppliers</small></li>
+          <li><b>Category manager</b><small>price &amp; contract decisions</small></li>
+          <li><b>AP investigator</b><small>ranked invoice evidence</small></li>
+          <li><b>Auditor</b><small>lineage &amp; approvals</small></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="closing section-shell">
+      <div class="closing-orb" aria-hidden="true"></div>
+      <p class="eyebrow reveal">PROCUREMENT × ANALYTICS × RESPONSIBLE AI</p>
+      <h2 class="reveal">Not another dashboard.<br><span>A decision system.</span></h2>
+      <p class="reveal">Designed and built as a deterministic synthetic proof of concept by Bikashit Baruah.</p>
+      <div class="closing-actions reveal">
+        <a class="btn primary" href="#top">Return to top <span>↑</span></a>
+        <a class="btn ghost" href="#roadmap">Review all phases</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="section-shell">
+    <div><span class="brand-mark small">P<span></span></span><b>PROCUREAI FMCG</b></div>
+    <p>Deterministic synthetic portfolio proof of concept · 2026</p>
+    <a href="#top">TOP ↑</a>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
