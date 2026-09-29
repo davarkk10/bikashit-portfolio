@@ -24,7 +24,7 @@ python src/build_release1_reference.py
 
 The generator uses seed `20260927`, creates transaction CSVs and 402 synthetic PDFs, and replaces generated outputs. Validation checks keys, relationships, arithmetic, workflows, ground truth, and document extraction. The warehouse reference builder creates conformed CSVs and seven analytical marts, then runs its own checks. This public extract supports the above three-command reproduction; the 11-gate local regression cited in the case study was run on the larger source release, which also contains ML, RAG, API and workflow modules.
 
-The generated corpus is intentionally omitted from Git to keep this review path small. Generation may take a few minutes and needs disk space for roughly 300 MB of outputs. The original source release is a synthetic project pack; no private operational records are needed.
+The generated corpus is intentionally omitted from Git to keep this review path small. Generation took approximately three minutes in a clean local copy and needs disk space for the generated CSVs and PDFs. The original source release is a synthetic project pack; no private operational records are needed.
 
 ## One example decision
 
