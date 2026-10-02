@@ -49,7 +49,8 @@ def csv_m(file, types, nullable):
     repl = (f'    Nulls = Table.ReplaceValue(Promoted, "", null, Replacer.ReplaceValue, {{{null_list}}}),\n'
             if nullable else '    Nulls = Promoted,\n')
     return f'''let
-    Source = Csv.Document(File.Contents(DataFolder & "{file}"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+    Folder = if Text.EndsWith(DataFolder, "\\") then DataFolder else DataFolder & "\\",
+    Source = Csv.Document(File.Contents(Folder & "{file}"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
     Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
 {repl}    Typed = Table.TransformColumnTypes(Nulls, {{{type_list}}}, "en-US")
 in
@@ -91,7 +92,8 @@ dim_seller = table('dim_seller', [
     calc_col('Decile Sort', 'IF ( ISBLANK ( dim_seller[late_decile] ), 99, dim_seller[late_decile] )', 'int64', fmt='0', hidden=True),
     calc_col('Seller Short', 'LEFT ( dim_seller[seller_id], 8 )', 'string'),
 ], '''let
-    Source = Csv.Document(File.Contents(DataFolder & "pbi_seller.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+    Folder = if Text.EndsWith(DataFolder, "\\") then DataFolder else DataFolder & "\\",
+    Source = Csv.Document(File.Contents(Folder & "pbi_seller.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
     Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
     Nulls = Table.ReplaceValue(Promoted, "", null, Replacer.ReplaceValue, {"late_decile"}),
     Typed = Table.TransformColumnTypes(Nulls, {{"seller_id", type text}, {"seller_city", type text}, {"seller_state", type text}, {"late_decile", Int64.Type}}, "en-US"),
