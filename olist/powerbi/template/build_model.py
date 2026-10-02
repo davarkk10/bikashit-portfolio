@@ -225,8 +225,11 @@ for m in measures:
     f = fmt_for(m['name'])
     if f: d['formatString'] = f
     if m['name'] == 'Metric Value':
-        d.pop('formatString', None)
-        d['formatStringDefinition'] = {'expression': 'SWITCH ( [Selected Metric], "Avg Review", "0.00", "Avg Days to Deliver", "0.0", "0.0%" )'}
+        # No dynamic format string (Power BI rejects it when loaded from a template): rates are shown x100.
+        d['expression'] = ['SWITCH (', '    [Selected Metric],', '    "Late %", [Late %] * 100,', '    "Avg Review", [Avg Review],',
+                           '    "Bad Review %", [Bad Review %] * 100,', '    "Avg Days to Deliver", [Avg Days to Deliver]', ')']
+        d['formatString'] = '0.0#'
+        d.pop('formatStringDefinition', None)
     tm.append(d)
 
 measures_tbl = table('_Measures', [col('Column1', 'string', hidden=True)], '''let
@@ -251,7 +254,7 @@ relationships = [
 
 model = {
     'name': lt(),
-    'compatibilityLevel': 1601,
+    'compatibilityLevel': 1567,
     'model': {
         'culture': 'en-US',
         'dataAccessOptions': {'legacyRedirects': True, 'returnErrorValuesAsNull': True},

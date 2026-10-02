@@ -2,7 +2,7 @@ import json, zipfile, sys, os
 sys.path.insert(0, os.path.dirname(__file__))
 import build_model, build_report as R
 
-OUT = '/home/claude/olist_pbit/Olist_Delivery_360/Olist_Delivery_360.pbit'
+OUT = '/home/claude/olist_pbit/Olist_Delivery_360/Olist_Delivery_360_v3.pbit'
 THEME_NAME = 'Olist_Delivery_360_Case4_dark.json'
 
 theme = {
