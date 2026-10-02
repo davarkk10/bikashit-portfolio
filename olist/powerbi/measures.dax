@@ -214,24 +214,25 @@ LY Cutoff = EDATE ( MAX ( fact_delivery[purchase_date] ), -12 )
 Delivered Orders LY =
 VAR Cutoff = [LY Cutoff]
 RETURN CALCULATE ( [Delivered Orders], SAMEPERIODLASTYEAR ( dim_date[Date] ), dim_date[Date] <= Cutoff )
+// Note: never name a variable Value (reserved: VALUE function).
 // LY values are shown only when last year has at least 300 orders in the same dates (else "BM: n/a").
 // Example: Year = 2017 would compare with Sep-Dec 2016 (267 orders), so the card shows n/a.
 Late % LY =
 VAR Cutoff = [LY Cutoff]
-VAR Value = CALCULATE ( [Late %], SAMEPERIODLASTYEAR ( dim_date[Date] ), dim_date[Date] <= Cutoff )
-RETURN IF ( [Delivered Orders LY] >= 300, Value )
+VAR Result = CALCULATE ( [Late %], SAMEPERIODLASTYEAR ( dim_date[Date] ), dim_date[Date] <= Cutoff )
+RETURN IF ( [Delivered Orders LY] >= 300, Result )
 Avg Review LY =
 VAR Cutoff = [LY Cutoff]
-VAR Value = CALCULATE ( [Avg Review], SAMEPERIODLASTYEAR ( dim_date[Date] ), dim_date[Date] <= Cutoff )
-RETURN IF ( [Delivered Orders LY] >= 300, Value )
+VAR Result = CALCULATE ( [Avg Review], SAMEPERIODLASTYEAR ( dim_date[Date] ), dim_date[Date] <= Cutoff )
+RETURN IF ( [Delivered Orders LY] >= 300, Result )
 Bad Review % LY =
 VAR Cutoff = [LY Cutoff]
-VAR Value = CALCULATE ( [Bad Review %], SAMEPERIODLASTYEAR ( dim_date[Date] ), dim_date[Date] <= Cutoff )
-RETURN IF ( [Delivered Orders LY] >= 300, Value )
+VAR Result = CALCULATE ( [Bad Review %], SAMEPERIODLASTYEAR ( dim_date[Date] ), dim_date[Date] <= Cutoff )
+RETURN IF ( [Delivered Orders LY] >= 300, Result )
 Avg Days to Deliver LY =
 VAR Cutoff = [LY Cutoff]
-VAR Value = CALCULATE ( [Avg Days to Deliver], SAMEPERIODLASTYEAR ( dim_date[Date] ), dim_date[Date] <= Cutoff )
-RETURN IF ( [Delivered Orders LY] >= 300, Value )
+VAR Result = CALCULATE ( [Avg Days to Deliver], SAMEPERIODLASTYEAR ( dim_date[Date] ), dim_date[Date] <= Cutoff )
+RETURN IF ( [Delivered Orders LY] >= 300, Result )
 
 // Targets are illustrative service goals, labelled as such on the report.
 Late % Target = 0.05
