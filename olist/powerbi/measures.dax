@@ -1,0 +1,309 @@
+// =====================================================================
+// Olist Delivery 360 — DAX for Power BI Desktop
+// Tables: fact_delivery, fact_order_seller, dim_seller, first_order (imported from SQL views)
+//         dim_date, dim_state, dim_bm, sql_check, _Measures (created below)
+// Every value marked "expect" was checked against the SQL results in olist/results.
+// =====================================================================
+
+
+// ---------------------------------------------------------------------
+// 1. CALCULATED TABLES  (Modeling > New table, paste one at a time)
+// ---------------------------------------------------------------------
+
+dim_date =
+ADDCOLUMNS (
+    CALENDAR ( DATE ( 2016, 9, 1 ), DATE ( 2018, 10, 31 ) ),
+    "Year", YEAR ( [Date] ),
+    "Quarter", "Q" & QUARTER ( [Date] ),
+    "Month No", MONTH ( [Date] ),
+    "Month", FORMAT ( [Date], "MMM" ),
+    "Year Month", FORMAT ( [Date], "MMM YYYY" ),
+    "Month Start", DATE ( YEAR ( [Date] ), MONTH ( [Date] ), 1 ),
+    "In Trend Window", IF ( [Date] >= DATE ( 2017, 1, 1 ) && [Date] <= DATE ( 2018, 8, 31 ), 1, 0 )
+)
+// Then: mark as date table (Date column); sort Month by Month No; sort Year Month by Month Start.
+
+dim_state =
+DATATABLE (
+    "State Code", STRING, "State", STRING, "Region", STRING,
+    {
+        { "AC", "Acre", "North" }, { "AP", "Amapá", "North" }, { "AM", "Amazonas", "North" },
+        { "PA", "Pará", "North" }, { "RO", "Rondônia", "North" }, { "RR", "Roraima", "North" },
+        { "TO", "Tocantins", "North" },
+        { "AL", "Alagoas", "Northeast" }, { "BA", "Bahia", "Northeast" }, { "CE", "Ceará", "Northeast" },
+        { "MA", "Maranhão", "Northeast" }, { "PB", "Paraíba", "Northeast" }, { "PE", "Pernambuco", "Northeast" },
+        { "PI", "Piauí", "Northeast" }, { "RN", "Rio Grande do Norte", "Northeast" }, { "SE", "Sergipe", "Northeast" },
+        { "DF", "Distrito Federal", "Central-West" }, { "GO", "Goiás", "Central-West" },
+        { "MT", "Mato Grosso", "Central-West" }, { "MS", "Mato Grosso do Sul", "Central-West" },
+        { "ES", "Espírito Santo", "Southeast" }, { "MG", "Minas Gerais", "Southeast" },
+        { "RJ", "Rio de Janeiro", "Southeast" }, { "SP", "São Paulo", "Southeast" },
+        { "PR", "Paraná", "South" }, { "RS", "Rio Grande do Sul", "South" }, { "SC", "Santa Catarina", "South" }
+    }
+)
+
+dim_bm =
+DATATABLE ( "Benchmark", STRING, "BM Order", INTEGER, { { "vs LY", 1 }, { "vs Target", 2 } } )
+// Disconnected table (no relationship). Used as the BM toggle, like "Benchmarks" in Business Insights 360.
+
+dim_metric =
+DATATABLE ( "Metric", STRING, "Metric Order", INTEGER,
+    { { "Late %", 1 }, { "Avg Review", 2 }, { "Bad Review %", 3 }, { "Avg Days to Deliver", 4 } } )
+// Disconnected table: lets the reader switch the metric shown in the state chart and trend.
+
+sql_check =
+DATATABLE (
+    "Check No", INTEGER, "Check", STRING, "SQL Value", DOUBLE, "Format", STRING, "SQL Source", STRING,
+    {
+        { 1,  "Delivered orders with a date",          96470,      "#,0",        "01_views.sql: delivered" },
+        { 2,  "Delivered orders with a review",        95824,      "#,0",        "Q1" },
+        { 3,  "Late orders (with a review)",           6381,       "#,0",        "Q1" },
+        { 4,  "Avg review: late orders",               2.27,       "0.00",       "Q1" },
+        { 5,  "Avg review: on-time orders",            4.29,       "0.00",       "Q1" },
+        { 6,  "1-2 star share: late orders",           0.624,      "0.0%",       "Q1" },
+        { 7,  "Late orders: seller handed over on time", 0.723,    "0.0%",       "Q6" },
+        { 8,  "Late orders on SP -> RJ lane",          0.177,      "0.0%",       "Q10" },
+        { 9,  "Late orders: worst seller decile",      0.156,      "0.0%",       "Q5" },
+        { 10, "Median days early vs promise",          12,         "0",          "Q9" },
+        { 11, "Late order value (R$ M)",               1.15,       "0.00",       "Q9" },
+        { 12, "Repeat rate: first order late",         0.0233,     "0.00%",      "Q7" }
+    }
+)
+
+
+// ---------------------------------------------------------------------
+// 2. CALCULATED COLUMNS  (select the table > New column)
+// ---------------------------------------------------------------------
+
+// dim_seller
+Seller Region = LOOKUPVALUE ( dim_state[Region], dim_state[State Code], dim_seller[seller_state] )
+Seller Decile Label = IF ( ISBLANK ( dim_seller[late_decile] ), "Under 30 orders", "D" & dim_seller[late_decile] )
+
+// dim_seller
+Seller Short = LEFT ( dim_seller[seller_id], 8 )
+
+// fact_order_seller  (RELATED works because each pair has one order and one seller)
+Lane = RELATED ( dim_seller[seller_state] ) & " → " & RELATED ( fact_delivery[customer_state] )
+
+// fact_delivery
+Delivery Status = IF ( fact_delivery[is_late] = 1, "Late", "On time" )
+// Sort delay_bucket by delay_bucket_order (Column tools > Sort by column).
+
+
+// ---------------------------------------------------------------------
+// 3. MEASURES  (create an empty table "_Measures" via Enter data, put all measures there)
+//    Display folders in brackets.
+// ---------------------------------------------------------------------
+
+// [1 Volume] ----------------------------------------------------------
+Delivered Orders = COUNTROWS ( fact_delivery )                                   // expect 96,470
+Late Orders = CALCULATE ( [Delivered Orders], fact_delivery[is_late] = 1 )       // expect 6,534
+Late % = DIVIDE ( [Late Orders], [Delivered Orders] )                            // expect 6.77%
+On-Time % = IF ( ISBLANK ( [Delivered Orders] ), BLANK (), 1 - [Late %] )        // expect 93.23%
+Order Value = SUM ( fact_delivery[order_value] )                                  // expect R$ 15.42M
+Late Order Value = CALCULATE ( [Order Value], fact_delivery[is_late] = 1 )       // expect R$ 1.15M
+Late Value % = DIVIDE ( [Late Order Value], [Order Value] )                      // expect 7.5%
+Share of Late Orders =
+DIVIDE ( [Late Orders], CALCULATE ( [Late Orders], ALLSELECTED ( dim_state ) ) )
+Late % vs Brazil (pp) =
+( [Late %] - CALCULATE ( [Late %], ALLSELECTED ( dim_state ) ) ) * 100
+
+// [2 Speed] -----------------------------------------------------------
+Avg Days to Deliver = AVERAGE ( fact_delivery[days_to_deliver] )                 // expect 12.5
+Avg Days Promised = AVERAGE ( fact_delivery[days_promised] )                     // expect 24.4
+Promise Buffer (days) = [Avg Days Promised] - [Avg Days to Deliver]              // expect 11.9
+Median Days Early = MEDIANX ( fact_delivery, - fact_delivery[days_vs_promise] )  // expect 12
+
+// [3 Experience] ------------------------------------------------------
+Reviewed Orders =
+CALCULATE ( [Delivered Orders], NOT ISBLANK ( fact_delivery[review_score] ) )    // expect 95,824
+Avg Review = AVERAGE ( fact_delivery[review_score] )                             // expect 4.16
+Bad Reviews =
+CALCULATE (
+    [Delivered Orders],
+    fact_delivery[review_score] <= 2,
+    NOT ISBLANK ( fact_delivery[review_score] )    // needed: DAX treats BLANK <= 2 as TRUE
+)
+Bad Review % = DIVIDE ( [Bad Reviews], [Reviewed Orders] )                        // expect 12.8%
+Avg Review Late = CALCULATE ( [Avg Review], fact_delivery[is_late] = 1 )         // expect 2.27
+Avg Review On Time = CALCULATE ( [Avg Review], fact_delivery[is_late] = 0 )      // expect 4.29
+Review Gap = [Avg Review On Time] - [Avg Review Late]                            // expect 2.02
+Bad Review % Late = CALCULATE ( [Bad Review %], fact_delivery[is_late] = 1 )     // expect 62.4%
+Bad Review % On Time = CALCULATE ( [Bad Review %], fact_delivery[is_late] = 0 )  // expect 9.3%
+Late Orders Reviewed =
+CALCULATE ( [Reviewed Orders], fact_delivery[is_late] = 1 )                      // expect 6,381
+
+// [4 Customers] -------------------------------------------------------
+Customers = COUNTROWS ( first_order )                                            // expect 93,350
+Repeat Rate = DIVIDE ( SUM ( first_order[came_back] ), [Customers] )             // expect 2.83%
+Repeat Rate First Late = CALCULATE ( [Repeat Rate], first_order[first_order_late] = 1 )     // expect 2.33%
+Repeat Rate First On Time = CALCULATE ( [Repeat Rate], first_order[first_order_late] = 0 )  // expect 2.86%
+
+// [5 Sellers & Lanes]  (grain: order-seller pair) ---------------------
+Order-Seller Pairs = COUNTROWS ( fact_order_seller )                             // expect 97,811
+Late Pairs = CALCULATE ( [Order-Seller Pairs], fact_delivery[is_late] = 1 )      // expect 6,547
+Lane Late % = DIVIDE ( [Late Pairs], [Order-Seller Pairs] )                      // expect 6.69%
+Share of Late Pairs =
+DIVIDE ( [Late Pairs], CALCULATE ( [Late Pairs], ALLSELECTED () ) )
+Seller Late Handover % =
+DIVIDE (
+    CALCULATE ( [Order-Seller Pairs], fact_order_seller[seller_late_handover] = 1 ),
+    CALCULATE ( [Order-Seller Pairs], NOT ISBLANK ( fact_order_seller[seller_late_handover] ) )
+)                                                                                // expect 8.97%
+Late % After On-Time Handover =
+CALCULATE ( [Lane Late %], fact_order_seller[seller_late_handover] = 0 )         // expect 5.3%
+Late % After Late Handover =
+CALCULATE ( [Lane Late %], fact_order_seller[seller_late_handover] = 1 )         // expect 20.7%
+Delivery-Leg Share of Late =
+DIVIDE (
+    CALCULATE ( [Late Pairs], fact_order_seller[seller_late_handover] = 0 ),
+    CALCULATE ( [Late Pairs], NOT ISBLANK ( fact_order_seller[seller_late_handover] ) )
+)                                                                                // expect 72.3%
+SP-RJ Share of Late =
+DIVIDE (
+    CALCULATE ( [Late Pairs], dim_seller[seller_state] = "SP", dim_state[State Code] = "RJ" ),
+    [Late Pairs]
+)                                                                                // expect 17.7%
+Worst Decile Share of Late =
+DIVIDE (
+    CALCULATE ( [Late Pairs], dim_seller[late_decile] = 1 ),
+    CALCULATE ( [Late Pairs], NOT ISBLANK ( dim_seller[late_decile] ) )
+)                                                                                // expect 15.6%
+Seller Orders = [Order-Seller Pairs]
+Sellers 30+ = COUNTROWS ( FILTER ( VALUES ( dim_seller[seller_id] ), [Seller Orders] >= 30 ) )   // expect 627 (all data)
+Seller Avg Review = AVERAGEX ( fact_order_seller, RELATED ( fact_delivery[review_score] ) )
+Lane Avg Days Promised = AVERAGEX ( fact_order_seller, RELATED ( fact_delivery[days_promised] ) )
+Lane Avg Days to Deliver = AVERAGEX ( fact_order_seller, RELATED ( fact_delivery[days_to_deliver] ) )
+Seller Risk =
+VAR LateRate = [Lane Late %]
+VAR Handover = [Seller Late Handover %]
+RETURN
+    SWITCH (
+        TRUE (),
+        [Seller Orders] < 30, "Low volume",
+        LateRate >= 0.12 || Handover >= 0.20, "High",
+        LateRate >= 0.08, "Watch",
+        "OK"
+    )
+// Top N Value: created automatically when you add the what-if parameter 'Top N' (Modeling > New parameter > Numeric range, 5 to 25, default 10).
+Show In Top N =
+VAR Rnk =
+    RANKX (
+        FILTER ( ALLSELECTED ( dim_seller[seller_id] ), [Seller Orders] >= 30 ),
+        [Lane Late %], , DESC, Dense
+    )
+RETURN IF ( [Seller Orders] >= 30 && Rnk <= [Top N Value], 1, 0 )
+// Use as a visual-level filter on the seller table: Show In Top N is 1.
+
+// [6 Benchmarks] ------------------------------------------------------
+// Expect with Year = 2018 and BM = vs LY: Late % 7.7% vs 3.5% (+4.2 pp, red) · Avg Review 4.14 vs 4.23 (-0.09, red)
+//   Bad Review % 13.4% vs 10.6% (+2.8 pp, red) · Avg Days 12.1 vs 12.2 (-0.1, green) · Orders 52,777 vs 21,681
+// LY compares like for like: same dates last year, only up to the last date that has data this year.
+Selected BM = SELECTEDVALUE ( dim_bm[Benchmark], "vs LY" )
+LY Cutoff = EDATE ( MAX ( fact_delivery[purchase_date] ), -12 )
+
+Late % LY =
+VAR Cutoff = [LY Cutoff]
+RETURN CALCULATE ( [Late %], SAMEPERIODLASTYEAR ( dim_date[Date] ), dim_date[Date] <= Cutoff )
+Avg Review LY =
+VAR Cutoff = [LY Cutoff]
+RETURN CALCULATE ( [Avg Review], SAMEPERIODLASTYEAR ( dim_date[Date] ), dim_date[Date] <= Cutoff )
+Bad Review % LY =
+VAR Cutoff = [LY Cutoff]
+RETURN CALCULATE ( [Bad Review %], SAMEPERIODLASTYEAR ( dim_date[Date] ), dim_date[Date] <= Cutoff )
+Avg Days to Deliver LY =
+VAR Cutoff = [LY Cutoff]
+RETURN CALCULATE ( [Avg Days to Deliver], SAMEPERIODLASTYEAR ( dim_date[Date] ), dim_date[Date] <= Cutoff )
+Delivered Orders LY =
+VAR Cutoff = [LY Cutoff]
+RETURN CALCULATE ( [Delivered Orders], SAMEPERIODLASTYEAR ( dim_date[Date] ), dim_date[Date] <= Cutoff )
+
+// Targets are illustrative service goals, labelled as such on the report.
+Late % Target = 0.05
+Avg Review Target = 4.2
+Bad Review % Target = 0.10
+Avg Days Target = 12
+
+Late % BM = IF ( [Selected BM] = "vs LY", [Late % LY], [Late % Target] )
+Avg Review BM = IF ( [Selected BM] = "vs LY", [Avg Review LY], [Avg Review Target] )
+Bad Review % BM = IF ( [Selected BM] = "vs LY", [Bad Review % LY], [Bad Review % Target] )
+Avg Days BM = IF ( [Selected BM] = "vs LY", [Avg Days to Deliver LY], [Avg Days Target] )
+
+// Change vs benchmark: percentage points for rates, plain difference for review and days
+Late % Chg (pp) = ( [Late %] - [Late % BM] ) * 100
+Avg Review Chg = [Avg Review] - [Avg Review BM]
+Bad Review % Chg (pp) = ( [Bad Review %] - [Bad Review % BM] ) * 100
+Avg Days Chg = [Avg Days to Deliver] - [Avg Days BM]
+
+// Card reference-label text, e.g. "BM: 3.5% | +4.2 pp vs LY"
+Callout Late % =
+IF ( ISBLANK ( [Late % BM] ), "BM: n/a",
+    "BM: " & FORMAT ( [Late % BM], "0.0%" ) & " | " & FORMAT ( [Late % Chg (pp)], "+0.0;-0.0;0.0" ) & " pp " & [Selected BM] )
+Callout Avg Review =
+IF ( ISBLANK ( [Avg Review BM] ), "BM: n/a",
+    "BM: " & FORMAT ( [Avg Review BM], "0.00" ) & " | " & FORMAT ( [Avg Review Chg], "+0.00;-0.00;0.00" ) & " " & [Selected BM] )
+Callout Bad Review % =
+IF ( ISBLANK ( [Bad Review % BM] ), "BM: n/a",
+    "BM: " & FORMAT ( [Bad Review % BM], "0.0%" ) & " | " & FORMAT ( [Bad Review % Chg (pp)], "+0.0;-0.0;0.0" ) & " pp " & [Selected BM] )
+Callout Avg Days =
+IF ( ISBLANK ( [Avg Days BM] ), "BM: n/a",
+    "BM: " & FORMAT ( [Avg Days BM], "0.0" ) & " | " & FORMAT ( [Avg Days Chg], "+0.0;-0.0;0.0" ) & " days " & [Selected BM] )
+
+// Accent-bar colours (lower is better for late %, bad review %, days; higher is better for review)
+COLOR Late % = IF ( [Late %] <= [Late % BM], "#0D9488", "#D64550" )
+COLOR Avg Review = IF ( [Avg Review] >= [Avg Review BM], "#0D9488", "#D64550" )
+COLOR Bad Review % = IF ( [Bad Review %] <= [Bad Review % BM], "#0D9488", "#D64550" )
+COLOR Avg Days = IF ( [Avg Days to Deliver] <= [Avg Days BM], "#0D9488", "#D64550" )
+COLOR Status Bar = IF ( SELECTEDVALUE ( fact_delivery[is_late] ) = 1, "#D64550", "#0D9488" )
+
+// [7 Dynamic metric] --------------------------------------------------
+Selected Metric = SELECTEDVALUE ( dim_metric[Metric], "Late %" )
+Metric Value =
+SWITCH (
+    [Selected Metric],
+    "Late %", [Late %],
+    "Avg Review", [Avg Review],
+    "Bad Review %", [Bad Review %],
+    "Avg Days to Deliver", [Avg Days to Deliver]
+)
+// Dynamic format string for Metric Value (Measure tools > Format > Dynamic):
+//   SWITCH ( [Selected Metric], "Avg Review", "0.00", "Avg Days to Deliver", "0.0", "0.0%" )
+Metric Title = [Selected Metric] & " by customer state"
+Trend Title = [Selected Metric] & " by month (Jan 2017 – Aug 2018)"
+
+// [8 Data checks] -----------------------------------------------------
+PBI Value =
+VAR c = SELECTEDVALUE ( sql_check[Check No] )
+RETURN
+    SWITCH (
+        c,
+        1, [Delivered Orders],
+        2, [Reviewed Orders],
+        3, [Late Orders Reviewed],
+        4, ROUND ( [Avg Review Late], 2 ),
+        5, ROUND ( [Avg Review On Time], 2 ),
+        6, ROUND ( [Bad Review % Late], 3 ),
+        7, ROUND ( [Delivery-Leg Share of Late], 3 ),
+        8, ROUND ( [SP-RJ Share of Late], 3 ),
+        9, ROUND ( [Worst Decile Share of Late], 3 ),
+        10, [Median Days Early],
+        11, ROUND ( [Late Order Value] / 1000000, 2 ),
+        12, ROUND ( [Repeat Rate First Late], 4 )
+    )
+SQL Value = SELECTEDVALUE ( sql_check[SQL Value] )
+Check Status =
+IF ( ISBLANK ( [PBI Value] ), BLANK (),
+    IF ( ABS ( [PBI Value] - [SQL Value] ) < 0.00001, "✔ Match", "✖ Differs" ) )
+Checks Passed =
+SUMX ( VALUES ( sql_check[Check No] ), IF ( [Check Status] = "✔ Match", 1, 0 ) )
+Checks Summary = [Checks Passed] & " / " & COUNTROWS ( sql_check ) & " checks match SQL"
+
+// [9 Labels] ----------------------------------------------------------
+Headline Insight =
+FORMAT ( [Delivery-Leg Share of Late], "0%" ) & " of late orders left the seller on time. "
+    & "The delay happens in delivery, so carriers and lanes come before seller penalties."
+COLOR Bucket = IF ( MAX ( fact_delivery[delay_bucket_order] ) >= 3, "#D64550", "#0D9488" )
+Last Data Date = "Data to " & FORMAT ( MAX ( fact_delivery[purchase_date] ), "d MMM yyyy" )
+Selection Label =
+VAR y = IF ( ISFILTERED ( dim_date[Year] ), CONCATENATEX ( VALUES ( dim_date[Year] ), dim_date[Year], ", " ), "All years" )
+VAR r = IF ( ISFILTERED ( dim_state[Region] ), CONCATENATEX ( VALUES ( dim_state[Region] ), dim_state[Region], ", " ), "All regions" )
+RETURN y & " · " & r

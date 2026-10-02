@@ -1,0 +1,87 @@
+{
+  "name": "Olist Delivery 360",
+  "dataColors": ["#0D9488", "#D64550", "#6366F1", "#D87B43", "#67E8F9", "#0B4D49", "#94A3B8", "#F6CF9A"],
+  "good": "#0D9488",
+  "neutral": "#D87B43",
+  "bad": "#D64550",
+  "maximum": "#0B4D49",
+  "center": "#67E8F9",
+  "minimum": "#F0FDFA",
+  "background": "#FFFFFF",
+  "foreground": "#232323",
+  "tableAccent": "#0D9488",
+  "textClasses": {
+    "callout": { "fontSize": 24, "fontFace": "Segoe UI Semibold", "color": "#232323" },
+    "title": { "fontSize": 12, "fontFace": "Segoe UI Semibold", "color": "#232323" },
+    "header": { "fontSize": 12, "fontFace": "Segoe UI Semibold", "color": "#232323" },
+    "label": { "fontSize": 10, "fontFace": "Segoe UI", "color": "#444444" }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [{ "show": true, "color": { "solid": { "color": "#FFFFFF" } }, "transparency": 0 }],
+        "border": [{ "show": true, "color": { "solid": { "color": "#E5E7EB" } }, "radius": 10 }],
+        "dropShadow": [{ "show": true, "preset": "Custom", "color": { "solid": { "color": "#000000" } }, "transparency": 88, "shadowBlur": 6, "shadowDistance": 2, "angle": 90 }],
+        "title": [{ "show": true, "fontColor": { "solid": { "color": "#232323" } }, "fontSize": 12, "fontFamily": "Segoe UI Semibold" }],
+        "padding": [{ "top": 8, "bottom": 8, "left": 10, "right": 10 }],
+        "visualHeader": [{ "show": true }]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [{ "color": { "solid": { "color": "#F5F5F5" } }, "transparency": 0 }],
+        "outspace": [{ "color": { "solid": { "color": "#F5F5F5" } } }]
+      }
+    },
+    "slicer": {
+      "*": {
+        "background": [{ "show": false }],
+        "border": [{ "show": false }],
+        "dropShadow": [{ "show": false }],
+        "items": [{ "fontColor": { "solid": { "color": "#FFFFFF" } }, "background": { "solid": { "color": "#0F766E" } }, "fontSize": 10 }],
+        "header": [{ "fontColor": { "solid": { "color": "#FFFFFF" } }, "fontSize": 10, "fontFamily": "Segoe UI Bold" }]
+      }
+    },
+    "pivotTable": {
+      "*": {
+        "columnHeaders": [{ "fontColor": { "solid": { "color": "#232323" } }, "backColor": { "solid": { "color": "#FFFFFF" } }, "fontFamily": "Segoe UI Semibold" }],
+        "grid": [{ "gridHorizontal": true, "gridHorizontalColor": { "solid": { "color": "#F0F0F0" } }, "rowPadding": 4 }],
+        "total": [{ "fontFamily": "Segoe UI Bold" }]
+      }
+    },
+    "tableEx": {
+      "*": {
+        "columnHeaders": [{ "fontColor": { "solid": { "color": "#232323" } }, "backColor": { "solid": { "color": "#FFFFFF" } }, "fontFamily": "Segoe UI Semibold" }],
+        "grid": [{ "gridHorizontal": true, "gridHorizontalColor": { "solid": { "color": "#F0F0F0" } }, "rowPadding": 4 }]
+      }
+    },
+    "actionButton": {
+      "*": {
+        "background": [{ "show": false }],
+        "border": [{ "show": false }],
+        "dropShadow": [{ "show": false }]
+      }
+    },
+    "shape": {
+      "*": {
+        "background": [{ "show": false }],
+        "border": [{ "show": false }],
+        "dropShadow": [{ "show": false }]
+      }
+    },
+    "textbox": {
+      "*": {
+        "background": [{ "show": false }],
+        "border": [{ "show": false }],
+        "dropShadow": [{ "show": false }]
+      }
+    },
+    "image": {
+      "*": {
+        "background": [{ "show": false }],
+        "border": [{ "show": false }],
+        "dropShadow": [{ "show": false }]
+      }
+    }
+  }
+}
