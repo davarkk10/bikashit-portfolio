@@ -225,6 +225,7 @@ for m in measures:
     f = fmt_for(m['name'])
     if f: d['formatString'] = f
     if m['name'] == 'Metric Value':
+        d.pop('formatString', None)
         d['formatStringDefinition'] = {'expression': 'SWITCH ( [Selected Metric], "Avg Review", "0.00", "Avg Days to Deliver", "0.0", "0.0%" )'}
     tm.append(d)
 
