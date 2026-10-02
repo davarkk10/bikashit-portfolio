@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Late Deliveries Cost Stars — Olist SQL Case Study | Bikashit Baruah</title>
+  <meta name="description" content="A SQL analysis of 96,478 real Brazilian e-commerce orders (Olist): how late delivery drives bad reviews, where lateness concentrates, and what to change.">
+  <meta name="theme-color" content="#070b14">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23070b14'/%3E%3Cpath d='M17 17h18c9 0 14 4 14 11 0 4-2 7-6 9 5 1 8 5 8 10 0 8-6 12-16 12H17V17zm10 9v8h8c3 0 5-1 5-4s-2-4-5-4h-8zm0 16v8h9c4 0 6-1 6-4s-2-4-6-4h-9z' fill='%239cff1e'/%3E%3C/svg%3E">
+  <style>
+    :root{--bg:#070b14;--panel:#101a2b;--panel2:#0c1524;--line:#263249;--ink:#f5f7fb;--soft:#c6cfdb;--muted:#7f8ba0;--lime:#9cff1e;--mint:#45e4ce;--amber:#ffc857;--s-ontime:#5eaa12;--s-late:#8b7bff;--grid:#ffffff12;--max:1180px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--bg)}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Manrope,system-ui,sans-serif;overflow-x:hidden}a{color:inherit}
+    .wrap{width:min(calc(100% - 48px),var(--max));margin:auto}.eyebrow{font:500 .74rem/1.3 "DM Mono",monospace;text-transform:uppercase;letter-spacing:.13em;color:var(--lime)}
+    .nav{position:sticky;top:0;z-index:50;background:#070b14e6;border-bottom:1px solid #ffffff0e;backdrop-filter:blur(18px)}.nav-inner{height:68px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{display:flex;align-items:center;gap:11px;font-weight:800;text-decoration:none}.brand-mark{width:12px;height:12px;border-radius:4px;background:var(--lime);box-shadow:0 0 22px #9cff1e88}.nav-links{display:flex;gap:22px;color:var(--soft);font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em}.nav-links a{text-decoration:none}.nav-links a:hover{color:var(--lime)}
+    .hero{padding:96px 0 64px;position:relative;isolation:isolate;overflow:hidden}.hero:before{content:"";position:absolute;inset:-30%;z-index:-1;background:radial-gradient(circle at 78% 30%,#173b3355,transparent 30%),radial-gradient(circle at 12% 80%,#112a493d,transparent 27%)}
+    .hero h1{font-size:clamp(2.8rem,7vw,6.2rem);line-height:.92;letter-spacing:-.065em;margin:22px 0 26px;max-width:980px}.hero h1 span{color:var(--lime)}.lede{color:var(--soft);font-size:clamp(1.02rem,1.5vw,1.22rem);max-width:760px;margin:0}.lede b{color:var(--ink)}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}.chips span{border:1px solid var(--line);border-radius:999px;padding:7px 12px;font:500 .68rem "DM Mono",monospace;color:var(--soft);letter-spacing:.04em;background:#0c1421}
+    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 18px;border:1px solid var(--line);border-radius:12px;font-weight:800;font-size:.86rem;background:#0b1321;text-decoration:none;transition:.2s}.btn:hover{border-color:#9cff1e77;transform:translateY(-2px)}.btn.primary{background:var(--lime);color:#0a110a;border-color:var(--lime)}
+    .band{border-block:1px solid var(--line);background:#0a101c}.kpis{display:grid;grid-template-columns:repeat(4,1fr)}.kpi:first-child{padding-left:0}.kpi{padding:24px 20px;border-right:1px solid var(--line)}.kpi:last-child{border:0}.kpi strong{display:block;font-size:clamp(1.5rem,2.6vw,2.2rem);letter-spacing:-.05em;color:var(--lime);line-height:1.1}.kpi span{color:var(--muted);font-size:.78rem}
+    .section{padding:96px 0;border-bottom:1px solid #ffffff0e}.head{display:grid;grid-template-columns:110px 1fr;gap:34px;margin-bottom:44px}.no{color:var(--lime);font:500 .73rem "DM Mono",monospace;padding-top:12px}.head h2{font-size:clamp(2rem,4.2vw,3.7rem);line-height:1;letter-spacing:-.05em;margin:0}.head h2 .fade{color:#606d80}.head p{color:var(--soft);max-width:760px;margin:18px 0 0}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.card{border:1px solid var(--line);border-radius:22px;padding:28px;background:var(--panel2)}.card h3{margin:0 0 10px;font-size:1.2rem;letter-spacing:-.02em}.card p,.card li{color:var(--soft);font-size:.92rem}.card ul{padding-left:18px;margin:0}.card li{margin:6px 0}.card .k{font:500 .66rem "DM Mono",monospace;color:var(--mint);text-transform:uppercase;letter-spacing:.1em}
+    table{width:100%;border-collapse:collapse;font-size:.84rem}th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line)}th{color:var(--muted);font:500 .66rem "DM Mono",monospace;text-transform:uppercase;letter-spacing:.08em}td{color:var(--soft)}td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+    .finding{display:grid;grid-template-columns:.85fr 1.15fr;gap:40px;align-items:start;margin-bottom:64px}.finding:last-child{margin-bottom:0}.finding .tag{font:500 .68rem "DM Mono",monospace;color:var(--mint);letter-spacing:.1em;text-transform:uppercase}.finding h3{font-size:clamp(1.6rem,2.8vw,2.4rem);line-height:1.08;letter-spacing:-.04em;margin:14px 0}.finding p{color:var(--soft);margin:0 0 12px}.finding p b{color:var(--ink)}.sql-ref{display:inline-block;margin-top:6px;color:var(--lime);font:500 .72rem "DM Mono",monospace;text-decoration:none;border-bottom:1px solid #9cff1e55}
+    .chart-card{border:1px solid var(--line);border-radius:22px;background:var(--panel);padding:22px 22px 14px;position:relative}.chart-title{font-weight:800;font-size:.98rem;margin:0}.chart-sub{color:var(--muted);font-size:.78rem;margin:2px 0 12px}.legend{display:flex;flex-wrap:wrap;gap:16px;font-size:.76rem;color:var(--soft);margin-bottom:6px}.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:7px;vertical-align:-1px}.legend i.line{height:3px;border-radius:2px;vertical-align:3px}
+    svg.chart{display:block;width:100%;height:auto;overflow:visible}@media(max-width:640px){.plot{overflow-x:auto;margin:0 -4px;padding:0 4px}.plot svg.chart{min-width:500px}}svg.chart text{fill:var(--muted);font:500 11px Manrope,sans-serif}svg.chart .val{fill:var(--soft);font-weight:700;paint-order:stroke;stroke:#101a2b;stroke-width:4px;stroke-linejoin:round}svg.chart .lab{paint-order:stroke;stroke:#101a2b;stroke-width:4px}svg.chart .lab{fill:var(--ink);font-weight:700}
+    .tip{position:absolute;pointer-events:none;background:#060a11f2;border:1px solid #3a4c68;border-radius:10px;padding:9px 11px;font-size:.76rem;color:var(--ink);min-width:150px;box-shadow:0 12px 30px #0009;opacity:0;transition:opacity .12s;z-index:5}.tip b{display:block;margin-bottom:4px}.tip div{display:flex;justify-content:space-between;gap:14px;color:var(--soft)}.tip i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px}
+    details{margin-top:8px}summary{cursor:pointer;color:var(--muted);font:500 .68rem "DM Mono",monospace;text-transform:uppercase;letter-spacing:.08em;padding:6px 0}summary:hover{color:var(--lime)}details table{margin-top:6px}
+    .recs{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.rec{border:1px solid var(--line);border-radius:22px;padding:28px;background:linear-gradient(150deg,#101a2b,#0a101b);display:flex;flex-direction:column}.rec .idx{color:var(--lime);font:.7rem "DM Mono",monospace}.rec h3{font-size:1.3rem;line-height:1.15;margin:20px 0 12px;letter-spacing:-.02em}.rec p{color:var(--soft);font-size:.88rem;margin:0 0 10px}.rec .measure{margin-top:auto;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:.78rem}.rec .measure b{color:var(--mint);font-weight:700}
+    pre{background:#060a11;border:1px solid var(--line);border-radius:14px;padding:18px;overflow-x:auto;font:400 .8rem/1.6 "DM Mono",monospace;color:var(--soft);margin:0}
+    .files{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.files a{display:block;border:1px solid var(--line);border-radius:12px;padding:14px;text-decoration:none;background:#0c1421;transition:.2s}.files a:hover{border-color:var(--lime)}.files b{display:block;font:500 .78rem "DM Mono",monospace;color:var(--lime)}.files span{color:var(--muted);font-size:.78rem}
+    .footer{padding:28px 0;color:var(--muted);font-size:.74rem}.footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.footer a{color:var(--soft)}
+    a:focus-visible,summary:focus-visible{outline:2px solid var(--lime);outline-offset:4px}
+    @media(max-width:900px){.finding,.grid2,.recs{grid-template-columns:1fr}.files{grid-template-columns:1fr 1fr}.kpis{grid-template-columns:1fr 1fr}.kpi:nth-child(2){border-right:0}.kpi{border-bottom:1px solid var(--line)}}
+    @media(max-width:640px){.wrap{width:calc(100% - 32px)}.head{grid-template-columns:1fr;gap:8px}.nav-links{display:none}.files{grid-template-columns:1fr}.hero{padding-top:64px}.section{padding:72px 0}.card,.rec{padding:22px}.chart-card{padding:16px 14px 10px}}
+  </style>
+</head>
+<body>
+<nav class="nav"><div class="wrap nav-inner"><a class="brand" href="../"><span class="brand-mark"></span>Bikashit Baruah</a><div class="nav-links"><a href="#data">Data</a><a href="#findings">Findings</a><a href="#actions">Actions</a><a href="#reproduce">Reproduce</a><a href="../#work">All work</a></div></div></nav>
+
+<header class="hero"><div class="wrap">
+  <div class="eyebrow">Case study 04 · Real public data · PostgreSQL</div>
+  <h1>A late delivery costs <span>two stars.</span></h1>
+  <p class="lede">I took <b>96,478 real delivered orders</b> from Olist, a Brazilian online marketplace (2016–2018), and used SQL to answer one operations question: <b>how much does late delivery hurt customers, and where should a logistics team look first?</b></p>
+  <div class="chips"><span>PostgreSQL 16</span><span>8 tables · 99,441 orders</span><span>Window functions · CTEs</span><span>Data checks before analysis</span><span>Every number from a saved query</span></div>
+  <div class="actions"><a class="btn primary" href="https://github.com/davarkk10/bikashit-portfolio/tree/main/olist/sql">Read the SQL ↗</a><a class="btn" href="https://github.com/davarkk10/bikashit-portfolio/tree/main/olist/results">Query results (CSV) ↗</a><a class="btn" href="../#work">← Back to portfolio</a></div>
+</div></header>
+
+<div class="band"><div class="wrap kpis">
+  <div class="kpi"><strong>6.7%</strong><span>of reviewed orders arrived after the promised date</span></div>
+  <div class="kpi"><strong>2.27 vs 4.29</strong><span>average review, late vs on time (out of 5)</span></div>
+  <div class="kpi"><strong>62% vs 9%</strong><span>share of 1–2 star reviews, late vs on time</span></div>
+  <div class="kpi"><strong>17.7%</strong><span>of all late orders sit on one lane: São Paulo → Rio de Janeiro</span></div>
+</div></div>
+
+<section class="section" id="data"><div class="wrap">
+  <div class="head"><div class="no">01 / DATA</div><div><h2>Check the data <span class="fade">before trusting it.</span></h2><p>Before any analysis I profiled the 8 tables and wrote down every problem I had to handle. These checks are in <code>02_profile.sql</code>.</p></div></div>
+  <div class="grid2">
+    <div class="card"><div class="k">What was loaded</div><table>
+      <tr><th>Table</th><th class="n">Rows</th></tr>
+      <tr><td>orders</td><td class="n">99,441</td></tr>
+      <tr><td>order_items</td><td class="n">112,650</td></tr>
+      <tr><td>customers (unique people)</td><td class="n">99,441 (96,096)</td></tr>
+      <tr><td>sellers</td><td class="n">3,095</td></tr>
+      <tr><td>products</td><td class="n">32,951</td></tr>
+      <tr><td>order_payments</td><td class="n">103,886</td></tr>
+      <tr><td>order_reviews</td><td class="n">99,224</td></tr>
+    </table></div>
+    <div class="card"><div class="k">Problems found and how I handled them</div><ul>
+      <li><b>547 orders have 2+ reviews</b> and 789 review IDs repeat. I keep the latest answered review per order, so no order is counted twice.</li>
+      <li><b>8 orders are marked delivered but have no delivery date.</b> Excluded from delivery timing.</li>
+      <li><b>One customer can have many customer IDs.</b> Repeat-purchase work uses <code>customer_unique_id</code> (96,096 people), not <code>customer_id</code>.</li>
+      <li><b>Payments reconcile:</b> for 98,416 of 98,665 paid orders, payments are within R$1 of items + freight.</li>
+      <li><b>Thin edges:</b> Sep–Dec 2016 and Sep–Oct 2018 have very few orders, so trends use Jan 2017–Aug 2018 only.</li>
+      <li><b>Definition of late:</b> delivered to the customer on a later calendar day than the estimated date shown at purchase.</li>
+    </ul></div>
+  </div>
+</div></section>
+
+<section class="section" id="findings"><div class="wrap">
+  <div class="head"><div class="no">02 / FINDINGS</div><div><h2>Three answers <span class="fade">from the SQL.</span></h2></div></div>
+
+  <div class="finding">
+    <div><div class="tag">Finding 1 · Late delivery and reviews</div>
+      <h3>Reviews collapse once an order is 4+ days late.</h3>
+      <p>Orders that arrive early or on the day get <b>~9–11% bad reviews</b> (1–2 stars). At 1–3 days late that triples to <b>32%</b>. From 4 days late, <b>two out of three</b> reviews are bad, and beyond a week it is about 80%.</p>
+      <p>Customers whose first order arrived late also came back slightly less often: <b>2.44% vs 3.03%</b> placed another order (a correlation; repeat buying is rare on Olist overall).</p>
+      <a class="sql-ref" href="https://github.com/davarkk10/bikashit-portfolio/blob/main/olist/sql/03_late_vs_reviews.sql">03_late_vs_reviews.sql · Q1–Q2 ↗</a>
+    </div>
+    <div class="chart-card" id="c1"><p class="chart-title">Share of 1–2 star reviews by delivery timing</p><p class="chart-sub">Delivered orders with a review, n = 95,824</p>
+      <div class="legend"><span><i style="background:var(--s-ontime)"></i>Arrived by the promised date</span><span><i style="background:var(--s-late)"></i>Arrived late</span></div>
+      <div class="plot"></div><div class="tip"></div>
+      <details><summary>Show as table</summary><table><tr><th>Delivery timing</th><th class="n">Orders</th><th class="n">Avg review</th><th class="n">% 1–2 star</th></tr><tbody class="tb"></tbody></table></details>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div><div class="tag">Finding 2 · When it happens</div>
+      <h3>Lateness spikes in peak months, and bad reviews follow.</h3>
+      <p>In normal months 3–6% of orders are late. After Black Friday (<b>Nov 2017: 12.3%</b>) and in <b>Feb–Mar 2018 (14.0%, 18.7%)</b> the late rate jumped, and the share of bad reviews rose with it to 17–21%.</p>
+      <p>The promise itself is padded: the median order arrives <b>12 days before</b> the promised date. So the problem is not that promises are too tight everywhere; it is that capacity runs out in specific months and lanes.</p>
+      <a class="sql-ref" href="https://github.com/davarkk10/bikashit-portfolio/blob/main/olist/sql/03_late_vs_reviews.sql">03_late_vs_reviews.sql · Q3 ↗</a>
+    </div>
+    <div class="chart-card" id="c2"><p class="chart-title">Late orders and bad reviews by purchase month</p><p class="chart-sub">% of delivered orders, Jan 2017 – Aug 2018</p>
+      <div class="legend"><span><i class="line" style="background:var(--s-ontime)"></i>% delivered late</span><span><i class="line" style="background:var(--s-late)"></i>% 1–2 star reviews</span></div>
+      <div class="plot"></div><div class="tip"></div>
+      <details><summary>Show as table</summary><table><tr><th>Month</th><th class="n">Delivered</th><th class="n">% late</th><th class="n">% 1–2 star</th></tr><tbody class="tb"></tbody></table></details>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div><div class="tag">Finding 3 · Where it happens</div>
+      <h3>It is mostly the delivery leg, on a few long lanes.</h3>
+      <p>When the seller handed the parcel to the carrier on time, orders were still late <b>5.3%</b> of the time, and these make up <b>72% of all late orders</b>. Late seller handover raises the risk to 20.7%, but explains only 28% of lateness.</p>
+      <p>Late rates are highest for customers in the Northeast and Rio de Janeiro. The single biggest lane, <b>São Paulo → Rio (8,274 orders, 14.0% late)</b>, alone holds 17.7% of all late orders. The worst 10% of sellers (63 sellers) add another 15.6%.</p>
+      <a class="sql-ref" href="https://github.com/davarkk10/bikashit-portfolio/blob/main/olist/sql/04_where_and_who.sql">04_where_and_who.sql · Q4–Q6 ↗</a>
+    </div>
+    <div class="chart-card" id="c3"><p class="chart-title">Late delivery rate by customer state</p><p class="chart-sub">States with 1,000+ delivered orders · dashed line = all-Brazil 6.7%</p>
+      <div class="plot"></div><div class="tip"></div>
+      <details><summary>Show as table</summary><table><tr><th>State</th><th class="n">Orders</th><th class="n">% late</th><th class="n">Avg days to deliver</th></tr><tbody class="tb"></tbody></table></details>
+    </div>
+  </div>
+
+  <div class="grid2" style="margin-top:8px">
+    <div class="card"><div class="k">Worst seller-to-customer lanes (300+ orders)</div><table>
+      <tr><th>Lane</th><th class="n">Orders</th><th class="n">% late</th><th class="n">Avg days</th><th class="n">Days promised</th></tr>
+      <tr><td>SP → MA</td><td class="n">497</td><td class="n">18.9</td><td class="n">22.0</td><td class="n">31.3</td></tr>
+      <tr><td>SP → PI</td><td class="n">331</td><td class="n">16.3</td><td class="n">20.2</td><td class="n">30.9</td></tr>
+      <tr><td>SP → RJ</td><td class="n">8,274</td><td class="n">14.0</td><td class="n">16.1</td><td class="n">27.1</td></tr>
+      <tr><td>SP → CE</td><td class="n">976</td><td class="n">13.6</td><td class="n">21.1</td><td class="n">32.1</td></tr>
+      <tr><td>SP → BA</td><td class="n">2,340</td><td class="n">12.7</td><td class="n">19.7</td><td class="n">30.5</td></tr>
+    </table><p style="margin:12px 0 0;font-size:.8rem;color:var(--muted)">Source: <code>05_impact_and_lanes.sql</code> Q8. An order with two sellers counts on both lanes.</p></div>
+    <div class="card"><div class="k">Seller leg vs delivery leg</div><table>
+      <tr><th>Seller handover</th><th class="n">Orders</th><th class="n">% late to customer</th><th class="n">Share of late orders</th></tr>
+      <tr><td>On time</td><td class="n">89,035</td><td class="n">5.3</td><td class="n">72.3%</td></tr>
+      <tr><td>Late</td><td class="n">8,775</td><td class="n">20.7</td><td class="n">27.7%</td></tr>
+    </table><p style="margin:12px 0 0;font-size:.8rem;color:var(--muted)">“Late handover” = carrier received the parcel after the seller's ship-by date (<code>shipping_limit_date</code>). Source: <code>04_where_and_who.sql</code> Q6.</p></div>
+  </div>
+</div></section>
+
+<section class="section" id="actions"><div class="wrap">
+  <div class="head"><div class="no">03 / ACTIONS</div><div><h2>What I would tell <span class="fade">the logistics team.</span></h2><p>Each recommendation comes with the number I would track to see whether it worked.</p></div></div>
+  <div class="recs">
+    <div class="rec"><span class="idx">01</span><h3>Start with São Paulo → Rio.</h3><p>One lane holds 17.7% of late orders. Review the carrier on that lane first: compare carriers, add a second option, and check where parcels wait.</p><p class="measure">Track: <b>SP → RJ late %</b> (14.0% today, Brazil average 6.7%)</p></div>
+    <div class="rec"><span class="idx">02</span><h3>Plan peak capacity before it is needed.</h3><p>Late rates tripled after Black Friday and in Feb–Mar 2018. Book extra carrier capacity before those weeks, and send customers a proactive delay message when a parcel misses its ship-by date, before it becomes 4+ days late.</p><p class="measure">Track: <b>monthly late %</b> kept under 6% in peak months</p></div>
+    <div class="rec"><span class="idx">03</span><h3>Set promise dates by lane, and coach the worst sellers.</h3><p>Promises are padded by a median of 12 days, yet long Northeast lanes still miss. Set the promise per lane from actual delivery times. Separately, 63 sellers produce 15.6% of late orders: give them a ship-by scorecard.</p><p class="measure">Track: <b>late % for the worst seller decile</b> (16.2% today)</p></div>
+  </div>
+</div></section>
+
+<section class="section" id="limits"><div class="wrap">
+  <div class="head"><div class="no">04 / LIMITS</div><div><h2>What this analysis <span class="fade">does not prove.</span></h2></div></div>
+  <div class="grid2">
+    <div class="card"><ul>
+      <li><b>Correlation, not cause.</b> Late orders get worse reviews, but some bad reviews may come from the product itself. A controlled test (e.g. proactive delay messages for half the late orders) would measure the true effect.</li>
+      <li><b>Repeat purchase is rare</b> (about 3%), so the 2.44% vs 3.03% gap is small even though it is statistically clear (z ≈ 2.7).</li>
+    </ul></div>
+    <div class="card"><ul>
+      <li><b>Old, one-country data.</b> Brazil, Sep 2016 – Oct 2018. Patterns are useful for method, not as current facts.</li>
+      <li><b>No carrier field.</b> The dataset does not name the carrier, so “delivery leg” means the time after the seller's handover, not a named company.</li>
+      <li><b>Reviews are optional.</b> Only orders with a review are in the review analysis (95,824 of 96,478 delivered).</li>
+    </ul></div>
+  </div>
+</div></section>
+
+<section class="section" id="reproduce"><div class="wrap">
+  <div class="head"><div class="no">05 / REPRODUCE</div><div><h2>Run it <span class="fade">yourself.</span></h2><p>Download the public Olist CSVs from Kaggle, then load and query them with PostgreSQL. Every number on this page is in a saved CSV.</p></div></div>
+  <pre>export DATA=/path/to/olist_csvs PGURL=postgresql://postgres@localhost/postgres
+olist/sql/load.sh       # 00_schema.sql + \copy 8 CSV files + 01_views.sql
+psql "$PGURL" -f olist/sql/02_profile.sql       # data checks
+olist/sql/export.sh     # runs Q1–Q10, writes olist/results/*.csv</pre>
+  <div class="files" style="margin-top:16px">
+    <a href="https://github.com/davarkk10/bikashit-portfolio/blob/main/olist/sql/00_schema.sql"><b>00_schema.sql</b><span>8 tables, types, keys</span></a>
+    <a href="https://github.com/davarkk10/bikashit-portfolio/blob/main/olist/sql/01_views.sql"><b>01_views.sql</b><span>Clean views: one review per order, delivery timing</span></a>
+    <a href="https://github.com/davarkk10/bikashit-portfolio/blob/main/olist/sql/02_profile.sql"><b>02_profile.sql</b><span>Row counts, duplicates, payment reconciliation</span></a>
+    <a href="https://github.com/davarkk10/bikashit-portfolio/blob/main/olist/sql/03_late_vs_reviews.sql"><b>03_late_vs_reviews.sql</b><span>Q1–Q3: lateness vs reviews, monthly trend</span></a>
+    <a href="https://github.com/davarkk10/bikashit-portfolio/blob/main/olist/sql/04_where_and_who.sql"><b>04_where_and_who.sql</b><span>Q4–Q6: states, seller deciles, handover</span></a>
+    <a href="https://github.com/davarkk10/bikashit-portfolio/blob/main/olist/sql/05_impact_and_lanes.sql"><b>05_impact_and_lanes.sql</b><span>Q7–Q10: repeat buying, lanes, value at stake</span></a>
+  </div>
+</div></section>
+
+<footer class="footer"><div class="wrap"><span>Data: <a href="https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce">Brazilian E-Commerce Public Dataset by Olist</a>, CC BY-NC-SA 4.0. Analysis and SQL by Bikashit Baruah.</span><a href="../">← Bikashit Baruah · portfolio</a></div></footer>
+
+<script>
+const ON='var(--s-ontime)',LATE='var(--s-late)';
+const buckets=[["7+ days early",75744,4.31,9.0,0],["0–6 days early",13699,4.17,10.8,0],["1–3 days late",1852,3.29,32.1,1],["4–7 days late",1748,2.10,67.7,1],["8–14 days late",1446,1.67,80.2,1],["15+ days late",1335,1.72,78.4,1]];
+const months=[["2017-01",741,2.8,12.0],["2017-02",1643,2.6,11.1],["2017-03",2527,4.5,11.2],["2017-04",2290,6.4,12.9],["2017-05",3517,2.8,10.1],["2017-06",3111,3.0,10.7],["2017-07",3842,2.7,9.9],["2017-08",4165,2.9,9.4],["2017-09",4118,4.3,10.3],["2017-10",4446,4.0,11.1],["2017-11",7237,12.3,16.6],["2017-12",5461,7.3,14.4],["2018-01",7013,5.6,13.7],["2018-02",6507,14.0,19.4],["2018-03",6948,18.7,21.2],["2018-04",6752,4.4,11.8],["2018-05",6722,6.5,10.8],["2018-06",6072,1.2,10.0],["2018-07",6118,3.3,9.7],["2018-08",6330,6.1,9.5]];
+const states=[["CE","Ceará",1279,13.8,21.2],["BA","Bahia",3256,12.2,19.3],["RJ","Rio de Janeiro",12350,12.1,15.2],["ES","Espírito Santo",1995,10.7,15.7],["PE","Pernambuco",1593,9.6,18.4],["SC","Santa Catarina",3546,8.2,14.9],["GO","Goiás",1957,6.5,15.5],["RS","Rio Grande do Sul",5344,6.1,15.2],["DF","Distrito Federal",2080,5.7,12.9],["MG","Minas Gerais",11354,4.6,11.9],["SP","São Paulo",40494,4.5,8.7],["PR","Paraná",4923,4.0,11.9]];
+const NS='http://www.w3.org/2000/svg',fmt=n=>n.toLocaleString('en-US');
+const mk=(tag,attrs,parent)=>{const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);parent&&parent.appendChild(e);return e};
+const txt=(parent,x,y,s,attrs={})=>{const t=mk('text',Object.assign({x,y},attrs),parent);t.textContent=s;return t};
+const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const mlabel=m=>MON[+m.slice(5)-1]+' '+m.slice(0,4);
+function tipRows(tip,title,rows){tip.replaceChildren();const b=document.createElement('b');b.textContent=title;tip.appendChild(b);for(const[c,l,v]of rows){const d=document.createElement('div'),s=document.createElement('span');if(c){const i=document.createElement('i');i.style.background=c;s.appendChild(i)}s.appendChild(document.createTextNode(l));const r=document.createElement('strong');r.textContent=v;d.append(s,r);tip.appendChild(d)}}
+function place(card,tip,x,y){const w=card.clientWidth,tw=tip.offsetWidth;let left=x+14;if(left+tw>w-8)left=x-tw-14;tip.style.left=Math.max(8,left)+'px';tip.style.top=Math.max(8,y-20)+'px';tip.style.opacity=1}
+function svgPoint(svg,ev){const p=svg.createSVGPoint();p.x=ev.clientX;p.y=ev.clientY;return p.matrixTransform(svg.getScreenCTM().inverse())}
+function cardXY(card,ev){const r=card.getBoundingClientRect();return[ev.clientX-r.left,ev.clientY-r.top]}
+function fillTable(card,rows){const tb=card.querySelector('.tb');for(const r of rows){const tr=document.createElement('tr');r.forEach((v,i)=>{const td=document.createElement('td');td.textContent=v;if(i)td.className='n';tr.appendChild(td)});tb.appendChild(tr)}}
+
+/* Chart 1: vertical bars */
+(function(){const card=document.getElementById('c1'),tip=card.querySelector('.tip'),W=560,H=300,m={l:40,r:8,t:22,b:40},iw=W-m.l-m.r,ih=H-m.t-m.b;
+const svg=mk('svg',{viewBox:`0 0 ${W} ${H}`,class:'chart',role:'img','aria-label':'Bar chart: share of 1–2 star reviews rises from 9% for early orders to 80% for orders 8–14 days late'},card.querySelector('.plot'));
+const y=v=>m.t+ih-v/100*ih;for(const t of[0,25,50,75,100]){mk('line',{x1:m.l,x2:W-m.r,y1:y(t),y2:y(t),stroke:'var(--grid)'},svg);txt(svg,m.l-8,y(t)+4,t+'%',{'text-anchor':'end'})}
+const bw=iw/buckets.length,g=2;buckets.forEach((d,i)=>{const x=m.l+i*bw+bw*.18,w=bw*.64,h=d[3]/100*ih,top=y(d[3]),r=4;
+const path=`M${x},${y(0)} V${top+r} Q${x},${top} ${x+r},${top} H${x+w-r} Q${x+w},${top} ${x+w},${top+r} V${y(0)} Z`;
+const bar=mk('path',{d:path,fill:d[4]?LATE:ON},svg);txt(svg,x+w/2,top-7,d[3].toFixed(0)+'%',{'text-anchor':'middle',class:'val'});
+const lines=d[0].split(' ');txt(svg,x+w/2,H-m.b+16,lines[0]+' '+lines[1],{'text-anchor':'middle'});txt(svg,x+w/2,H-m.b+30,lines.slice(2).join(' '),{'text-anchor':'middle'});
+const hit=mk('rect',{x:m.l+i*bw,y:m.t,width:bw,height:ih,fill:'transparent'},svg);
+hit.addEventListener('mousemove',ev=>{bar.setAttribute('opacity',1);tipRows(tip,d[0],[[d[4]?'#8b7bff':'#5eaa12','% 1–2 star',d[3].toFixed(1)+'%'],[null,'Avg review',d[2].toFixed(2)],[null,'Orders',fmt(d[1])]]);const[a,b]=cardXY(card,ev);place(card,tip,a,b)});
+hit.addEventListener('mouseleave',()=>tip.style.opacity=0)});
+fillTable(card,buckets.map(d=>[d[0],fmt(d[1]),d[2].toFixed(2),d[3].toFixed(1)+'%']))})();
+
+/* Chart 2: two lines, one % axis, crosshair */
+(function(){const card=document.getElementById('c2'),tip=card.querySelector('.tip'),W=560,H=300,m={l:40,r:74,t:16,b:34},iw=W-m.l-m.r,ih=H-m.t-m.b,max=25;
+const svg=mk('svg',{viewBox:`0 0 ${W} ${H}`,class:'chart',role:'img','aria-label':'Line chart: late delivery % and bad review % by month, both spiking in Nov 2017 and Feb–Mar 2018'},card.querySelector('.plot'));
+const x=i=>m.l+i/(months.length-1)*iw,y=v=>m.t+ih-v/max*ih;
+for(const t of[0,5,10,15,20,25]){mk('line',{x1:m.l,x2:m.l+iw,y1:y(t),y2:y(t),stroke:'var(--grid)'},svg);txt(svg,m.l-8,y(t)+4,t+'%',{'text-anchor':'end'})}
+months.forEach((d,i)=>{if(i%3===0)txt(svg,x(i),H-m.b+18,mlabel(d[0]).replace(' 20',' ’'),{'text-anchor':'middle'})});
+const series=[[2,'#5eaa12','% late'],[3,'#8b7bff','% 1–2 star']];
+for(const[k,c,l]of series){mk('path',{d:months.map((d,i)=>(i?'L':'M')+x(i)+','+y(d[k])).join(' '),fill:'none',stroke:c,'stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'},svg);
+const last=months[months.length-1];mk('circle',{cx:x(months.length-1),cy:y(last[k]),r:4,fill:c,stroke:'#101a2b','stroke-width':2},svg)}
+txt(svg,x(months.length-1)+9,y(months[months.length-1][3])-2,'Bad reviews',{class:'lab'});txt(svg,x(months.length-1)+9,y(months[months.length-1][2])+12,'Late',{class:'lab'});
+const peak=months.findIndex(d=>d[0]==='2018-03');txt(svg,x(peak),y(21.2)-10,'Mar 2018: 18.7% late, 21.2% bad',{'text-anchor':'middle',class:'val'});
+const cross=mk('line',{y1:m.t,y2:m.t+ih,stroke:'#ffffff40','stroke-dasharray':'3 3',opacity:0},svg);
+const dots=series.map(([k,c])=>mk('circle',{r:5,fill:c,stroke:'#101a2b','stroke-width':2,opacity:0},svg));
+const hit=mk('rect',{x:m.l-10,y:m.t,width:iw+20,height:ih,fill:'transparent'},svg);
+hit.addEventListener('mousemove',ev=>{const p=svgPoint(svg,ev);const i=Math.max(0,Math.min(months.length-1,Math.round((p.x-m.l)/iw*(months.length-1))));const d=months[i];
+cross.setAttribute('x1',x(i));cross.setAttribute('x2',x(i));cross.setAttribute('opacity',1);series.forEach(([k],j)=>{dots[j].setAttribute('cx',x(i));dots[j].setAttribute('cy',y(d[k]));dots[j].setAttribute('opacity',1)});
+tipRows(tip,mlabel(d[0]),[['#5eaa12','% late',d[2].toFixed(1)+'%'],['#8b7bff','% 1–2 star',d[3].toFixed(1)+'%'],[null,'Delivered orders',fmt(d[1])]]);const[a,b]=cardXY(card,ev);place(card,tip,a,b)});
+hit.addEventListener('mouseleave',()=>{tip.style.opacity=0;cross.setAttribute('opacity',0);dots.forEach(d=>d.setAttribute('opacity',0))});
+fillTable(card,months.map(d=>[mlabel(d[0]),fmt(d[1]),d[2].toFixed(1)+'%',d[3].toFixed(1)+'%']))})();
+
+/* Chart 3: horizontal bars, single series + reference line */
+(function(){const card=document.getElementById('c3'),tip=card.querySelector('.tip'),W=560,rowH=24,m={l:118,r:44,t:8,b:26},iw=W-m.l-m.r,H=m.t+m.b+states.length*rowH,max=15;
+const svg=mk('svg',{viewBox:`0 0 ${W} ${H}`,class:'chart',role:'img','aria-label':'Bar chart: late delivery rate by state, highest in Ceará 13.8%, Bahia 12.2% and Rio de Janeiro 12.1%, lowest in Paraná 4.0%'},card.querySelector('.plot'));
+const x=v=>m.l+v/max*iw;for(const t of[0,5,10,15]){mk('line',{x1:x(t),x2:x(t),y1:m.t,y2:H-m.b,stroke:'var(--grid)'},svg);txt(svg,x(t),H-m.b+16,t+'%',{'text-anchor':'middle'})}
+mk('line',{x1:x(6.7),x2:x(6.7),y1:m.t-4,y2:H-m.b,stroke:'var(--soft)','stroke-dasharray':'4 4','stroke-width':1.5,'pointer-events':'none'},svg);
+states.forEach((d,i)=>{const yy=m.t+i*rowH,h=rowH-8,w=x(d[3])-m.l,r=4;
+const path=`M${m.l},${yy+4} H${m.l+w-r} Q${m.l+w},${yy+4} ${m.l+w},${yy+4+r} V${yy+4+h-r} Q${m.l+w},${yy+4+h} ${m.l+w-r},${yy+4+h} H${m.l} Z`;
+mk('path',{d:path,fill:LATE},svg);txt(svg,m.l-8,yy+rowH/2+4,d[1],{'text-anchor':'end'});txt(svg,m.l+w+6,yy+rowH/2+4,d[3].toFixed(1)+'%',{class:'val'});
+const hit=mk('rect',{x:0,y:yy,width:W,height:rowH,fill:'transparent'},svg);
+hit.addEventListener('mousemove',ev=>{tipRows(tip,d[1]+' ('+d[0]+')',[['#8b7bff','% late',d[3].toFixed(1)+'%'],[null,'Avg days to deliver',d[4].toFixed(1)],[null,'Delivered orders',fmt(d[2])]]);const[a,b]=cardXY(card,ev);place(card,tip,a,b)});
+hit.addEventListener('mouseleave',()=>tip.style.opacity=0)});
+fillTable(card,states.map(d=>[d[1],fmt(d[2]),d[3].toFixed(1)+'%',d[4].toFixed(1)]))})();
+</script>
+</body>
+</html>

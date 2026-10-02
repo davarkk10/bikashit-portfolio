@@ -31,7 +31,7 @@
       <a href="#system">System</a>
       <a href="#roadmap">Phases</a>
       <a href="#proof">Proof</a>
-      <a href="#impact">Recruiter lens</a>
+      <a href="#impact">Skills</a>
     </nav>
     <a class="header-cta" href="#roadmap">Explore build <span>↘</span></a>
   </header>
@@ -47,21 +47,12 @@
         <div class="hero-copy">
           <p class="eyebrow reveal">PROJECT 03 / DATA · AI · AUTOMATION</p>
           <h1 id="hero-title" class="reveal">Procure<span>AI</span><br>FMCG</h1>
-          <p class="hero-lede reveal">A tested procurement intelligence system connecting reconciled spend analytics, time-aware risk models, citation-grounded contract retrieval and human-controlled workflows.</p>
-          <div class="hero-role reveal"><span>MY ROLE</span><b>Data &amp; AI solution architect · synthetic data engineer · implementation owner</b></div>
+          <p class="hero-lede reveal">Which supplier invoices deserve a second look, and what does the contract say? A PostgreSQL warehouse, a live Power BI report, risk scoring and contract search on synthetic FMCG data, with a named person making every decision.</p>
+          <div class="hero-role reveal"><span>BUILT BY</span><b>Bikashit Baruah, with AI coding assistants. <a href="#ownership" style="color:#46e8bd;text-decoration:underline;text-underline-offset:3px">See how I built it</a></b></div>
           <div class="hero-actions reveal">
             <a class="btn primary" href="#cockpit">Enter decision cockpit <span>↘</span></a>
             <a class="btn ghost" href="#evidence">Audit the evidence</a>
             <a class="btn ghost" href="https://app.powerbi.com/view?r=eyJrIjoiYTdmZWE0MDktZDk5Ni00ZWQ1LTgzMGItMDE3N2E1ODg3N2ZjIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9" target="_blank" rel="noopener noreferrer">Open the live Power BI report <span>↗</span></a>
-          </div>
-          <div class="review-lenses reveal" aria-label="Choose a review path">
-            <span>CHOOSE YOUR REVIEW</span>
-            <div>
-              <a href="#evidence"><b>90 sec</b> Recruiter</a>
-              <a href="#cockpit"><b>3 min</b> BI &amp; analytics</a>
-              <a href="#workstreams"><b>5 min</b> AI &amp; engineering</a>
-              <a href="#proof"><b>Deep</b> Technical audit</a>
-            </div>
           </div>
           <div class="build-line reveal">
             <span>BUILT AROUND</span>
@@ -83,8 +74,6 @@
           <div class="satellite s3"><i></i><span>CONTRACT<br>RAG</span></div>
           <div class="satellite s4"><i></i><span>SUPPLIER<br>RISK</span></div>
           <div class="satellite s5"><i></i><span>APPROVAL<br>AGENTS</span></div>
-          <div class="coordinate c1">26.1445° N</div>
-          <div class="coordinate c2">91.7362° E</div>
         </div>
       </div>
 
@@ -144,13 +133,35 @@
     </section>
 
     <section class="ownership section-shell" id="ownership">
-      <div class="section-index">02 / OWNERSHIP &amp; CURRENT STATE</div>
+      <div class="section-index">02 / HOW I BUILT THIS</div>
       <div class="ownership-head">
         <div>
-          <p class="eyebrow reveal">WHAT I PERSONALLY OWN</p>
-          <h2 class="section-title reveal">Clear contribution.<br><em>Honest status.</em></h2>
+          <p class="eyebrow reveal">MY PART AND THE TOOLS' PART</p>
+          <h2 class="section-title reveal">How I built this.<br><em>And how to check it.</em></h2>
         </div>
-        <p class="reveal">This case study separates validated artifacts from the downstream implementation roadmap, so every claim can survive technical interview scrutiny.</p>
+        <p class="reveal">AI coding assistants wrote most of the code. I directed the work, set the checks a number has to pass before it is shown, ran the release, and finished and published the Power BI report.</p>
+      </div>
+      <div class="ownership-grid reveal" style="grid-template-columns:repeat(2,minmax(0,1fr));margin-bottom:22px">
+        <article class="complete">
+          <span>WHAT I DID</span>
+          <h3>Questions, checks and the report</h3>
+          <ul>
+            <li>Set the procurement questions the project answers: spend bought off contract, duplicate payments, late suppliers, slow approvals</li>
+            <li>Ran the full release in Docker on my own machine and checked the results</li>
+            <li>Required every headline number to match SQL before it was shown (28 of 28 KPIs do)</li>
+            <li>Fixed, checked and published the 9-page Power BI report in Power BI Desktop</li>
+            <li>Decided what not to claim, and kept weak results in (56% on unseen contract questions)</li>
+          </ul>
+        </article>
+        <article class="roadmapped">
+          <span>WHAT AI TOOLS DID</span>
+          <h3>Most of the code, to my specification</h3>
+          <ul>
+            <li>Wrote most of the Python, SQL, test and pipeline code</li>
+            <li>Generated the synthetic FMCG data and the 402 contract PDFs</li>
+            <li>Wrote the automated tests: 373 of them plus 46 data checks, all passing in a clean Docker run</li>
+          </ul>
+        </article>
       </div>
       <div class="ownership-grid reveal">
         <article class="complete">
@@ -161,7 +172,7 @@
             <li>402 searchable, entity-linked procurement PDFs</li>
             <li>Ground-truth anomaly and supplier-delay labels</li>
             <li>PostgreSQL 16 warehouse: 68 SQL tests, idempotent reload, 24 decision analyses</li>
-            <li>Power BI report built in Desktop: 8 pages, 32 measures, 5 security roles</li>
+            <li>Power BI report built in Desktop: 9 pages, 32 measures, 5 security roles</li>
             <li>Time-aware ML, hybrid RAG, FastAPI and controlled workflow evidence</li>
           </ul>
         </article>
@@ -179,7 +190,7 @@
         </article>
         <article class="not-claimed">
           <span>NOT CLAIMED</span>
-          <h3>Credibility over theatre</h3>
+          <h3>What this project does not claim</h3>
           <ul>
             <li>No real-company or confidential transaction data</li>
             <li>No production deployment or active business users</li>
@@ -204,7 +215,7 @@
 
       <div class="cockpit-shell reveal">
         <div class="cockpit-bar">
-          <div class="cockpit-brand"><i></i><span>PROCUREAI / DECISION OS</span></div>
+          <div class="cockpit-brand"><i></i><span>PROCUREAI / REVIEW SCREENS</span></div>
           <div class="cockpit-status"><i></i> VERIFIED LOCAL RELEASE</div>
           <div class="cockpit-asof">AS OF · 1 OCT 2026</div>
         </div>
@@ -522,7 +533,7 @@
           <p>Baseline release validation</p>
         </div>
         <div class="proof-copy">
-          <p class="eyebrow reveal">TRUST IS ENGINEERED</p>
+          <p class="eyebrow reveal">HOW THE NUMBERS ARE CHECKED</p>
           <h2 class="section-title reveal">No silent joins.<br><em>No invented impact.</em></h2>
           <p class="reveal">Evidence now spans source validation, warehouse reconciliation, chronological model evaluation, cited retrieval, API behavior, workflow branches, drift, latency and secret scanning.</p>
           <div class="check-grid reveal">
@@ -549,7 +560,7 @@
     </section>
 
     <section class="impact section-shell" id="impact">
-      <div class="section-index">10 / RECRUITER LENS</div>
+      <div class="section-index">10 / SKILLS MAP</div>
       <div class="impact-head">
         <p class="eyebrow reveal">ONE PROJECT · EIGHT CAPABILITIES</p>
         <h2 class="section-title reveal">The portfolio proof behind<br><em>every skill claim.</em></h2>
@@ -579,9 +590,9 @@
 
     <section class="closing section-shell">
       <div class="closing-orb" aria-hidden="true"></div>
-      <p class="eyebrow reveal">PROCUREMENT × ANALYTICS × RESPONSIBLE AI</p>
-      <h2 class="reveal">Not another dashboard.<br><span>A decision system.</span></h2>
-      <p class="reveal">Designed and built as a deterministic synthetic proof of concept by Bikashit Baruah.</p>
+      <p class="eyebrow reveal">PROCUREMENT ANALYTICS ON SYNTHETIC DATA</p>
+      <h2 class="reveal">From 48,000 invoices<br><span>to a short review list.</span></h2>
+      <p class="reveal">Built by Bikashit Baruah with AI coding assistants, on deterministic synthetic data. No real company data, savings or fraud findings are claimed.</p>
       <div class="closing-actions reveal">
         <a class="btn primary" href="#top">Return to top <span>↑</span></a>
         <a class="btn ghost" href="#roadmap">Review all phases</a>
