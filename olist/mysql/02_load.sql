@@ -1,6 +1,8 @@
 -- MySQL 8 version. Before running: SET GLOBAL local_infile = 1; and add OPT_LOCAL_INFILE=1
 -- to the Workbench connection (Edit Connection > Advanced > Others). Change C:/olist/data to your folder.
 -- Empty strings in date and number columns are turned into NULL with NULLIF.
+USE olist_db;
+
 LOAD DATA LOCAL INFILE 'C:/olist/data/olist_customers_dataset.csv' INTO TABLE customers
   FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
 
@@ -40,4 +42,4 @@ LOAD DATA LOCAL INFILE 'C:/olist/data/olist_order_reviews_dataset.csv' INTO TABL
   (review_id, order_id, review_score, @title, @message, review_creation_date, @answered)
   SET review_comment_title    = NULLIF(@title, ''),
       review_comment_message  = NULLIF(@message, ''),
-      review_answer_timestamp = NULLIF(@answered, '');
+      review_answer_timestamp = NULLIF(TRIM(TRAILING '\r' FROM @answered), '');  -- this file ends lines with \r\n
