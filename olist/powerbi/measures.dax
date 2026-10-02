@@ -201,21 +201,27 @@ RETURN IF ( [Seller Orders] >= 30 && Rnk <= [Top N Value], 1, 0 )
 Selected BM = SELECTEDVALUE ( dim_bm[Benchmark], "vs LY" )
 LY Cutoff = EDATE ( MAX ( fact_delivery[purchase_date] ), -12 )
 
-Late % LY =
-VAR Cutoff = [LY Cutoff]
-RETURN CALCULATE ( [Late %], SAMEPERIODLASTYEAR ( dim_date[Date] ), dim_date[Date] <= Cutoff )
-Avg Review LY =
-VAR Cutoff = [LY Cutoff]
-RETURN CALCULATE ( [Avg Review], SAMEPERIODLASTYEAR ( dim_date[Date] ), dim_date[Date] <= Cutoff )
-Bad Review % LY =
-VAR Cutoff = [LY Cutoff]
-RETURN CALCULATE ( [Bad Review %], SAMEPERIODLASTYEAR ( dim_date[Date] ), dim_date[Date] <= Cutoff )
-Avg Days to Deliver LY =
-VAR Cutoff = [LY Cutoff]
-RETURN CALCULATE ( [Avg Days to Deliver], SAMEPERIODLASTYEAR ( dim_date[Date] ), dim_date[Date] <= Cutoff )
 Delivered Orders LY =
 VAR Cutoff = [LY Cutoff]
 RETURN CALCULATE ( [Delivered Orders], SAMEPERIODLASTYEAR ( dim_date[Date] ), dim_date[Date] <= Cutoff )
+// LY values are shown only when last year has at least 300 orders in the same dates (else "BM: n/a").
+// Example: Year = 2017 would compare with Sep-Dec 2016 (267 orders), so the card shows n/a.
+Late % LY =
+VAR Cutoff = [LY Cutoff]
+VAR Value = CALCULATE ( [Late %], SAMEPERIODLASTYEAR ( dim_date[Date] ), dim_date[Date] <= Cutoff )
+RETURN IF ( [Delivered Orders LY] >= 300, Value )
+Avg Review LY =
+VAR Cutoff = [LY Cutoff]
+VAR Value = CALCULATE ( [Avg Review], SAMEPERIODLASTYEAR ( dim_date[Date] ), dim_date[Date] <= Cutoff )
+RETURN IF ( [Delivered Orders LY] >= 300, Value )
+Bad Review % LY =
+VAR Cutoff = [LY Cutoff]
+VAR Value = CALCULATE ( [Bad Review %], SAMEPERIODLASTYEAR ( dim_date[Date] ), dim_date[Date] <= Cutoff )
+RETURN IF ( [Delivered Orders LY] >= 300, Value )
+Avg Days to Deliver LY =
+VAR Cutoff = [LY Cutoff]
+VAR Value = CALCULATE ( [Avg Days to Deliver], SAMEPERIODLASTYEAR ( dim_date[Date] ), dim_date[Date] <= Cutoff )
+RETURN IF ( [Delivered Orders LY] >= 300, Value )
 
 // Targets are illustrative service goals, labelled as such on the report.
 Late % Target = 0.05
@@ -229,10 +235,10 @@ Bad Review % BM = IF ( [Selected BM] = "vs LY", [Bad Review % LY], [Bad Review %
 Avg Days BM = IF ( [Selected BM] = "vs LY", [Avg Days to Deliver LY], [Avg Days Target] )
 
 // Change vs benchmark: percentage points for rates, plain difference for review and days
-Late % Chg (pp) = ( [Late %] - [Late % BM] ) * 100
-Avg Review Chg = [Avg Review] - [Avg Review BM]
-Bad Review % Chg (pp) = ( [Bad Review %] - [Bad Review % BM] ) * 100
-Avg Days Chg = [Avg Days to Deliver] - [Avg Days BM]
+Late % Chg (pp) = IF ( NOT ISBLANK ( [Late % BM] ), ( [Late %] - [Late % BM] ) * 100 )
+Avg Review Chg = IF ( NOT ISBLANK ( [Avg Review BM] ), [Avg Review] - [Avg Review BM] )
+Bad Review % Chg (pp) = IF ( NOT ISBLANK ( [Bad Review % BM] ), ( [Bad Review %] - [Bad Review % BM] ) * 100 )
+Avg Days Chg = IF ( NOT ISBLANK ( [Avg Days BM] ), [Avg Days to Deliver] - [Avg Days BM] )
 
 // Card reference-label text, e.g. "BM: 3.5% | +4.2 pp vs LY"
 Callout Late % =
@@ -249,10 +255,10 @@ IF ( ISBLANK ( [Avg Days BM] ), "BM: n/a",
     "BM: " & FORMAT ( [Avg Days BM], "0.0" ) & " | " & FORMAT ( [Avg Days Chg], "+0.0;-0.0;0.0" ) & " days " & [Selected BM] )
 
 // Accent-bar colours (lower is better for late %, bad review %, days; higher is better for review)
-COLOR Late % = IF ( [Late %] <= [Late % BM], "#0D9488", "#D64550" )
-COLOR Avg Review = IF ( [Avg Review] >= [Avg Review BM], "#0D9488", "#D64550" )
-COLOR Bad Review % = IF ( [Bad Review %] <= [Bad Review % BM], "#0D9488", "#D64550" )
-COLOR Avg Days = IF ( [Avg Days to Deliver] <= [Avg Days BM], "#0D9488", "#D64550" )
+COLOR Late % = IF ( ISBLANK ( [Late % BM] ), "#94A3B8", IF ( [Late %] <= [Late % BM], "#0D9488", "#D64550" ) )
+COLOR Avg Review = IF ( ISBLANK ( [Avg Review BM] ), "#94A3B8", IF ( [Avg Review] >= [Avg Review BM], "#0D9488", "#D64550" ) )
+COLOR Bad Review % = IF ( ISBLANK ( [Bad Review % BM] ), "#94A3B8", IF ( [Bad Review %] <= [Bad Review % BM], "#0D9488", "#D64550" ) )
+COLOR Avg Days = IF ( ISBLANK ( [Avg Days BM] ), "#94A3B8", IF ( [Avg Days to Deliver] <= [Avg Days BM], "#0D9488", "#D64550" ) )
 COLOR Status Bar = IF ( SELECTEDVALUE ( fact_delivery[is_late] ) = 1, "#D64550", "#0D9488" )
 
 // [7 Dynamic metric] --------------------------------------------------
