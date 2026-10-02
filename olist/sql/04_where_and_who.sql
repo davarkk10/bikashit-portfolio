@@ -15,7 +15,7 @@ WITH s AS (
   GROUP BY 1 HAVING COUNT(*) >= 30),
 ranked AS (
   SELECT *, late_orders::numeric / orders AS late_rate,
-         NTILE(10) OVER (ORDER BY late_orders::numeric / orders DESC) AS decile
+         NTILE(10) OVER (ORDER BY late_orders::numeric / orders DESC, seller_id) AS decile  -- seller_id breaks ties so deciles are repeatable
   FROM s)
 SELECT decile, COUNT(*) AS sellers, SUM(orders) AS orders, SUM(late_orders) AS late_orders,
        ROUND(100.0 * SUM(late_orders) / SUM(orders), 1) AS late_pct,

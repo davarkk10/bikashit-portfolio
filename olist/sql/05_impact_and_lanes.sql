@@ -1,17 +1,20 @@
 -- Q7-Q9: What does lateness cost, which routes are worst, and are delivery promises set well?
 SET search_path = olist;
 
--- Q7. Do customers come back? First delivered order late vs on time -> placed another order later
+-- Q7. Do customers come back? First delivered order late vs on time -> bought again at a later time
+--     (strictly later: a few people placed two orders at the same second, which is one checkout, not a return visit)
 WITH person_orders AS (
-  SELECT c.customer_unique_id, o.order_id, o.order_purchase_timestamp,
-         LEAD(o.order_purchase_timestamp) OVER (PARTITION BY c.customer_unique_id ORDER BY o.order_purchase_timestamp) AS next_purchase
+  SELECT c.customer_unique_id, o.order_id,
+         MAX(o.order_purchase_timestamp) OVER (PARTITION BY c.customer_unique_id) AS last_purchase
   FROM orders o JOIN customers c USING (customer_id)),
 firsts AS (
-  SELECT DISTINCT ON (d.customer_unique_id) d.customer_unique_id, d.is_late, p.next_purchase
+  SELECT DISTINCT ON (d.customer_unique_id) d.customer_unique_id, d.is_late, d.purchased_at, p.last_purchase
   FROM delivered d JOIN person_orders p USING (order_id)
-  ORDER BY d.customer_unique_id, d.purchased_at)
+  ORDER BY d.customer_unique_id, d.purchased_at, d.order_id)
 SELECT CASE WHEN is_late THEN 'first order late' ELSE 'first order on time' END AS first_order,
-       COUNT(*) AS customers, ROUND(100.0 * AVG((next_purchase IS NOT NULL)::int), 2) AS repeat_pct
+       COUNT(*) AS customers,
+       SUM((last_purchase > purchased_at)::int) AS came_back,
+       ROUND(100.0 * AVG((last_purchase > purchased_at)::int), 2) AS repeat_pct
 FROM firsts GROUP BY 1 ORDER BY 1;
 
 -- Q8. Worst seller-state -> customer-state lanes (300+ delivered orders)

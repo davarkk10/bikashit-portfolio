@@ -19,7 +19,7 @@ Case page: https://davarkk10.github.io/bikashit-portfolio/olist/
 - **Delivery leg, not seller leg:** when the seller handed over on time, 5.3% of orders were still late; these are 72.3% of all late orders. Late handover raises the late rate to 20.7% but explains 27.7%. (Q6)
 - **Lanes:** São Paulo → Rio de Janeiro (8,274 orders, 14.0% late) holds 17.7% of all late orders. The worst 10% of sellers (63 sellers, 30+ orders each) hold 15.6%. (Q5, Q8, Q10)
 - **Promise padding:** the median order arrives 12 days before the promised date. (Q9)
-- **Repeat buying:** customers whose first order was late placed another order 2.44% of the time vs 3.03% (z ≈ 2.7; correlation only). (Q7)
+- **Repeat buying:** customers whose first order was late bought again later 2.33% of the time vs 2.86% (z ≈ 2.5; correlation only). (Q7)
 
 ## Data checks (02_profile.sql)
 
@@ -49,6 +49,10 @@ olist/sql/export.sh                        # Q1–Q10 → olist/results/*.csv
 | `sql/04_where_and_who.sql` | Q4–Q6 |
 | `sql/05_impact_and_lanes.sql` | Q7–Q10 |
 | `results/*.csv` | Saved output of every query |
+
+## MySQL version
+
+`mysql/` holds the same project for MySQL 8 (Workbench): schema, `LOAD DATA LOCAL INFILE` loader, data checks, views and Q1–Q10. It returns the same results; Q5 and Q7 break ties explicitly so both databases agree.
 
 ## Limits
 
