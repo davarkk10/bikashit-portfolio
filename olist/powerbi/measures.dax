@@ -193,6 +193,16 @@ VAR Rnk =
     )
 RETURN IF ( [Seller Orders] >= 30 && Rnk <= [Top N Value], 1, 0 )
 // Use as a visual-level filter on the seller table: Show In Top N is 1.
+Show State Top5 =
+VAR Rnk =
+    RANKX ( FILTER ( ALLSELECTED ( dim_state[State] ), [Delivered Orders] >= 200 ), [Late %], , DESC, Dense )
+RETURN IF ( [Delivered Orders] >= 200 && Rnk <= 5, 1, 0 )
+Show Lane Top5 =
+VAR Rnk = RANKX ( ALLSELECTED ( fact_order_seller[Lane] ), [Late Pairs], , DESC, Dense )
+RETURN IF ( Rnk <= 5, 1, 0 )
+COLOR Seller Risk =
+SWITCH ( [Seller Risk], "High", "#D64550", "Watch", "#D87B43", "OK", "#0D9488", "#94A3B8" )
+COLOR Decile = IF ( SELECTEDVALUE ( dim_seller[late_decile] ) = 1, "#D64550", "#0D9488" )
 
 // [6 Benchmarks] ------------------------------------------------------
 // Expect with Year = 2018 and BM = vs LY: Late % 7.7% vs 3.5% (+4.2 pp, red) · Avg Review 4.14 vs 4.23 (-0.09, red)
@@ -299,6 +309,7 @@ SQL Value = SELECTEDVALUE ( sql_check[SQL Value] )
 Check Status =
 IF ( ISBLANK ( [PBI Value] ), BLANK (),
     IF ( ABS ( [PBI Value] - [SQL Value] ) < 0.00001, "✔ Match", "✖ Differs" ) )
+COLOR Check = IF ( LEFT ( [Check Status], 1 ) = "✔", "#0D9488", "#D64550" )
 Checks Passed =
 SUMX ( VALUES ( sql_check[Check No] ), IF ( [Check Status] = "✔ Match", 1, 0 ) )
 Checks Summary = [Checks Passed] & " / " & COUNTROWS ( sql_check ) & " checks match SQL"
