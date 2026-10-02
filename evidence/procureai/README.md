@@ -1,4 +1,8 @@
-# ProcureAI FMCG — public evidence extract
+# ProcureAI FMCG — public evidence extract (first release, September 2026)
+
+> **Archived extract.** These files come from the project's first release. The project has since been rebuilt end to end
+> (PostgreSQL warehouse, Power BI report built in Desktop, retrained models, re-evaluated contract search), and some figures
+> changed. The current figures and their limits are on the [case study page](https://davarkk10.github.io/bikashit-portfolio/procureai/).
 
 **Question:** Which procurement exceptions deserve review, and what evidence should the reviewer see before approving an action?
 

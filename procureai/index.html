@@ -52,6 +52,7 @@
           <div class="hero-actions reveal">
             <a class="btn primary" href="#cockpit">Enter decision cockpit <span>↘</span></a>
             <a class="btn ghost" href="#evidence">Audit the evidence</a>
+            <a class="btn ghost" href="https://app.powerbi.com/view?r=eyJrIjoiYTdmZWE0MDktZDk5Ni00ZWQ1LTgzMGItMDE3N2E1ODg3N2ZjIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9" target="_blank" rel="noopener noreferrer">Open the live Power BI report <span>↗</span></a>
           </div>
           <div class="review-lenses reveal" aria-label="Choose a review path">
             <span>CHOOSE YOUR REVIEW</span>
@@ -92,11 +93,11 @@
         <article><span>02</span><strong data-count="48000">48,000</strong><p>invoices</p></article>
         <article><span>03</span><strong data-count="175">175</strong><p>suppliers</p></article>
         <article><span>04</span><strong data-count="402">402</strong><p>searchable documents</p></article>
-        <article><span>05</span><strong data-count="46">46 / 46</strong><p>validation tests passed</p></article>
+        <article><span>05</span><strong data-count="28">28 / 28</strong><p>KPIs reconciled SQL = DAX</p></article>
       </div>
       <div class="truth-rail reveal" aria-label="Project status and claim discipline">
-        <div><span>VERIFIED NOW</span><b>Warehouse logic · BI pack · ML · RAG · API · workflow fixtures</b></div>
-        <div><span>MEASURED EVIDENCE</span><b>11/11 final gates · 197/197 RAG · 33/33 API · 135 workflow cases</b></div>
+        <div><span>VERIFIED NOW</span><b>PostgreSQL warehouse · 9-page Power BI report, published live · ML · RAG · API — rebuilt in Docker</b></div>
+        <div><span>MEASURED EVIDENCE</span><b>12/12 phase gates · 373 automated tests · 151 RAG cases · unseen-question accuracy 56%</b></div>
         <div><span>CLAIM DISCIPLINE</span><b>Synthetic proof of concept · not production deployment</b></div>
       </div>
     </section>
@@ -154,13 +155,13 @@
       <div class="ownership-grid reveal">
         <article class="complete">
           <span>VERIFIED DELIVERABLES</span>
-          <h3>Eight releases implemented and tested</h3>
+          <h3>Twelve phases implemented and tested</h3>
           <ul>
             <li>Deterministic FMCG data generator and 23 operational tables</li>
             <li>402 searchable, entity-linked procurement PDFs</li>
             <li>Ground-truth anomaly and supplier-delay labels</li>
-            <li>18 conformed outputs, seven marts and transactional PostgreSQL contract</li>
-            <li>46/46 release validation and evidence workbook</li>
+            <li>PostgreSQL 16 warehouse: 68 SQL tests, idempotent reload, 24 decision analyses</li>
+            <li>Power BI report built in Desktop: 8 pages, 32 measures, 5 security roles</li>
             <li>Time-aware ML, hybrid RAG, FastAPI and controlled workflow evidence</li>
           </ul>
         </article>
@@ -168,12 +169,12 @@
           <span>VERIFIED IMPLEMENTATION</span>
           <h3>Measured, tested and reproducible</h3>
           <ul>
-            <li>Invoice anomaly model: 0.8817 PR-AUC on 2025 holdout</li>
-            <li>Supplier delay model: 0.5616 PR-AUC on 2025 holdout</li>
-            <li>402 PDFs indexed into 962 page-aware chunks</li>
-            <li>197/197 controlled RAG evaluation cases passed</li>
-            <li>33/33 API tests and 103 n8n path fixtures passed</li>
-            <li>11/11 monitoring and security checks passed</li>
+            <li>Invoice model PR-AUC 1.00 vs policy rules 0.48 — refined rules also reach 1.00, so no model lift is claimed</li>
+            <li>Supplier delay model PR-AUC 0.56 vs baseline 0.56 — better calibrated (ECE 0.017 vs 0.036), no ranking lift</li>
+            <li>402 PDFs indexed into 3,772 page-aware chunks</li>
+            <li>151/151 RAG evaluation cases passed; first run on 25 unseen questions: 56% correct, kept as reported</li>
+            <li>27 API tests and 67 n8n workflow fixtures passed</li>
+            <li>Monitoring: 50 checks OK, 4 WARN, 1 deliberate FAIL kept visible</li>
           </ul>
         </article>
         <article class="not-claimed">
@@ -183,7 +184,7 @@
             <li>No real-company or confidential transaction data</li>
             <li>No production deployment or active business users</li>
             <li>No invented savings, ROI or fraud-prevention outcome</li>
-            <li>No native PBIX or tenant-connected Power Automate flow claimed</li>
+            <li>No live n8n instance or tenant-connected Power Automate flow claimed</li>
             <li>No autonomous payment, contract or supplier-master action</li>
             <li>No anomaly presented as confirmed fraud</li>
           </ul>
@@ -205,7 +206,7 @@
         <div class="cockpit-bar">
           <div class="cockpit-brand"><i></i><span>PROCUREAI / DECISION OS</span></div>
           <div class="cockpit-status"><i></i> VERIFIED LOCAL RELEASE</div>
-          <div class="cockpit-asof">AS OF · 27 SEP 2026</div>
+          <div class="cockpit-asof">AS OF · 1 OCT 2026</div>
         </div>
         <div class="cockpit-tabs" role="tablist" aria-label="Decision cockpit views">
           <button class="cockpit-tab active" role="tab" aria-selected="true" data-cockpit="0"><span>01</span>Executive pulse</button>
@@ -215,8 +216,8 @@
         </div>
         <div class="cockpit-view" id="cockpitView" role="tabpanel" aria-live="polite">
           <div class="pulse-kpis">
-            <article><small>REALIZED GROSS SPEND</small><strong>₹11.58B</strong><span>48,000 invoices</span></article>
-            <article><small>OFF-CONTRACT EXPOSURE</small><strong>₹4.27B</strong><span>investigate by category</span></article>
+            <article><small>REALIZED NET SPEND</small><strong>₹9.89B</strong><span>48,000 invoices</span></article>
+            <article><small>OFF-CONTRACT SPEND</small><strong>₹4.27B</strong><span>43.1% of net spend</span></article>
             <article><small>LINE-WEIGHTED OTIF</small><strong>54.0%</strong><span>217,377 eligible lines</span></article>
             <article><small>EXCEPTION VALUE</small><strong>₹5.32B</strong><span>20,256 invoice exceptions</span></article>
           </div>
@@ -235,14 +236,14 @@
             </article>
           </div>
         </div>
-        <div class="cockpit-foot"><span>DATASET: DETERMINISTIC SYNTHETIC POC</span><span>46 DAX MEASURES · 13/13 CONTRACT CHECKS</span><span>NO PRODUCTION IMPACT CLAIMED</span></div>
+        <div class="cockpit-foot"><span>DATASET: DETERMINISTIC SYNTHETIC POC</span><span>32 DAX MEASURES · 28/28 KPIs RECONCILED</span><span>NO PRODUCTION IMPACT CLAIMED</span></div>
       </div>
 
       <div class="decision-thread reveal">
         <div class="thread-title"><span>FEATURED TRACE</span><b>INV0036211 · from anomaly signal to accountable decision</b><small>Synthetic test-window record</small></div>
         <ol>
-          <li><small>01 · DETECT</small><strong>99.66%</strong><span>review priority</span></li>
-          <li><small>02 · EXPLAIN</small><strong>Missing PO</strong><span>+ quantity gap</span></li>
+          <li><small>01 · DETECT</small><strong>Critical</strong><span>risk band</span></li>
+          <li><small>02 · EXPLAIN</small><strong>Missing PO</strong><span>+ above ₹10 lakh</span></li>
           <li><small>03 · QUANTIFY</small><strong>₹1.50M</strong><span>gross exposure</span></li>
           <li><small>04 · ROUTE</small><strong>Needs info</strong><span>114-hour cycle</span></li>
           <li><small>05 · CONTROL</small><strong>Human gate</strong><span>no autonomous payment</span></li>
@@ -254,20 +255,20 @@
       <div class="section-index">04 / LIVE EVIDENCE ROOM</div>
       <div class="evidence-head">
         <div>
-          <p class="eyebrow reveal">RED-TEAMED · REBUILT · RECHECKED</p>
+          <p class="eyebrow reveal">REBUILT · RECHECKED · LIMITS STATED</p>
           <h2 class="section-title reveal">A critical reviewer can<br><em>challenge every layer.</em></h2>
         </div>
         <div class="regression-stamp reveal" aria-label="Final regression status">
-          <span>FINAL REGRESSION</span><strong>11 / 11</strong><b>GATES PASSED</b><small>&lt; 60 seconds · one reproducible chain</small>
+          <span>CLEAN RELEASE RUN</span><strong>12 / 12</strong><b>PHASE GATES PASSED</b><small>one command · Docker · about 10 minutes</small>
         </div>
       </div>
       <div class="evidence-scoreboard reveal" aria-label="Verified implementation metrics">
-        <article><span>WAREHOUSE</span><strong>22/22</strong><p>reconciliation gates</p></article>
-        <article><span>SEMANTIC LAYER</span><strong>46</strong><p>documented DAX measures</p></article>
-        <article><span>CONTRACT RAG</span><strong>197/197</strong><p>answers, citations &amp; safety</p></article>
-        <article><span>ANALYST API</span><strong>33/33</strong><p>service &amp; integration tests</p></article>
-        <article><span>AUTOMATION</span><strong>135</strong><p>n8n + approval fixtures</p></article>
-        <article><span>OPS &amp; SECURITY</span><strong>11/11</strong><p>local controls</p></article>
+        <article><span>WAREHOUSE</span><strong>68</strong><p>SQL tests, run twice</p></article>
+        <article><span>POWER BI</span><strong>28/28</strong><p>KPIs reconciled · 7/7 RLS cases</p></article>
+        <article><span>CONTRACT RAG</span><strong>56%</strong><p>first run on unseen questions (151/151 tuned set)</p></article>
+        <article><span>ANALYST API</span><strong>27</strong><p>service &amp; security tests</p></article>
+        <article><span>AUTOMATION</span><strong>67</strong><p>n8n workflow fixtures</p></article>
+        <article><span>OPS &amp; SECURITY</span><strong>0</strong><p>secrets · restore drill passed</p></article>
       </div>
       <div class="release-console reveal">
         <div class="release-tabs" role="tablist" aria-label="Downstream release evidence">
@@ -282,7 +283,7 @@
         </div>
         <div class="release-panel" id="releasePanel" role="tabpanel" aria-live="polite">
           <div><span>RELEASE 01 · VERIFIED</span><h3>Decision-ready warehouse</h3><p>Conformed outputs, seven decision marts and reconciliation tests protect transaction grain from source through analysis.</p></div>
-          <dl><div><dt>EVIDENCE</dt><dd>18 core outputs · 7 marts</dd></div><div><dt>GATE</dt><dd>22 / 22 passed</dd></div><div><dt>BOUNDARY</dt><dd>PostgreSQL server run pending</dd></div></dl>
+          <dl><div><dt>EVIDENCE</dt><dd>PostgreSQL 16 · 24 decision analyses</dd></div><div><dt>GATE</dt><dd>68 SQL tests passed twice</dd></div><div><dt>BOUNDARY</dt><dd>Local Docker run, not a hosted server</dd></div></dl>
         </div>
       </div>
       <div class="recruiter-path reveal">
@@ -467,8 +468,8 @@
           <h3>Risk models that explain</h3>
           <p>Time-aware models rank invoice anomalies and supplier delays using point-in-time evidence and a chronological 2024/2025 split.</p>
           <div class="risk-meter" aria-hidden="true">
-            <div class="meter-ring"><span>.882<small>PR-AUC</small></span></div>
-            <div class="reason-list"><i>PRICE Δ</i><i>QTY GAP</i><i>BANK CHANGE</i></div>
+            <div class="meter-ring"><span>3,680<small>FLAGGED</small></span></div>
+            <div class="reason-list"><i>MISSING PO</i><i>PRICE Δ</i><i>BANK CHANGE</i></div>
           </div>
           <ul><li>Chronological validation</li><li>Precision @ review capacity</li><li>Calibrated bands</li><li>Reason codes</li></ul>
         </article>
@@ -482,7 +483,7 @@
             <p>What is the termination notice period?</p>
             <strong>45 days <small>[CTR00142.pdf, p. 1]</small></strong>
           </div>
-          <ul><li>197 evaluation questions</li><li>100% citation accuracy</li><li>100% abstention accuracy</li><li>100% injection refusal</li></ul>
+          <ul><li>151 evaluation questions</li><li>100% citation precision</li><li>56% on first unseen run</li><li>Injection refused</li></ul>
         </article>
 
         <article class="work-card agent reveal">
@@ -490,7 +491,7 @@
           <h3>Human-approved agents</h3>
           <p>n8n enriches and routes exceptions; Power Automate presents the evidence and enforces a named human decision.</p>
           <div class="agent-flow" aria-hidden="true"><span>Score</span><i>→</i><span>Evidence</span><i>→</i><span class="human">Human</span><i>→</i><span>Audit</span></div>
-          <ul><li>103 n8n path fixtures</li><li>Retries &amp; dead-letter path</li><li>Wait/resume human gate</li><li>32 approval branch fixtures</li></ul>
+          <ul><li>67 n8n workflow fixtures</li><li>Retries &amp; dead-letter path</li><li>Wait/resume human gate</li><li>Every approval branch executed</li></ul>
         </article>
 
         <article class="work-card platform reveal">
@@ -531,10 +532,10 @@
             <span><i>✓</i> Workflow sequence</span>
             <span><i>✓</i> Ground-truth integrity</span>
             <span><i>✓</i> PDF text extraction</span>
-            <span><i>✓</i> 197/197 RAG cases</span>
-            <span><i>✓</i> 33/33 API tests</span>
-            <span><i>✓</i> 135 workflow cases</span>
-            <span><i>✓</i> 11/11 security checks</span>
+            <span><i>✓</i> 151 RAG cases</span>
+            <span><i>✓</i> 27 API tests</span>
+            <span><i>✓</i> 67 workflow fixtures</span>
+            <span><i>✓</i> 0 secrets in source</span>
           </div>
         </div>
       </div>
@@ -543,7 +544,7 @@
         <div><span>CONTROL 01</span><b>Anomaly ≠ fraud</b><p>Injected risk conditions are investigative leads, never proof of wrongdoing.</p></div>
         <div><span>CONTROL 02</span><b>Retrieved text is untrusted</b><p>Document instructions cannot override the RAG system or invoke tools.</p></div>
         <div><span>CONTROL 03</span><b>Human remains accountable</b><p>No autonomous payment, contract or supplier-master action is permitted.</p></div>
-        <div><span>CONTROL 04</span><b>Native artifacts stay honest</b><p>PBIX and cloud-flow work is labeled build-ready until assembled and verified in its native environment.</p></div>
+        <div><span>CONTROL 04</span><b>Native artifacts stay honest</b><p>Cloud-flow work is labeled build-ready until assembled and verified in its native environment.</p></div>
       </div>
     </section>
 
@@ -556,7 +557,7 @@
       <div class="skill-matrix reveal">
         <div class="matrix-row header"><span>CAPABILITY</span><span>VISIBLE EVIDENCE</span><span>BUSINESS DECISION</span></div>
         <div class="matrix-row"><strong>SQL</strong><span>Typed warehouse, analytical marts, reconciliation tests</span><span>Where is spend leakage occurring?</span></div>
-        <div class="matrix-row"><strong>Power BI + DAX</strong><span>Governed semantic model, eight decision pages, RLS</span><span>What requires leadership attention?</span></div>
+        <div class="matrix-row"><strong>Power BI + DAX</strong><span>Governed semantic model, a briefing page plus eight decision pages, RLS</span><span>What requires leadership attention?</span></div>
         <div class="matrix-row"><strong>Power Query</strong><span>Parameterized, repeatable ingestion and shaping</span><span>Can reporting refresh reliably?</span></div>
         <div class="matrix-row"><strong>Python + ML</strong><span>Point-in-time features, calibrated risk, reason codes</span><span>Which case should be reviewed first?</span></div>
         <div class="matrix-row"><strong>GenAI + RAG</strong><span>Hybrid retrieval, page citations, abstention tests</span><span>What does the contract actually say?</span></div>
@@ -592,7 +593,7 @@
   <footer class="section-shell">
     <div><span class="brand-mark small">P<span></span></span><b>PROCUREAI FMCG</b></div>
     <p>Deterministic synthetic portfolio proof of concept · 2026</p>
-    <a href="../#case-3">BACK TO PORTFOLIO ↗</a>
+    <a href="../index.html#case-3">BACK TO PORTFOLIO ↗</a>
   </footer>
 
   <script src="app.js"></script>

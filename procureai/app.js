@@ -4,7 +4,7 @@ const phases = [
     title: "Baseline, environment & claim discipline",
     description: "Establish a reproducible starting point and make every portfolio claim traceable before downstream implementation begins.",
     deliverables: ["Execute the 46-test source validation", "Create environment and one-command targets", "Open decision, execution and claims registers", "Scan tracked text for secrets and false claims"],
-    gate: "46 tests pass, zero secrets are tracked, and every stated outcome is explicitly synthetic."
+    gate: "46 baseline checks pass, zero secrets are tracked, and every stated outcome is explicitly synthetic."
   },
   {
     number: "PHASE 01",
@@ -93,15 +93,15 @@ function renderPhase(index) {
   const statuses = [
     "VERIFIED FOUNDATION",
     "DATA CONTRACT VERIFIED",
-    "REFERENCE EXECUTED · POSTGRES DEPLOYMENT PENDING",
-    "DEVELOPMENT PACK VERIFIED · PBIX PENDING",
-    "MODEL PASSED · 0.8817 PR-AUC",
-    "MODEL PASSED · 0.5616 PR-AUC",
-    "RAG PASSED · 197/197",
-    "API PASSED · 33/33",
-    "WORKFLOW PASSED · 103 FIXTURES",
-    "PACK PASSED · 32 FIXTURES · TENANT PENDING",
-    "LOCAL CONTROLS PASSED · 11/11",
+    "POSTGRESQL BUILT · 68 SQL TESTS",
+    "PBIX BUILT · 28/28 KPIs RECONCILED",
+    "MODEL PASSED · NO LIFT OVER REFINED RULES",
+    "MODEL PASSED · NO LIFT OVER BASELINE",
+    "RAG 151/151 · UNSEEN FIRST RUN 56%",
+    "API PASSED · 27 TESTS",
+    "WORKFLOW PASSED · 67 FIXTURES",
+    "ALL BRANCHES EXECUTED · TENANT PENDING",
+    "0 SECRETS · RESTORE DRILL PASSED",
     "EVIDENCE UPDATED · DEMO PENDING"
   ];
   const status = statuses[index];
@@ -136,14 +136,14 @@ tabs.forEach((tab, index) => {
 renderPhase(0);
 
 const releases = [
-  { number: "01", title: "Decision-ready warehouse", description: "Conformed outputs, seven decision marts and reconciliation tests protect transaction grain from source through analysis.", evidence: "18 core outputs · 7 marts", gate: "22 / 22 passed", boundary: "PostgreSQL server run pending" },
-  { number: "02", title: "Governed semantic layer", description: "An eight-page Power BI development pack connects decision questions to explicit measures, relationships, parameters and role rules.", evidence: "46 documented DAX measures", gate: "13 / 13 contract checks", boundary: "Native PBIX assembly pending" },
-  { number: "03", title: "Risk ranking with context", description: "Chronological models publish probabilities, review-capacity metrics, calibration, cohort behavior, reason codes and versioned scores.", evidence: "Invoice .8817 · Delay .5616 PR-AUC", gate: "Leakage + cohort checks passed", boundary: "Synthetic holdout evaluation" },
-  { number: "04", title: "Citation-first retrieval", description: "Document-scoped extraction prevents cross-contract contamination; conflicts, missing evidence and prompt injection have explicit safe outcomes.", evidence: "402 PDFs · 962 chunks", gate: "197 / 197 cases passed", boundary: "Local hybrid baseline; pgvector contract supplied" },
-  { number: "05", title: "Read-only evidence API", description: "Authenticated endpoints expose scores, traces, pagination, readiness, versions and cited answers with request-level correlation IDs.", evidence: "Health · metrics · traces · RAG", gate: "33 / 33 tests passed", boundary: "Local service, not a public production API" },
-  { number: "06", title: "Resilient triage orchestration", description: "A credential-free n8n export enriches evidence, suppresses replay, retries failures and pauses at a true wait/resume human gate.", evidence: "13 nodes · 103 fixtures", gate: "Normal + failure + adversarial paths", boundary: "Live instance import pending" },
-  { number: "07", title: "Human decision, fully audited", description: "The approval design covers approve, reject, needs-information, timeout, callback failure and immutable audit fields—without executing payment.", evidence: "12 audit fields · 4 prohibited actions", gate: "32 branch fixtures passed", boundary: "Microsoft tenant connection pending" },
-  { number: "08", title: "Release evidence that can be rerun", description: "Profiles, manifests, SBOM, secret scan, drift checks and per-gate logs are composed into one local regression command.", evidence: "11 gates · under 60 seconds", gate: "11 / 11 final gates passed", boundary: "Native cross-system demo pending" }
+  { number: "01", title: "Decision-ready warehouse", description: "Conformed outputs, seven decision marts and reconciliation tests protect transaction grain from source through analysis.", evidence: "PostgreSQL 16 · 24 decision analyses", gate: "68 SQL tests passed twice", boundary: "Local Docker run, not a hosted server" },
+  { number: "02", title: "Governed semantic layer", description: "A nine-page Power BI report (a briefing plus eight decision pages), built in Desktop and published live, connects decision questions to explicit measures, relationships, parameters and role rules.", evidence: "32 DAX measures · 5 security roles", gate: "28/28 KPIs · 7/7 RLS cases", boundary: "Not published to a Power BI tenant" },
+  { number: "03", title: "Risk ranking with context", description: "Chronological models publish probabilities, review-capacity metrics, calibration, cohort behavior, reason codes and versioned scores.", evidence: "Invoice 1.00 vs rules 0.48 · Delay 0.56 vs 0.56", gate: "Leakage + calibration checks passed", boundary: "Injected anomalies are rule-detectable: no model lift claimed" },
+  { number: "04", title: "Citation-first retrieval", description: "Document-scoped extraction prevents cross-contract contamination; conflicts, missing evidence and prompt injection have explicit safe outcomes.", evidence: "402 PDFs · 3,772 chunks", gate: "151/151 tuned cases · 56% on first unseen run", boundary: "Tuned on its own evaluation set; unseen accuracy reported as is" },
+  { number: "05", title: "Read-only evidence API", description: "Authenticated endpoints expose scores, traces, pagination, readiness, versions and cited answers with request-level correlation IDs.", evidence: "Health · metrics · traces · RAG", gate: "27 tests passed", boundary: "Local service, not a public production API" },
+  { number: "06", title: "Resilient triage orchestration", description: "A credential-free n8n export enriches evidence, suppresses replay, retries failures and pauses at a true wait/resume human gate.", evidence: "42 nodes · 67 fixtures", gate: "Normal + failure + adversarial paths", boundary: "Live instance import pending" },
+  { number: "07", title: "Human decision, fully audited", description: "The approval design covers approve, reject, needs-information, timeout, callback failure and immutable audit fields—without executing payment.", evidence: "12 audit fields · 4 prohibited actions", gate: "Every branch executed in simulation", boundary: "Microsoft tenant connection pending" },
+  { number: "08", title: "Release evidence that can be rerun", description: "Profiles, manifests, SBOM, secret scan, drift checks and per-gate logs are composed into one local regression command.", evidence: "One command · about 10 minutes", gate: "12 / 12 phase gates passed", boundary: "Native cross-system demo pending" }
 ];
 const releasePanel = document.getElementById("releasePanel");
 const releaseTabs = [...document.querySelectorAll(".release-tab")];
@@ -174,8 +174,8 @@ renderRelease(0);
 
 const cockpitViews = [
   () => `<div class="pulse-kpis">
-      <article><small>REALIZED GROSS SPEND</small><strong>₹11.58B</strong><span>48,000 invoices</span></article>
-      <article><small>OFF-CONTRACT EXPOSURE</small><strong>₹4.27B</strong><span>investigate by category</span></article>
+      <article><small>REALIZED NET SPEND</small><strong>₹9.89B</strong><span>48,000 invoices</span></article>
+      <article><small>OFF-CONTRACT SPEND</small><strong>₹4.27B</strong><span>43.1% of net spend</span></article>
       <article><small>LINE-WEIGHTED OTIF</small><strong>54.0%</strong><span>217,377 eligible lines</span></article>
       <article><small>EXCEPTION VALUE</small><strong>₹5.32B</strong><span>20,256 invoice exceptions</span></article>
     </div>
@@ -188,16 +188,16 @@ const cockpitViews = [
       </article>
     </div>`,
   () => `<div class="workbench-grid">
-      <article class="queue-panel"><div class="queue-head"><span>REVIEW QUEUE</span><small>sorted by model priority</small></div>
-        <div class="queue-row"><b>INV0047503</b><span>SUP0055 · ₹709,917.59</span><i>99.95%</i></div>
-        <div class="queue-row"><b>INV0028088</b><span>SUP0161 · ₹732,043.71</span><i>99.90%</i></div>
-        <div class="queue-row"><b>INV0042574</b><span>SUP0028 · ₹50,139.34</span><i>99.90%</i></div>
-        <div class="queue-row active"><b>INV0036211</b><span>SUP0091 · ₹1,502,606.93</span><i>99.66%</i></div>
-        <div class="queue-row"><b>INV0036016</b><span>SUP0001 · ₹231,451.36</span><i>99.90%</i></div>
+      <article class="queue-panel"><div class="queue-head"><span>REVIEW QUEUE</span><small>open critical cases · largest exposure first</small></div>
+        <div class="queue-row active"><b>INV0036211</b><span>SUP0091 · ₹1,502,606.93</span><i>CRITICAL</i></div>
+        <div class="queue-row"><b>INV0003173</b><span>SUP0074 · ₹1,481,091.51</span><i>CRITICAL</i></div>
+        <div class="queue-row"><b>INV0027594</b><span>SUP0124 · ₹1,204,303.02</span><i>CRITICAL</i></div>
+        <div class="queue-row"><b>INV0019880</b><span>SUP0055 · ₹1,193,826.41</span><i>CRITICAL</i></div>
+        <div class="queue-row"><b>INV0001446</b><span>SUP0052 · ₹1,165,263.64</span><i>CRITICAL</i></div>
       </article>
       <article class="case-panel"><div class="case-head"><span>SELECTED CASE</span><small>2025 chronological holdout</small></div>
-        <div class="case-summary"><div><small>INV0036211 · SUMMIT TRADING 91</small><h3>Evidence before action</h3><p>The model ranks the case; deterministic controls explain why a human must review it.</p></div><div class="risk-chip"><strong>99.66%</strong><small>PRIORITY</small></div></div>
-        <div class="case-facts"><div><small>GROSS EXPOSURE</small><b>₹1,502,606.93</b></div><div><small>PRIMARY REASON</small><b>Missing PO reference</b></div><div><small>THREE-WAY MATCH</small><b>Quantity gap detected</b></div><div><small>PAYMENT STATE</small><b>Unpaid · fully exposed</b></div></div>
+        <div class="case-summary"><div><small>INV0036211 · SUMMIT TRADING 91</small><h3>Evidence before action</h3><p>The model ranks the case; deterministic controls explain why a human must review it.</p></div><div class="risk-chip"><strong style="font-size:1.25rem">CRITICAL</strong><small>RISK BAND</small></div></div>
+        <div class="case-facts"><div><small>GROSS EXPOSURE</small><b>₹1,502,606.93</b></div><div><small>PRIMARY REASON</small><b>Missing PO reference</b></div><div><small>SECOND REASON</small><b>Above ₹10 lakh</b></div><div><small>PAYMENT STATE</small><b>Unpaid · fully exposed</b></div></div>
         <div class="case-outcome"><span>Observed workflow outcome</span><strong>REQUEST INFORMATION · 114 HOURS</strong></div>
       </article>
     </div>`,
@@ -207,7 +207,7 @@ const cockpitViews = [
     </div>`,
   () => `<div class="approval-layout">
       <article class="approval-map"><div class="approval-head"><span>CONTROLLED AUTOMATION</span><small>agent drafts · human decides</small></div><div class="approval-flow"><div><small>01 · n8n</small><b>Validate and deduplicate event</b></div><div><small>02 · EVIDENCE</small><b>Enrich score, reasons and citation</b></div><div class="human"><small>03 · HUMAN GATE</small><b>Approve, reject or request information</b></div><div><small>04 · AUDIT</small><b>Persist outcome and correlation ID</b></div></div></article>
-      <article class="approval-detail"><div class="approval-head"><span>GOVERNANCE PROOF</span><small>verified fixtures</small></div><dl><div><dt>n8n paths</dt><dd class="pass">103 PASSED</dd></div><div><dt>Approval branches</dt><dd class="pass">32 PASSED</dd></div><div><dt>Idempotent replay</dt><dd class="pass">ENFORCED</dd></div><div><dt>Retries + dead letter</dt><dd class="pass">TESTED</dd></div><div><dt>Autonomous payment</dt><dd>PROHIBITED</dd></div><div><dt>Native cloud run</dt><dd>PENDING</dd></div></dl></article>
+      <article class="approval-detail"><div class="approval-head"><span>GOVERNANCE PROOF</span><small>verified fixtures</small></div><dl><div><dt>n8n paths</dt><dd class="pass">67 PASSED</dd></div><div><dt>Approval branches</dt><dd class="pass">ALL EXECUTED</dd></div><div><dt>Idempotent replay</dt><dd class="pass">ENFORCED</dd></div><div><dt>Retries + dead letter</dt><dd class="pass">TESTED</dd></div><div><dt>Autonomous payment</dt><dd>PROHIBITED</dd></div><div><dt>Native cloud run</dt><dd>PENDING</dd></div></dl></article>
     </div>`
 ];
 
