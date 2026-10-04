@@ -345,9 +345,9 @@ v.append(chart(400, 710, 735, 340, 'pivotTable',
                title='Top 5 customer states by late %', objects=matrix_objects(bar_measures=['Late %']),
                filters=[f_measure('Show State Top5', 0, 1)], sort=(MEAS('Late %'), 'Descending')))
 v.append(chart(1155, 710, 735, 340, 'pivotTable',
-               {'Rows': [COLM('fact_order_seller', 'Lane')], 'Values': [MEAS('Order-Seller Pairs'), MEAS('Lane Late %'), MEAS('Share of Late Pairs'), MEAS('Lane Avg Days Promised')]},
+               {'Rows': [COLM('fact_order_seller', 'Lane')], 'Values': [MEAS('Order-Seller Pairs'), MEAS('Lane Late %'), MEAS('Lane Share of Late'), MEAS('Lane Avg Days Promised')]},
                title='Top 5 lanes by late orders', objects=matrix_objects(bar_measures=['Lane Late %']),
-               filters=[f_measure('Show Lane Top5', 0, 1)], sort=(MEAS('Share of Late Pairs'), 'Descending')))
+               filters=[f_measure('Show Lane Top5', 0, 1)], sort=(MEAS('Lane Share of Late'), 'Descending')))
 pages.append(page_json('exec', 'Executive', v, interactions=no_time_filter('exec', [trend['name']])))
 
 # ---- Delivery ----
@@ -402,7 +402,7 @@ for s, c in star_cols.items():
     dp.append({'properties': {'fill': C(c)}, 'selector': {'data': [{'scopeId': {'Comparison': {'ComparisonKind': 0,
               'Left': COLM('fact_delivery', 'review_score'), 'Right': {'Literal': {'Value': f'{s}L'}}}}}]}})
 v.append(chart(1300, 270, 590, 380, 'hundredPercentStackedBarChart',
-               {'Category': [COLM('fact_delivery', 'Delivery Status')], 'Series': [COLM('fact_delivery', 'review_score')], 'Y': [MEAS('Reviewed Orders')]},
+               {'Category': [COLM('fact_delivery', 'Delivery Status')], 'Series': [COLM('fact_delivery', 'review_score')], 'Y': [MEAS('Review Count')]},
                title='Star mix: late vs on time', subtitle='Share of reviews by star rating (1 = worst)',
                objects={'categoryAxis': AXIS(), 'valueAxis': VAXIS(False), 'legend': LEGEND(), 'labels': LABELS(True, '#070B14'), 'dataPoint': dp},
                filters=[f_in('fact_delivery', 'review_score', [1, 2, 3, 4, 5])]))

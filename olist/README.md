@@ -1,10 +1,13 @@
-# Late deliveries cost stars: Olist SQL case study
+# Late deliveries cost stars: Olist SQL + Power BI case study
 
 A PostgreSQL analysis of the public Olist Brazilian e-commerce dataset (99,441 orders, Sep 2016 – Oct 2018).
 
 **Question:** how much does late delivery hurt customers, and where should a logistics team look first?
 
 Case page: https://davarkk10.github.io/bikashit-portfolio/olist/
+
+Live Power BI report (6 pages, publish to web): https://app.powerbi.com/view?r=eyJrIjoiYWNlOTRjZGItNmY3NC00MDE4LWExODctYjIwNzM1NzgxMDAyIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9
+Build files and DAX: [`powerbi/`](powerbi/)
 
 ## Results
 

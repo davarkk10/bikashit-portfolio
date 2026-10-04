@@ -1,5 +1,7 @@
 # Olist Delivery 360 — Power BI build files
 
+Live report: https://app.powerbi.com/view?r=eyJrIjoiYWNlOTRjZGItNmY3NC00MDE4LWExODctYjIwNzM1NzgxMDAyIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9
+
 | File | Use |
 |---|---|
 | `../sql/06_powerbi_views.sql` / `../mysql/06_powerbi_views.sql` | The 4 views Power BI imports (`pbi_delivery`, `pbi_order_seller`, `pbi_seller`, `pbi_first_order`) |

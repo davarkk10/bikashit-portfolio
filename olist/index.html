@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Late Deliveries Cost Stars — Olist SQL Case Study | Bikashit Baruah</title>
-  <meta name="description" content="A SQL analysis of 96,478 real Brazilian e-commerce orders (Olist): how late delivery drives bad reviews, where lateness concentrates, and what to change.">
+  <title>Late Deliveries Cost Stars — Olist SQL &amp; Power BI Case Study | Bikashit Baruah</title>
+  <meta name="description" content="A SQL and Power BI analysis of 96,478 real Brazilian e-commerce orders (Olist): how late delivery drives bad reviews, where lateness concentrates, and what to change.">
   <meta name="theme-color" content="#070b14">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23070b14'/%3E%3Cpath d='M17 17h18c9 0 14 4 14 11 0 4-2 7-6 9 5 1 8 5 8 10 0 8-6 12-16 12H17V17zm10 9v8h8c3 0 5-1 5-4s-2-4-5-4h-8zm0 16v8h9c4 0 6-1 6-4s-2-4-6-4h-9z' fill='%239cff1e'/%3E%3C/svg%3E">
@@ -30,19 +30,24 @@
     .files{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.files a{display:block;border:1px solid var(--line);border-radius:12px;padding:14px;text-decoration:none;background:#0c1421;transition:.2s}.files a:hover{border-color:var(--lime)}.files b{display:block;font:500 .78rem "DM Mono",monospace;color:var(--lime)}.files span{color:var(--muted);font-size:.78rem}
     .footer{padding:28px 0;color:var(--muted);font-size:.74rem}.footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.footer a{color:var(--soft)}
     a:focus-visible,summary:focus-visible{outline:2px solid var(--lime);outline-offset:4px}
-    @media(max-width:900px){.finding,.grid2,.recs{grid-template-columns:1fr}.files{grid-template-columns:1fr 1fr}.kpis{grid-template-columns:1fr 1fr}.kpi:nth-child(2){border-right:0}.kpi{border-bottom:1px solid var(--line)}}
+    .finding>*,.grid2>*{min-width:0}@media(max-width:900px){.finding,.grid2,.recs{grid-template-columns:1fr}.files{grid-template-columns:1fr 1fr}.kpis{grid-template-columns:1fr 1fr}.kpi:nth-child(2){border-right:0}.kpi{border-bottom:1px solid var(--line)}}
     @media(max-width:640px){.wrap{width:calc(100% - 32px)}.head{grid-template-columns:1fr;gap:8px}.nav-links{display:none}.files{grid-template-columns:1fr}.hero{padding-top:64px}.section{padding:72px 0}.card,.rec{padding:22px}.chart-card{padding:16px 14px 10px}}
+    .pbi-frame{position:relative;aspect-ratio:16/9.6;border:1px solid var(--line);border-radius:22px;overflow:hidden;background:radial-gradient(circle at 78% 20%,#1d3b1455,transparent 40%),radial-gradient(circle at 10% 90%,#231d4d66,transparent 45%),var(--panel2)}.pbi-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#070b14}
+    .pbi-poster{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:clamp(22px,5vw,64px)}.pbi-poster-top{display:flex;justify-content:space-between;gap:12px;align-items:center}.pbi-pages{font:500 .68rem "DM Mono",monospace;color:var(--soft);border:1px solid var(--line);border-radius:999px;padding:5px 10px}.pbi-poster h3{font-size:clamp(2rem,5vw,4.2rem);letter-spacing:-.05em;line-height:1;margin:22px 0 10px}.pbi-poster h3 span{color:var(--lime)}.pbi-poster p{color:var(--soft);margin:0}.pbi-poster small{color:var(--muted);font-size:.74rem;margin-top:18px}.pbi-poster button{font-family:inherit;cursor:pointer}
+    .pbi-pages-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}.pbi-pages-grid a{display:block;border:1px solid var(--line);border-radius:14px;padding:16px;text-decoration:none;background:#0c1421;transition:.2s}.pbi-pages-grid a:hover{border-color:var(--lime);transform:translateY(-2px)}.pbi-pages-grid b{display:block;margin-bottom:4px}.pbi-pages-grid b:after{content:" ↗";color:var(--lime);font-weight:500}.pbi-pages-grid span{color:var(--muted);font-size:.8rem;line-height:1.45;display:block}
+    .card code{font:500 .78rem "DM Mono",monospace;color:var(--mint)}
+    @media(max-width:900px){.pbi-pages-grid{grid-template-columns:1fr 1fr}}@media(max-width:640px){.pbi-pages-grid{grid-template-columns:1fr}.pbi-frame{aspect-ratio:auto;min-height:420px}.pbi-poster small{display:none}}
   </style>
 </head>
 <body>
-<nav class="nav"><div class="wrap nav-inner"><a class="brand" href="../"><span class="brand-mark"></span>Bikashit Baruah</a><div class="nav-links"><a href="#data">Data</a><a href="#findings">Findings</a><a href="#actions">Actions</a><a href="#reproduce">Reproduce</a><a href="../#work">All work</a></div></div></nav>
+<nav class="nav"><div class="wrap nav-inner"><a class="brand" href="../"><span class="brand-mark"></span>Bikashit Baruah</a><div class="nav-links"><a href="#powerbi">Power BI</a><a href="#data">Data</a><a href="#findings">Findings</a><a href="#actions">Actions</a><a href="#reproduce">Reproduce</a><a href="../#work">All work</a></div></div></nav>
 
 <header class="hero"><div class="wrap">
-  <div class="eyebrow">Case study 04 · Real public data · PostgreSQL</div>
+  <div class="eyebrow">Case study 04 · Real public data · PostgreSQL + Power BI</div>
   <h1>A late delivery costs <span>two stars.</span></h1>
-  <p class="lede">I took <b>96,478 real delivered orders</b> from Olist, a Brazilian online marketplace (2016–2018), and used SQL to answer one operations question: <b>how much does late delivery hurt customers, and where should a logistics team look first?</b></p>
-  <div class="chips"><span>PostgreSQL 16</span><span>8 tables · 99,441 orders</span><span>Window functions · CTEs</span><span>Data checks before analysis</span><span>Every number from a saved query</span></div>
-  <div class="actions"><a class="btn primary" href="https://github.com/davarkk10/bikashit-portfolio/tree/main/olist/sql">Read the SQL ↗</a><a class="btn" href="https://github.com/davarkk10/bikashit-portfolio/tree/main/olist/results">Query results (CSV) ↗</a><a class="btn" href="../#work">← Back to portfolio</a></div>
+  <p class="lede">I took <b>96,478 real delivered orders</b> from Olist, a Brazilian online marketplace (2016–2018), and used SQL and Power BI to answer one operations question: <b>how much does late delivery hurt customers, and where should a logistics team look first?</b></p>
+  <div class="chips"><span>PostgreSQL 16</span><span>8 tables · 99,441 orders</span><span>Window functions · CTEs</span><span>Data checks before analysis</span><span>Every number from a saved query</span><span>Live 6-page Power BI report</span></div>
+  <div class="actions"><a class="btn primary" href="https://app.powerbi.com/view?r=eyJrIjoiYWNlOTRjZGItNmY3NC00MDE4LWExODctYjIwNzM1NzgxMDAyIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9" target="_blank" rel="noopener noreferrer">Open the live Power BI report ↗</a><a class="btn" href="https://github.com/davarkk10/bikashit-portfolio/tree/main/olist/sql">Read the SQL ↗</a><a class="btn" href="https://github.com/davarkk10/bikashit-portfolio/tree/main/olist/results">Query results (CSV) ↗</a><a class="btn" href="../#work">← Back to portfolio</a></div>
 </div></header>
 
 <div class="band"><div class="wrap kpis">
@@ -52,8 +57,46 @@
   <div class="kpi"><strong>17.7%</strong><span>of all late orders sit on one lane: São Paulo → Rio de Janeiro</span></div>
 </div></div>
 
+<section class="section" id="powerbi"><div class="wrap">
+  <div class="head"><div class="no">01 / POWER BI</div><div><h2>The same answers, <span class="fade">as a report you can click.</span></h2><p>I turned the SQL views into a Power BI model, so a logistics lead can filter by year, region or state and see what to fix. Every headline number on the Data Checks page matches a saved SQL result.</p></div></div>
+  <div class="pbi-frame" id="pbiFrame">
+    <div class="pbi-poster">
+      <div class="pbi-poster-top"><span class="eyebrow">Live report · Power BI publish to web</span><span class="pbi-pages">6 pages</span></div>
+      <h3>Olist Delivery <span>360</span></h3>
+      <p>Executive · Delivery · Customer · Seller · Data Checks · About</p>
+      <div class="actions"><button class="btn primary" type="button" id="pbiLoad">Load the live report here</button><a class="btn" href="https://app.powerbi.com/view?r=eyJrIjoiYWNlOTRjZGItNmY3NC00MDE4LWExODctYjIwNzM1NzgxMDAyIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9" target="_blank" rel="noopener noreferrer">Open full screen ↗</a></div>
+      <small>Loads from app.powerbi.com. Public data only; filters reset on reload.</small>
+    </div>
+  </div>
+  <div class="pbi-pages-grid">
+    <a href="https://app.powerbi.com/view?r=eyJrIjoiYWNlOTRjZGItNmY3NC00MDE4LWExODctYjIwNzM1NzgxMDAyIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9&amp;pageName=79082de0c93349f71797" target="_blank" rel="noopener noreferrer"><b>Executive</b><span>Four KPIs against last year (same dates) or a target, the monthly trend and the worst states and lanes.</span></a>
+    <a href="https://app.powerbi.com/view?r=eyJrIjoiYWNlOTRjZGItNmY3NC00MDE4LWExODctYjIwNzM1NzgxMDAyIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9&amp;pageName=a8d60ccdf22a9ea36a4a" target="_blank" rel="noopener noreferrer"><b>Delivery</b><span>Where lateness happens: state ranking with a metric switch, a seller × customer region matrix, promise vs reality by lane.</span></a>
+    <a href="https://app.powerbi.com/view?r=eyJrIjoiYWNlOTRjZGItNmY3NC00MDE4LWExODctYjIwNzM1NzgxMDAyIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9&amp;pageName=f5390a29f54ac0b2c1d6" target="_blank" rel="noopener noreferrer"><b>Customer</b><span>How reviews fall as orders get later, the star mix, and whether a late first order changes repeat buying.</span></a>
+    <a href="https://app.powerbi.com/view?r=eyJrIjoiYWNlOTRjZGItNmY3NC00MDE4LWExODctYjIwNzM1NzgxMDAyIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9&amp;pageName=e0ddc30cd23662f842e1" target="_blank" rel="noopener noreferrer"><b>Seller</b><span>Late % by seller decile, a regional scorecard and a Top N list of sellers to coach first.</span></a>
+    <a href="https://app.powerbi.com/view?r=eyJrIjoiYWNlOTRjZGItNmY3NC00MDE4LWExODctYjIwNzM1NzgxMDAyIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9&amp;pageName=83c5c1fec559478fec4f" target="_blank" rel="noopener noreferrer"><b>Data Checks</b><span>12 headline numbers compared with the SQL output, plus every data decision written down.</span></a>
+    <a href="https://app.powerbi.com/view?r=eyJrIjoiYWNlOTRjZGItNmY3NC00MDE4LWExODctYjIwNzM1NzgxMDAyIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9&amp;pageName=f61918994eeec9e24e2b" target="_blank" rel="noopener noreferrer"><b>About</b><span>Definitions, how it was built and what the report does not prove.</span></a>
+  </div>
+  <div class="grid2" style="margin-top:16px">
+    <div class="card"><div class="k">Model</div><h3>Star schema on SQL views</h3><ul>
+      <li><b>Two fact tables at two grains:</b> one row per delivered order, and one row per order × seller. 1.3% of orders have two sellers, so seller and lane numbers count pairs, not orders.</li>
+      <li><b>Dimensions:</b> date, customer state and region, seller (with a fixed late-rate decile), first order per customer.</li>
+      <li><b>Disconnected tables</b> drive the benchmark switch (last year or target), the metric switch, the Top N slicer and the reconciliation table.</li>
+    </ul></div>
+    <div class="card"><div class="k">DAX</div><h3>90+ measures, written to be checked</h3><ul>
+      <li><b>Like-for-like last year:</b> the comparison stops at the last date with data and shows n/a when last year has under 300 orders.</li>
+      <li><b>One chart, four metrics:</b> a SWITCH measure with a dynamic format string (%, stars or days).</li>
+      <li><b>Checked against SQL:</b> the reconciliation exposed a filter bug. A Top 5 table used <code>ALLSELECTED</code>, so “vs Brazil” compared each state with the other four. <code>REMOVEFILTERS</code> fixed it.</li>
+    </ul></div>
+  </div>
+  <div class="files" style="margin-top:16px">
+    <a href="https://github.com/davarkk10/bikashit-portfolio/blob/main/olist/sql/06_powerbi_views.sql"><b>06_powerbi_views.sql</b><span>The 4 views the model loads</span></a>
+    <a href="https://github.com/davarkk10/bikashit-portfolio/blob/main/olist/powerbi/measures.dax"><b>measures.dax</b><span>Every measure, with expected values</span></a>
+    <a href="https://github.com/davarkk10/bikashit-portfolio/tree/main/olist/powerbi"><b>olist/powerbi/</b><span>Power Query, theme, template</span></a>
+  </div>
+</div></section>
+
 <section class="section" id="data"><div class="wrap">
-  <div class="head"><div class="no">01 / DATA</div><div><h2>Check the data <span class="fade">before trusting it.</span></h2><p>Before any analysis I profiled the 8 tables and wrote down every problem I had to handle. These checks are in <code>02_profile.sql</code>.</p></div></div>
+  <div class="head"><div class="no">02 / DATA</div><div><h2>Check the data <span class="fade">before trusting it.</span></h2><p>Before any analysis I profiled the 8 tables and wrote down every problem I had to handle. These checks are in <code>02_profile.sql</code>.</p></div></div>
   <div class="grid2">
     <div class="card"><div class="k">What was loaded</div><table>
       <tr><th>Table</th><th class="n">Rows</th></tr>
@@ -77,7 +120,7 @@
 </div></section>
 
 <section class="section" id="findings"><div class="wrap">
-  <div class="head"><div class="no">02 / FINDINGS</div><div><h2>Three answers <span class="fade">from the SQL.</span></h2></div></div>
+  <div class="head"><div class="no">03 / FINDINGS</div><div><h2>Three answers <span class="fade">from the SQL.</span></h2></div></div>
 
   <div class="finding">
     <div><div class="tag">Finding 1 · Late delivery and reviews</div>
@@ -138,7 +181,7 @@
 </div></section>
 
 <section class="section" id="actions"><div class="wrap">
-  <div class="head"><div class="no">03 / ACTIONS</div><div><h2>What I would tell <span class="fade">the logistics team.</span></h2><p>Each recommendation comes with the number I would track to see whether it worked.</p></div></div>
+  <div class="head"><div class="no">04 / ACTIONS</div><div><h2>What I would tell <span class="fade">the logistics team.</span></h2><p>Each recommendation comes with the number I would track to see whether it worked.</p></div></div>
   <div class="recs">
     <div class="rec"><span class="idx">01</span><h3>Start with São Paulo → Rio.</h3><p>One lane holds 17.7% of late orders. Review the carrier on that lane first: compare carriers, add a second option, and check where parcels wait.</p><p class="measure">Track: <b>SP → RJ late %</b> (14.0% today, Brazil average 6.7%)</p></div>
     <div class="rec"><span class="idx">02</span><h3>Plan peak capacity before it is needed.</h3><p>Late rates tripled after Black Friday and in Feb–Mar 2018. Book extra carrier capacity before those weeks, and send customers a proactive delay message when a parcel misses its ship-by date, before it becomes 4+ days late.</p><p class="measure">Track: <b>monthly late %</b> kept under 6% in peak months</p></div>
@@ -147,7 +190,7 @@
 </div></section>
 
 <section class="section" id="limits"><div class="wrap">
-  <div class="head"><div class="no">04 / LIMITS</div><div><h2>What this analysis <span class="fade">does not prove.</span></h2></div></div>
+  <div class="head"><div class="no">05 / LIMITS</div><div><h2>What this analysis <span class="fade">does not prove.</span></h2></div></div>
   <div class="grid2">
     <div class="card"><ul>
       <li><b>Correlation, not cause.</b> Late orders get worse reviews, but some bad reviews may come from the product itself. A controlled test (e.g. proactive delay messages for half the late orders) would measure the true effect.</li>
@@ -162,7 +205,7 @@
 </div></section>
 
 <section class="section" id="reproduce"><div class="wrap">
-  <div class="head"><div class="no">05 / REPRODUCE</div><div><h2>Run it <span class="fade">yourself.</span></h2><p>Download the public Olist CSVs from Kaggle, then load and query them with PostgreSQL. Every number on this page is in a saved CSV.</p></div></div>
+  <div class="head"><div class="no">06 / REPRODUCE</div><div><h2>Run it <span class="fade">yourself.</span></h2><p>Download the public Olist CSVs from Kaggle, then load and query them with PostgreSQL. Every number on this page is in a saved CSV.</p></div></div>
   <pre>export DATA=/path/to/olist_csvs PGURL=postgresql://postgres@localhost/postgres
 olist/sql/load.sh       # 00_schema.sql + \copy 8 CSV files + 01_views.sql
 psql "$PGURL" -f olist/sql/02_profile.sql       # data checks
@@ -177,7 +220,7 @@ olist/sql/export.sh     # runs Q1–Q10, writes olist/results/*.csv</pre>
   </div>
 </div></section>
 
-<footer class="footer"><div class="wrap"><span>Data: <a href="https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce">Brazilian E-Commerce Public Dataset by Olist</a>, CC BY-NC-SA 4.0. Analysis and SQL by Bikashit Baruah.</span><a href="../">← Bikashit Baruah · portfolio</a></div></footer>
+<footer class="footer"><div class="wrap"><span>Data: <a href="https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce">Brazilian E-Commerce Public Dataset by Olist</a>, CC BY-NC-SA 4.0. Analysis, SQL and Power BI report by Bikashit Baruah.</span><a href="../">← Bikashit Baruah · portfolio</a></div></footer>
 
 <script>
 const ON='var(--s-ontime)',LATE='var(--s-late)';
@@ -240,6 +283,10 @@ const hit=mk('rect',{x:0,y:yy,width:W,height:rowH,fill:'transparent'},svg);
 hit.addEventListener('mousemove',ev=>{tipRows(tip,d[1]+' ('+d[0]+')',[['#8b7bff','% late',d[3].toFixed(1)+'%'],[null,'Avg days to deliver',d[4].toFixed(1)],[null,'Delivered orders',fmt(d[2])]]);const[a,b]=cardXY(card,ev);place(card,tip,a,b)});
 hit.addEventListener('mouseleave',()=>tip.style.opacity=0)});
 fillTable(card,states.map(d=>[d[1],fmt(d[2]),d[3].toFixed(1)+'%',d[4].toFixed(1)]))})();
+</script>
+<script>
+(function(){const b=document.getElementById('pbiLoad'),f=document.getElementById('pbiFrame');if(!b)return;
+b.addEventListener('click',()=>{const i=document.createElement('iframe');i.title='Olist Delivery 360, live Power BI report';i.src='https://app.powerbi.com/view?r=eyJrIjoiYWNlOTRjZGItNmY3NC00MDE4LWExODctYjIwNzM1NzgxMDAyIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9';i.allowFullscreen=true;i.loading='eager';f.replaceChildren(i);if(window.innerWidth<640)f.style.aspectRatio='16/10';});})();
 </script>
 </body>
 </html>
