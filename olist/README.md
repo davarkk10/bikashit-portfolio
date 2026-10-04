@@ -6,7 +6,7 @@ A PostgreSQL analysis of the public Olist Brazilian e-commerce dataset (99,441 o
 
 Case page: https://davarkk10.github.io/bikashit-portfolio/olist/
 
-Live Power BI report (6 pages, publish to web): https://app.powerbi.com/view?r=eyJrIjoiYWNlOTRjZGItNmY3NC00MDE4LWExODctYjIwNzM1NzgxMDAyIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9
+Live Power BI report (6 pages, publish to web): https://app.powerbi.com/view?r=eyJrIjoiYzdmMWViOTgtN2Q2Mi00M2YxLTgzN2EtNWJiMzdiMGQ4ZjM2IiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9
 Build files and DAX: [`powerbi/`](powerbi/)
 
 ## Results
