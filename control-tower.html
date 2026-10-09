@@ -32,6 +32,7 @@
   </style>
 <style>
 [hidden]{display:none!important}.select:disabled{opacity:.65}.filter-label{font-size:.7rem;color:var(--muted)}.scope-note{color:var(--muted);font-size:.76rem;margin:12px 0}.order-button{background:transparent;border:0;padding:0;color:var(--ink);text-align:left;cursor:pointer}.order-button:focus-visible{outline:2px solid var(--acid);outline-offset:4px}.queue-row:focus-visible{outline:2px solid var(--acid);outline-offset:-2px}.drawer:not(.open){visibility:hidden}.view-scope{padding:10px 14px;border:1px solid var(--line);border-radius:10px;margin-bottom:16px;font-size:.75rem;color:var(--muted)}
+.customer-hero small{display:block;margin-top:6px}
 </style></head>
 <body>
 <div class="app">
@@ -48,10 +49,10 @@
       <button class="nav-btn active" data-view="executive">
 <span>◫</span>Executive</button>
       <button class="nav-btn" data-view="customers">
-<span>◎</span>Customer SLA <em>169</em>
+<span>◎</span>Customer SLA <em>200</em>
 </button>
       <button class="nav-btn" data-view="queue">
-<span>⚑</span>Action queue <em>3,535</em>
+<span>⚑</span>Action queue <em>1,881</em>
 </button>
       <button class="nav-btn" data-view="inventory">
 <span>▦</span>Inventory risk</button>
@@ -63,7 +64,7 @@
       <button class="nav-btn" data-view="trust">
 <span>✓</span>Trust center</button>
     </nav>
-    <div class="side-foot">Seed 20260915 · 24 months<br>Captured build: 26 Sep 2026<a href="index.html">← Portfolio</a>
+    <div class="side-foot">Seed 20260915 · Jan 2024 – Dec 2025<br>Same data as the Power BI report<a href="index.html">← Portfolio</a>
 </div>
   </aside>
 
@@ -74,662 +75,137 @@
 <span>Early warning → prioritized human action</span>
 </div>
 <div class="filters">
-<label class="filter-label" for="whFilter" id="filterLabel">Network view</label><select class="select" id="whFilter" aria-label="Warehouse">
+<label class="filter-label" for="whFilter" id="filterLabel">Warehouse</label><select class="select" id="whFilter" aria-label="Warehouse">
 <option value="ALL">All warehouses</option>
-<option>WH-TSK</option>
-<option>WH-DBR</option>
-<option>WH-JOR</option>
-<option>WH-GHY</option>
+<option value="WH-DBR">WH-DBR · Dibrugarh</option><option value="WH-GHY">WH-GHY · Guwahati</option><option value="WH-JRH">WH-JRH · Jorhat</option><option value="WH-TSK">WH-TSK · Tinsukia</option>
 </select>
 <span class="icon-btn" title="Data is fixed for this proof of concept">24 months · fixed</span>
 <span class="proof">Synthetic demo</span>
 </div>
 </header>
     <div class="content">
-<div class="wh-note" id="whNote" role="status"></div>
+<div class="wh-note on" id="whNote" role="status"></div>
       <section class="view active" id="executive">
         <header class="page-head">
 <div>
 <h1>Network health</h1>
-<p>Service performance, operational risk and the next best intervention—on one decision surface.</p>
+<p>Service performance, failure causes and the next best intervention—on one decision surface.</p>
 </div>
-<span class="timestamp">95,912 eligible completed · 99,433 total records</span>
+<span class="timestamp" id="exStamp"></span>
 </header>
         <div class="kpis">
-          <article class="card kpi" style="--accent:var(--amber)">
-<div class="kpi-label">
-<span>On time</span>
-<span>OT</span>
-</div>
-<strong>85.61%</strong>
-<small>On-time component rate</small>
-</article>
-          <article class="card kpi" style="--accent:var(--blue)">
-<div class="kpi-label">
-<span>In full</span>
-<span>IF</span>
-</div>
-<strong>89.69%</strong>
-<small>Order level</small>
-</article>
-          <article class="card kpi" style="--accent:var(--red)">
-<div class="kpi-label">
-<span>Joint service</span>
-<span>OTIF</span>
-</div>
-<strong>76.96%</strong>
-<small class="down">15.04pp below 92%</small>
-</article>
-          <article class="card kpi" style="--accent:var(--red)">
-<div class="kpi-label">
-<span>Below SLA target</span>
-<span>SLA</span>
-</div>
-<strong>169</strong>
-<small>of 200 active customers</small>
-</article>
-          <article class="card kpi" style="--accent:var(--acid)">
-<div class="kpi-label">
-<span>Open alerts</span>
-<span>ACT</span>
-</div>
-<strong>3,535</strong>
-<small class="up">83.1% recoverable</small>
-</article>
+          <article class="card kpi" style="--accent:var(--amber)"><div class="kpi-label"><span>On time</span><span>OT</span></div><strong id="kOT"></strong><small id="kOTs"></small></article>
+          <article class="card kpi" style="--accent:var(--blue)"><div class="kpi-label"><span>In full</span><span>IF</span></div><strong id="kIF"></strong><small id="kIFs"></small></article>
+          <article class="card kpi" style="--accent:var(--red)"><div class="kpi-label"><span>Joint service</span><span>OTIF</span></div><strong id="kOTIF"></strong><small class="down" id="kOTIFs"></small></article>
+          <article class="card kpi" style="--accent:var(--red)"><div class="kpi-label"><span>Failed order value</span><span>₹</span></div><strong id="kFail"></strong><small id="kFails"></small></article>
+          <article class="card kpi" style="--accent:var(--acid)"><div class="kpi-label"><span>Open interventions</span><span>ACT</span></div><strong id="kOpen"></strong><small class="up" id="kOpens"></small></article>
         </div>
         <div class="grid">
           <article class="card chart-card">
-<div class="card-head">
-<div>
-<h2>Illustrative OTIF trajectory</h2>
-<span>Schematic illustration; weekly source values are not included in this web export.</span>
-</div>
-<span>Illustration · network only</span>
-</div>
+<div class="card-head"><div><h2>OTIF by month vs the 93% target</h2><span>Shaded columns are monsoon months (Jun–Sep)</span></div><span id="trendScope"></span></div>
 <div class="chart-wrap">
-<div class="legend">
-<span>
-<i>
-</i>Illustrative OTIF</span>
-<span class="target">
-<i>
-</i>Target 92%</span>
-</div>
-<svg viewBox="0 0 760 220" role="img" aria-label="Schematic OTIF trend, not a chart of exported weekly observations">
-<defs>
-<linearGradient id="area" x1="0" y1="0" x2="0" y2="1">
-<stop offset="0" stop-color="#47dec9" stop-opacity=".35"/>
-<stop offset="1" stop-color="#47dec9" stop-opacity="0"/>
-</linearGradient>
-</defs>
-<g stroke="#26364c" stroke-width="1">
-<line x1="38" y1="35" x2="740" y2="35"/>
-<line x1="38" y1="90" x2="740" y2="90"/>
-<line x1="38" y1="145" x2="740" y2="145"/>
-<line x1="38" y1="200" x2="740" y2="200"/>
-</g>
-<line x1="38" y1="48" x2="740" y2="48" stroke="#a7f432" stroke-dasharray="6 6"/>
-<path d="M38 200 L38 156 L102 139 L166 151 L230 163 L294 172 L358 178 L422 157 L486 150 L550 141 L614 137 L678 147 L740 140 L740 200Z" fill="url(#area)"/>
-<polyline points="38,156 102,139 166,151 230,163 294,172 358,178 422,157 486,150 550,141 614,137 678,147 740,140" fill="none" stroke="#47dec9" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-<g fill="#47dec9">
-<circle cx="38" cy="156" r="4"/>
-<circle cx="102" cy="139" r="4"/>
-<circle cx="166" cy="151" r="4"/>
-<circle cx="230" cy="163" r="4"/>
-<circle cx="294" cy="172" r="4"/>
-<circle cx="358" cy="178" r="4"/>
-<circle cx="422" cy="157" r="4"/>
-<circle cx="486" cy="150" r="4"/>
-<circle cx="550" cy="141" r="4"/>
-<circle cx="614" cy="137" r="4"/>
-<circle cx="678" cy="147" r="4"/>
-<circle cx="740" cy="140" r="4"/>
-</g>
-<g fill="#8294ac" font-size="11">
-<text x="38" y="218">Oct 13</text>
-<text x="282" y="218">Nov 10</text>
-<text x="540" y="218">Dec 08</text>
-<text x="700" y="218">Dec 29</text>
-</g>
-</svg>
+<div class="legend"><span><i></i>OTIF</span><span class="target"><i></i>Target 93%</span><span><i style="background:#ff6b6b55"></i>Monsoon</span></div>
+<svg id="trend" viewBox="0 0 760 236" role="img" aria-label="Monthly OTIF against the 93% target"></svg>
 </div>
 </article>
           <div class="stack">
 <article class="card">
-<div class="card-head">
-<div>
-<h2>Reasons in the displayed sample</h2>
-<span>Six ranked orders · each counted once</span>
-</div>
-</div>
-<div class="cause-list" id="reasonCounts"></div><p class="scope-note" style="padding:0 18px">Sample counts only; not the 3,535-alert population.</p>
+<div class="card-head"><div><h2>Why orders failed</h2><span>Share of failed orders by logged root cause</span></div></div>
+<div class="cause-list" id="causes"></div>
 </article>
 <article class="card decision-strip">
 <div>
-<b>Candidate review</b>
-<p>Inspect the ranked sample and verify stock availability and inbound timing before approving an intervention.</p>
+<b>Highest-value next move</b>
+<p>Review the 25 riskiest orders each day: that catches <strong>35.6%</strong> of all OTIF failures, against 18.3% for the same 25 picked at random (network desk).</p>
 </div>
-<button class="btn primary" data-jump="queue">Inspect ranked sample →</button>
+<button class="btn primary" data-jump="queue">Open queue →</button>
 </article>
 </div>
         </div>
         <article class="card table-card">
 <div class="table-head">
-<div>
-<h2>Urgent intervention queue</h2>
-<small>Ranked by failure probability × urgency × value × recoverability</small>
+<div><h2>Urgent intervention queue</h2><small>Open interventions ranked by priority score · top 3</small></div>
+<button class="btn" data-jump="queue">Full queue →</button>
 </div>
-<button class="btn" data-jump="queue">Inspect 6-row sample →</button>
-</div>
-<div class="table-scroll">
-<table>
-<thead>
-<tr>
-<th>Order</th>
-<th>Warehouse</th>
-<th>Customer</th>
-<th>Risk</th>
-<th>Likely driver</th>
-<th>Time left</th>
-<th>Priority</th>
-</tr>
-</thead>
-<tbody>
-<tr class="queue-row">
-<td>ORD-0089628</td>
-<td>WH-TSK</td>
-<td>
-<span class="pill">Platinum</span>
-</td>
-<td>
-<span class="risk">High</span>
-</td>
-<td>Stock shortage</td>
-<td>25.8h</td>
-<td class="priority">5.10</td>
-</tr>
-<tr class="queue-row">
-<td>ORD-0088994</td>
-<td>WH-TSK</td>
-<td>
-<span class="pill">Platinum</span>
-</td>
-<td>
-<span class="risk">High</span>
-</td>
-<td>Stock shortage</td>
-<td>20.3h</td>
-<td class="priority">4.72</td>
-</tr>
-<tr class="queue-row">
-<td>ORD-0086320</td>
-<td>WH-JOR</td>
-<td>
-<span class="pill">Platinum</span>
-</td>
-<td>
-<span class="risk">High</span>
-</td>
-<td>Shortage + inbound delay</td>
-<td>30.8h</td>
-<td class="priority">4.46</td>
-</tr>
-</tbody>
-</table>
-</div>
+<div class="table-scroll"><table><thead><tr><th>Order</th><th>Warehouse</th><th>Customer</th><th>Risk</th><th>Likely driver</th><th>Due</th><th>Priority</th></tr></thead><tbody id="exQueue"></tbody></table></div>
 </article>
       </section>
 
       <section class="view" id="customers">
 <header class="page-head">
-<div>
-<h1>Customer SLA exposure</h1>
-<p>Find the accounts where service gaps and commercial importance intersect.</p>
-</div>
+<div><h1>Customer SLA exposure</h1><p>Find the accounts where service gaps and commercial importance intersect.</p></div>
 <span class="timestamp">Values are 24-month order value—not open exposure</span>
 </header>
 <div class="customer-hero">
-<article class="card">
-<span>Customers below target</span>
-<strong>169 / 200</strong>
-<small class="down">84.5% below target</small>
-</article>
-<article class="card">
-<span>Average target gap</span>
-<strong>-8.4pp</strong>
-<small>Across below-target accounts</small>
-</article>
-<article class="card">
-<span>Largest Platinum gap</span>
-<strong>-48.4pp</strong>
-<small>Hospital Account 0096</small>
-</article>
+<article class="card"><span>Customers below the 93% target</span><strong id="cBelow"></strong><small class="down" id="cBelows"></small></article>
+<article class="card"><span>Average target gap</span><strong id="cGap"></strong><small>Across below-target accounts</small></article>
+<article class="card"><span>Largest Strategic-tier gap</span><strong id="cStrat"></strong><small id="cStrats"></small></article>
 </div>
 <article class="card table-card">
-<div class="table-head">
-<div>
-<h2>Customer sample, sorted by order value</h2>
-<small>Five displayed accounts · not a complete customer ranking</small>
-</div>
-</div>
-<div class="table-scroll">
-<table>
-<thead>
-<tr>
-<th>Customer</th>
-<th>Tier</th>
-<th>OTIF</th>
-<th>Target</th>
-<th>Gap</th>
-<th>24-month value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Hospital Account 0096</td>
-<td>
-<span class="pill">Platinum</span>
-</td>
-<td>48.6%</td>
-<td>97%</td>
-<td class="down">-48.4pp</td>
-<td>₹38,36,728</td>
-</tr>
-<tr>
-<td>Institutional Account 0033</td>
-<td>Silver</td>
-<td>79.9%</td>
-<td>90%</td>
-<td class="down">-10.1pp</td>
-<td>₹35,25,921</td>
-</tr>
-<tr>
-<td>Retail Account 0112</td>
-<td>Silver</td>
-<td>85.9%</td>
-<td>90%</td>
-<td class="down">-4.1pp</td>
-<td>₹34,04,471</td>
-</tr>
-<tr>
-<td>Retail Account 0160</td>
-<td>Gold</td>
-<td>87.4%</td>
-<td>94%</td>
-<td class="down">-6.6pp</td>
-<td>₹23,51,112</td>
-</tr>
-<tr>
-<td>Institutional Account 0015</td>
-<td>Silver</td>
-<td>81.3%</td>
-<td>90%</td>
-<td class="down">-8.7pp</td>
-<td>₹18,48,810</td>
-</tr>
-</tbody>
-</table>
-</div>
+<div class="table-head"><div><h2>Largest accounts by order value</h2><small>Top 6 accounts with 20+ orders in the selected scope</small></div></div>
+<div class="table-scroll"><table><thead><tr><th>Customer</th><th>Tier</th><th>Segment</th><th>OTIF</th><th>Target</th><th>Gap</th><th>24-month value</th></tr></thead><tbody id="custTable"></tbody></table></div>
 </article>
 </section>
 
       <section class="view" id="queue">
 <header class="page-head">
-<div>
-<h1>Human action queue</h1>
-<p>A transparent, capacity-aware ranking—not a list of every high-risk order.</p>
-</div>
+<div><h1>Human action queue</h1><p>A transparent, capacity-aware ranking—every action needs a named owner and an explicit human decision.</p></div>
 <span class="timestamp">Review capacity: 25 orders/day</span>
 </header>
 <div class="kpis">
-<article class="card kpi">
-<div class="kpi-label">Open alerts</div>
-<strong>3,535</strong>
-<small>Across 3 checkpoints</small>
-</article>
-<article class="card kpi">
-<div class="kpi-label">Failure probability</div>
-<strong>75.2%</strong>
-<small>Average flagged risk</small>
-</article>
-<article class="card kpi">
-<div class="kpi-label">Recoverable</div>
-<strong>83.1%</strong>
-<small class="up">Action remains feasible</small>
-</article>
-<article class="card kpi">
-<div class="kpi-label">Precision @ capacity</div>
-<strong>70.3%</strong>
-<small>Allocation checkpoint</small>
-</article>
-<article class="card kpi">
-<div class="kpi-label">Median lead time</div>
-<strong>81.7h</strong>
-<small>Before commitment</small>
-</article>
+<article class="card kpi"><div class="kpi-label">Open interventions</div><strong id="qOpen"></strong><small id="qOpens"></small></article>
+<article class="card kpi"><div class="kpi-label">Average order risk</div><strong id="qRisk"></strong><small>Predicted OTIF failure, open items</small></article>
+<article class="card kpi"><div class="kpi-label">Approval rate</div><strong id="qAppr"></strong><small id="qApprs"></small></article>
+<article class="card kpi"><div class="kpi-label">Completion rate</div><strong id="qComp"></strong><small id="qComps"></small></article>
+<article class="card kpi"><div class="kpi-label">Queue hit rate</div><strong>51.0%</strong><small>Top 25/day that really fail · network</small></article>
 </div>
 <article class="card table-card">
-<div class="table-head">
-<div>
-<h2>Ranked intervention sample</h2>
-<small>Select any row to inspect evidence and recommended action</small>
-</div>
-<span class="pill">Showing 6 sample rows</span>
-</div>
-<div class="table-scroll">
-<table>
-<thead>
-<tr>
-<th>Order</th>
-<th>WH</th>
-<th>Tier</th>
-<th>Risk</th>
-<th>Reason</th>
-<th>Time left</th>
-<th>Priority</th>
-</tr>
-</thead>
-<tbody>
-<tr class="queue-row">
-<td>ORD-0089628</td>
-<td>WH-TSK</td>
-<td>Platinum</td>
-<td>
-<span class="risk">High</span>
-</td>
-<td>Stock shortage</td>
-<td>25.8h</td>
-<td class="priority">5.10</td>
-</tr>
-<tr class="queue-row">
-<td>ORD-0088994</td>
-<td>WH-TSK</td>
-<td>Platinum</td>
-<td>
-<span class="risk">High</span>
-</td>
-<td>Stock shortage</td>
-<td>20.3h</td>
-<td class="priority">4.72</td>
-</tr>
-<tr class="queue-row">
-<td>ORD-0086320</td>
-<td>WH-JOR</td>
-<td>Platinum</td>
-<td>
-<span class="risk">High</span>
-</td>
-<td>Shortage + inbound delay</td>
-<td>30.8h</td>
-<td class="priority">4.46</td>
-</tr>
-<tr class="queue-row">
-<td>ORD-0090011</td>
-<td>WH-DBR</td>
-<td>Platinum</td>
-<td>
-<span class="risk">High</span>
-</td>
-<td>Shortage + inbound delay</td>
-<td>32.2h</td>
-<td class="priority">4.40</td>
-</tr>
-<tr class="queue-row">
-<td>ORD-0092077</td>
-<td>WH-DBR</td>
-<td>Platinum</td>
-<td>
-<span class="risk">High</span>
-</td>
-<td>Stock shortage</td>
-<td>38.4h</td>
-<td class="priority">4.38</td>
-</tr>
-<tr class="queue-row">
-<td>ORD-0082660</td>
-<td>WH-DBR</td>
-<td>Platinum</td>
-<td>
-<span class="risk">High</span>
-</td>
-<td>Shortage + inbound delay</td>
-<td>26.5h</td>
-<td class="priority">4.19</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="limit">Priority is a capped product of failure probability × time urgency × essential-product weight × customer-tier weight × exposure weight × recoverability. The exported page does not include the individual multiplier values; scores are displayed as reported, not recomputed here.</div>
+<div class="table-head"><div><h2>Open intervention queue</h2><small>Select any row to inspect evidence and the recommended action</small></div><span class="pill" id="qCount"></span></div>
+<div class="table-scroll"><table><thead><tr><th>Order</th><th>WH</th><th>Tier</th><th>Risk</th><th>Reason</th><th>Due</th><th>Priority</th></tr></thead><tbody id="qTable"></tbody></table></div>
+<div class="limit">Priority combines failure probability, time urgency, essential-product weight, customer-tier weight, exposure and recoverability. Interventions record observed outcomes only; no causal OTIF improvement is claimed.</div>
 </article>
 </section>
 
       <section class="view" id="inventory">
 <header class="page-head">
-<div>
-<h1>Inventory risk</h1>
-<p>Short-horizon supply visibility for essential-category SKUs.</p>
-</div>
-<span class="timestamp">Descriptive only · no reorder recommendation</span>
+<div><h1>Inventory risk</h1><p>Stock availability and stockout pressure across 500 SKUs and 27 therapeutic categories.</p></div>
+<span class="timestamp" id="invStamp"></span>
 </header>
 <div class="split">
 <article class="card">
 <div class="stat-row">
-<div class="stat">
-<b>295,474</b>
-<span>Network on-hand units</span>
+<div class="stat"><b id="iAvail"></b><span>Available units, latest snapshot</span></div>
+<div class="stat"><b class="down" id="iRop"></b><span>SKUs below reorder point</span></div>
+<div class="stat"><b class="down" id="iOut"></b><span>SKUs stocked out today</span></div>
 </div>
-<div class="stat">
-<b>56.5d</b>
-<span>Network average days of supply</span>
-</div>
-<div class="stat">
-<b class="down">6</b>
-<span>Reported low-supply sample (6 rows)</span>
-</div>
-</div>
-<p class="scope-note" style="padding:0 18px">Five displayed product rows from the six-row network sample. Bars use a 0–10 day scale. Product-to-warehouse mapping was not exported.</p><div class="bar-list">
-<div class="bar-item bad">
-<span>Respiratory · 0169</span>
-<div class="track">
-<i style="width:40%">
-</i>
-</div>
-<b>4.0d</b>
-</div>
-<div class="bar-item bad">
-<span>Gastrointestinal · 0211</span>
-<div class="track">
-<i style="width:52%">
-</i>
-</div>
-<b>5.2d</b>
-</div>
-<div class="bar-item bad">
-<span>Cardiovascular · 0437</span>
-<div class="track">
-<i style="width:54%">
-</i>
-</div>
-<b>5.4d</b>
-</div>
-<div class="bar-item bad">
-<span>OTC · 0011</span>
-<div class="track">
-<i style="width:57%">
-</i>
-</div>
-<b>5.7d</b>
-</div>
-<div class="bar-item bad">
-<span>Electrolytes · 0474</span>
-<div class="track">
-<i style="width:63%">
-</i>
-</div>
-<b>6.3d</b>
-</div>
-</div>
+<p class="scope-note" style="padding:0 18px">Categories with the highest stockout rate · share of daily SKU snapshots with zero available stock, 2024–2025.</p>
+<div class="bar-list" id="catBars"></div>
 </article>
 <article class="card">
-<div class="card-head">
-<div>
-<h2>Low-supply sample by warehouse</h2>
-<span>Count among the six shortest days-of-supply rows</span>
-</div>
-</div>
-<div class="chart-wrap">
-<svg viewBox="0 0 520 280" role="img" aria-label="Low-supply sample counts: Tinsukia 1, Jorhat 4, Guwahati 1, Dibrugarh 0. Bar heights use a zero to four count scale."><line x1="32" x2="505" y1="230" y2="230" stroke="#25354d"/><text x="8" y="235" fill="#91a2b9" font-size="13">0</text><line x1="32" x2="505" y1="185" y2="185" stroke="#25354d"/><text x="8" y="190" fill="#91a2b9" font-size="13">1</text><line x1="32" x2="505" y1="140" y2="140" stroke="#25354d"/><text x="8" y="145" fill="#91a2b9" font-size="13">2</text><line x1="32" x2="505" y1="95" y2="95" stroke="#25354d"/><text x="8" y="100" fill="#91a2b9" font-size="13">3</text><line x1="32" x2="505" y1="50" y2="50" stroke="#25354d"/><text x="8" y="55" fill="#91a2b9" font-size="13">4</text><g data-wh="WH-TSK"><rect x="55" y="185" width="70" height="45" rx="5" fill="#ff6b6b"/><text x="90" y="175" text-anchor="middle" fill="#f4f7fb">1</text><text x="90" y="260" text-anchor="middle" fill="#f4f7fb">TSK</text></g><g data-wh="WH-JOR"><rect x="175" y="50" width="70" height="180" rx="5" fill="#ff6b6b"/><text x="210" y="40" text-anchor="middle" fill="#f4f7fb">4</text><text x="210" y="260" text-anchor="middle" fill="#f4f7fb">JOR</text></g><g data-wh="WH-GHY"><rect x="295" y="185" width="70" height="45" rx="5" fill="#ff6b6b"/><text x="330" y="175" text-anchor="middle" fill="#f4f7fb">1</text><text x="330" y="260" text-anchor="middle" fill="#f4f7fb">GHY</text></g><g data-wh="WH-DBR"><rect x="415" y="230" width="70" height="0" rx="5" fill="#ff6b6b"/><text x="450" y="220" text-anchor="middle" fill="#f4f7fb">0</text><text x="450" y="260" text-anchor="middle" fill="#f4f7fb">DBR</text></g></svg>
-</div>
+<div class="card-head"><div><h2>Stockout rate by warehouse</h2><span>Share of daily SKU snapshots with zero available stock</span></div></div>
+<div class="chart-wrap"><svg id="whStock" viewBox="0 0 520 280" role="img" aria-label="Stockout rate by warehouse"></svg></div>
 </article>
 </div>
 </section>
 
       <section class="view" id="execution">
 <header class="page-head">
-<div>
-<h1>Execution health</h1>
-<p>Separate warehouse, carrier and supplier signals so intervention reaches the right owner.</p>
-</div>
-<span class="timestamp">24-month average / sampled PO ledger</span>
+<div><h1>Execution health</h1><p>Separate warehouse, carrier and stock-transfer signals so intervention reaches the right owner.</p></div>
+<span class="timestamp">24-month averages</span>
 </header>
 <div class="split">
 <article class="card">
-<div class="card-head">
-<div>
-<h2>Warehouse processing</h2>
-<span>Backlog ratio (0–100% bar scale) / average processing hours</span>
-</div>
-</div>
-<div class="bar-list">
-<div class="bar-item" data-wh="WH-DBR">
-<span>WH-DBR · 6.60h</span>
-<div class="track">
-<i style="width:8%">
-</i>
-</div>
-<b>8%</b>
-</div>
-<div class="bar-item" data-wh="WH-GHY">
-<span>WH-GHY · 6.61h</span>
-<div class="track">
-<i style="width:6%">
-</i>
-</div>
-<b>6%</b>
-</div>
-<div class="bar-item" data-wh="WH-TSK">
-<span>WH-TSK · 6.60h</span>
-<div class="track">
-<i style="width:6%">
-</i>
-</div>
-<b>6%</b>
-</div>
-<div class="bar-item" data-wh="WH-JOR">
-<span>WH-JOR · 6.60h</span>
-<div class="track">
-<i style="width:4%">
-</i>
-</div>
-<b>4%</b>
-</div>
-</div>
+<div class="card-head"><div><h2>Warehouse OTIF</h2><span>OTIF % with average warehouse utilisation at release</span></div></div>
+<div class="bar-list" id="whBars"></div>
 </article>
 <article class="card">
-<div class="card-head">
-<div>
-<h2>Carrier on-time performance</h2>
-<span>Network only · four-carrier sample · spread 2.2pp</span>
-</div>
-</div>
-<div class="bar-list">
-<div class="bar-item">
-<span>Tea Route Express</span>
-<div class="track">
-<i style="width:86.8%">
-</i>
-</div>
-<b>86.8%</b>
-</div>
-<div class="bar-item">
-<span>Highland Cargo</span>
-<div class="track">
-<i style="width:86.5%">
-</i>
-</div>
-<b>86.5%</b>
-</div>
-<div class="bar-item">
-<span>Brahmaputra</span>
-<div class="track">
-<i style="width:86%">
-</i>
-</div>
-<b>86.0%</b>
-</div>
-<div class="bar-item">
-<span>Kaziranga</span>
-<div class="track">
-<i style="width:84.6%">
-</i>
-</div>
-<b>84.6%</b>
-</div>
-</div>
+<div class="card-head"><div><h2>Carrier OTIF</h2><span id="carScope"></span></div></div>
+<div class="bar-list" id="carBars"></div>
 </article>
 </div>
 <article class="card table-card">
-<div class="table-head">
-<div>
-<h2>Weakest supplier receipt performance</h2>
-<small>Network only · archived sampled purchase-order ledger</small>
-</div>
-</div>
-<div class="table-scroll">
-<table>
-<thead>
-<tr>
-<th>Supplier</th>
-<th>POs sampled</th>
-<th>On-time</th>
-<th>Average fill</th>
-<th>Signal</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>SUP-017</td>
-<td>31</td>
-<td class="down">25.8%</td>
-<td>85.1%</td>
-<td>
-<span class="risk">Escalate</span>
-</td>
-</tr>
-<tr>
-<td>SUP-007</td>
-<td>31</td>
-<td class="down">35.5%</td>
-<td>97.5%</td>
-<td>Timing risk</td>
-</tr>
-<tr>
-<td>SUP-014</td>
-<td>39</td>
-<td class="down">35.9%</td>
-<td>91.1%</td>
-<td>Timing risk</td>
-</tr>
-<tr>
-<td>SUP-002</td>
-<td>27</td>
-<td class="down">37.0%</td>
-<td>85.3%</td>
-<td>Dual risk</td>
-</tr>
-</tbody>
-</table>
-</div>
+<div class="table-head"><div><h2>Stock-transfer scenarios by lane</h2><small>Estimated OTIF-risk reduction if stock moves between warehouses · scenario only, approval required</small></div></div>
+<div class="table-scroll"><table><thead><tr><th>Lane</th><th>Scenarios</th><th>Units</th><th>Avg risk before</th><th>Avg risk after</th><th>Reduction</th></tr></thead><tbody id="laneTable"></tbody></table></div>
 </article>
 </section>
 
@@ -741,6 +217,7 @@
 </div>
 <span class="timestamp">Run run-20260926T141000Z-44e3ad</span>
 </header>
+<div class="view-scope prototype-note"><b>Engineering prototype · earlier simulation run.</b> This view replays a captured API → PostgreSQL → approval run from a separately retrained model (seed 20260926). Its metrics are not from the 100,000-order dataset used in every other view and in the Power BI report.</div>
 <div class="kpis">
 <article class="card kpi">
 <div class="kpi-label">Phase 5 release PR-AUC</div>
@@ -898,131 +375,59 @@
   </details>
   <details>
     <summary>Component status ledger</summary>
-    <div class="evidence-body"><ul><li><strong>Implemented and tested:</strong> canonical contract and leakage gate; release ML pipeline; threshold and priority policy; 5-endpoint FastAPI/Pydantic API; action catalogue; 16-table/9-view PostgreSQL layer; 6 structurally validated n8n workflows.</li><li><strong>Built with gaps noted:</strong> Docker Compose parsed but images could not be pulled; Power BI specs and live CSV exist but the native .pbix page needs Desktop; second-company onboarding is documented but not externally tested.</li><li><strong>Future enhancement:</strong> allocation-complete and dispatch automation checkpoints.</li></ul></div>
+    <div class="evidence-body"><ul><li><strong>Implemented and tested:</strong> canonical contract and leakage gate; release ML pipeline; threshold and priority policy; 5-endpoint FastAPI/Pydantic API; action catalogue; 16-table/9-view PostgreSQL layer; 6 structurally validated n8n workflows.</li><li><strong>Built with gaps noted:</strong> Docker Compose parsed but images could not be pulled; Power BI was delivered later as a separate 13-page report on the refreshed 100,000-order dataset; second-company onboarding is documented but not externally tested.</li><li><strong>Future enhancement:</strong> allocation-complete and dispatch automation checkpoints.</li></ul></div>
   </details>
 </article>
 </section>
 
+      
       <section class="view" id="trust">
 <header class="page-head">
-<div>
-<h1>Trust center</h1>
-<p>Metric contracts, model validation, leakage checks and limitations—visible without obscuring the operational story.</p>
-</div>
+<div><h1>Trust center</h1><p>Metric contracts, model validation and limitations—visible without obscuring the operational story.</p></div>
 <span class="timestamp">Synthetic-data proof of concept</span>
 </header>
 <div class="trust-grid">
 <article class="card trust-score">
-<div class="card-head" style="padding:0">
-<div>
-<h2>Verification results</h2>
-<span>Reported checks from the original build</span>
-</div>
-</div>
-<div class="ring">
-<b>17 / 17</b>
-</div>
+<div class="card-head" style="padding:0"><div><h2>Verification results</h2><span>Power BI measures vs an independent Python script on the same CSVs</span></div></div>
+<div class="ring"><b>18 / 18</b></div>
 <ul class="checklist">
-<li>Python KPI acceptance <strong>9 / 9</strong>
-</li>
-<li>SQL reconciliation <strong>8 / 8</strong>
-</li>
-<li>Prohibited features <strong>0 × 3</strong>
-</li>
-<li>SQL ↔ Python OTIF <strong>MATCH</strong>
-</li>
+<li>OTIF 73.84% <strong>MATCH</strong></li>
+<li>Failed order value ₹19.84 Cr <strong>MATCH</strong></li>
+<li>Calibration gap (predicted vs actual) <strong>0.9 pp</strong></li>
+<li>Failures caught at 25 orders/day <strong>35.6%</strong></li>
 </ul>
 </article>
 <article class="card">
-<div class="card-head">
-<div>
-<h2>Original build: temporal test performance</h2>
-<span>All checkpoints beat naive and rule baselines</span>
-</div>
-</div>
-<div class="model-cards">
-<div class="model-card">
-<b>RELEASE</b>
-<strong>0.475</strong>
-<small>PR-AUC · 5.31× lift<br>83.5h lead time</small>
-</div>
-<div class="model-card">
-<b>ALLOCATION</b>
-<strong>0.767</strong>
-<small>PR-AUC · 4.28× lift<br>81.2h lead time</small>
-</div>
-<div class="model-card">
-<b>DISPATCH</b>
-<strong>0.495</strong>
-<small>PR-AUC · 3.94× lift<br>70.5h lead time</small>
-</div>
-</div>
-<div class="limit">
-<strong>What cannot be claimed:</strong> this validates a proof of concept on synthetic data—not real-world accuracy, OTIF improvement, stockout reduction or intervention effectiveness. NLEM names, OSM routes and the DataCo/Olist benchmark were not available in the original build.</div>
+<div class="card-head"><div><h2>Checkpoint models: temporal holdout</h2><span>Three scores per order: release, after allocation, at dispatch</span></div></div>
+<div class="model-cards"><div class="model-card"><b>RELEASE · IF</b><strong>0.386</strong><small>PR-AUC · base rate 11.6%<br>2.71× lift in a 25-a-day queue</small></div><div class="model-card"><b>ALLOCATION · OTIF</b><strong>0.469</strong><small>PR-AUC · base rate 25.3%<br>1.84× lift in a 25-a-day queue</small></div><div class="model-card"><b>DISPATCH · OT</b><strong>0.363</strong><small>PR-AUC · base rate 15.7%<br>2.15× lift in a 25-a-day queue</small></div></div>
+<div class="limit"><strong>What cannot be claimed:</strong> this validates a proof of concept on synthetic data—not real-world accuracy, OTIF improvement, stockout reduction or intervention effectiveness.</div>
 </article>
 </div>
 <article class="card" style="margin-top:14px">
-<div class="card-head">
-<div>
-<h2>12-week delivery record</h2>
-<span>8 complete · 4 partial with explicit open items</span>
-</div>
-</div>
+<div class="card-head"><div><h2>12-week delivery record</h2><span>9 complete · 3 partial with explicit open items</span></div></div>
 <div class="roadmap">
-<div class="week">
-<span>W01 COMPLETE</span>
-<b>KPI contract</b>
-<small>9/9 acceptance tests</small>
-</div>
-<div class="week">
-<span>W02 COMPLETE</span>
-<b>Data contracts + ERD</b>
-<small>Grain and availability mapped</small>
-</div>
-<div class="week">
-<span>W03–05 COMPLETE</span>
-<b>Generation + SQL</b>
-<small>1.46M inventory rows · 0 mismatches</small>
-</div>
-<div class="week">
-<span>W07–09 COMPLETE</span>
-<b>Models + queue</b>
-<small>Leakage-safe and calibrated</small>
-</div>
-<div class="week partial">
-<span>W06 PARTIAL</span>
-<b>EDA</b>
-<small>No standalone notebook</small>
-</div>
-<div class="week partial">
-<span>W10 PARTIAL</span>
-<b>Power BI</b>
-<small>Implementation pack, no native .pbix</small>
-</div>
-<div class="week partial">
-<span>W11 PARTIAL</span>
-<b>Stress + benchmark</b>
-<small>Ablation and external benchmark open</small>
-</div>
-<div class="week partial">
-<span>W12 PARTIAL</span>
-<b>Release assets</b>
-<small>No demo recording in original build</small>
-</div>
+<div class="week"><span>W01 COMPLETE</span><b>KPI contract</b><small>OTIF = on time AND in full</small></div>
+<div class="week"><span>W02 COMPLETE</span><b>Data contracts + ERD</b><small>15-file CSV contract</small></div>
+<div class="week"><span>W03–05 COMPLETE</span><b>Generation + SQL</b><small>1.46M inventory rows</small></div>
+<div class="week"><span>W07–09 COMPLETE</span><b>Models + queue</b><small>3 checkpoints, calibrated</small></div>
+<div class="week"><span>W10 COMPLETE</span><b>Power BI</b><small>13-page report · 18/18 checks</small></div>
+<div class="week partial"><span>W06 PARTIAL</span><b>EDA</b><small>No standalone notebook</small></div>
+<div class="week partial"><span>W11 PARTIAL</span><b>Stress + benchmark</b><small>Ablation and external benchmark open</small></div>
+<div class="week partial"><span>W12 PARTIAL</span><b>Release assets</b><small>No demo recording yet</small></div>
 </div>
 </article>
 <article class="card evidence">
   <details>
     <summary>Exact KPI contract</summary>
-    <div class="evidence-body evidence-table"><table><thead><tr><th>Metric</th><th>Governed definition</th></tr></thead><tbody><tr><td>Eligible order</td><td>Completed order in SLA reporting; cancelled and test orders excluded and reported separately.</td></tr><tr><td>Line IF</td><td>accepted_qty ≥ ordered_qty, with no cross-SKU offset.</td></tr><tr><td>Order IF</td><td>Minimum eligible-line IF flag.</td></tr><tr><td>Order OT</td><td>Final required line ≤ original committed timestamp; revised promise is never the SLA baseline.</td></tr><tr><td>Order OTIF</td><td>IF=1 AND OT=1—never (OT%+IF%)/2.</td></tr></tbody></table></div>
+    <div class="evidence-body evidence-table"><table><thead><tr><th>Metric</th><th>Governed definition</th></tr></thead><tbody><tr><td>Order</td><td>Every simulated order is a completed order; this run contains no cancelled or test records.</td></tr><tr><td>Order IF</td><td>Every line delivered in full (delivered quantity ≥ ordered quantity), with no cross-SKU offset.</td></tr><tr><td>Order OT</td><td>Delivered on or before the original promised date; a revised promise is never the SLA baseline.</td></tr><tr><td>Order OTIF</td><td>OT = 1 AND IF = 1—never (OT% + IF%) / 2.</td></tr><tr><td>Failure cause</td><td>One logged root cause per failed order.</td></tr></tbody></table></div>
   </details>
   <details>
-    <summary>Full temporal model metrics</summary>
-    <div class="evidence-body evidence-table"><table><thead><tr><th>Checkpoint</th><th>Model</th><th>PR-AUC</th><th>Naive</th><th>Rule</th><th>ROC-AUC</th><th>Recall@cap</th><th>Prec@cap</th><th>Brier</th><th>ECE</th><th>Lift</th><th>Lead time</th></tr></thead><tbody><tr><td>Release</td><td>Logistic regression</td><td>0.475</td><td>0.100</td><td>0.361</td><td>0.841</td><td>69.3%</td><td>37.4%</td><td>0.066</td><td>0.006</td><td>5.31×</td><td>83.5h</td></tr><tr><td>Allocation-complete</td><td>Gradient boosting</td><td>0.767</td><td>0.226</td><td>0.565</td><td>0.863</td><td>63.9%</td><td>70.3%</td><td>0.099</td><td>0.036</td><td>4.28×</td><td>81.2h</td></tr><tr><td>Dispatch</td><td>Gradient boosting</td><td>0.495</td><td>0.142</td><td>0.294</td><td>0.855</td><td>56.1%</td><td>50.4%</td><td>0.091</td><td>0.008</td><td>3.94×</td><td>70.5h</td></tr></tbody></table><p>Review capacity: 25 orders/day; thresholds were set on validation. All three checkpoints beat both baselines on held-out test data.</p></div>
+    <summary>Full checkpoint model metrics</summary>
+    <div class="evidence-body evidence-table"><table><thead><tr><th>Checkpoint</th><th>Predicts</th><th>PR-AUC</th><th>Base rate</th><th>ROC-AUC</th><th>Brier</th><th>Precision</th><th>Recall</th><th>Top-25 hit</th><th>Lift</th></tr></thead><tbody><tr><td>Order release</td><td>Incomplete fulfilment</td><td>0.386</td><td>11.6%</td><td>0.716</td><td>0.087</td><td>32.0%</td><td>49.7%</td><td>31.4%</td><td>2.71×</td></tr><tr><td>After allocation</td><td>Late or incomplete</td><td>0.469</td><td>25.3%</td><td>0.690</td><td>0.169</td><td>49.3%</td><td>35.1%</td><td>46.5%</td><td>1.84×</td></tr><tr><td>At dispatch</td><td>Late delivery</td><td>0.363</td><td>15.7%</td><td>0.736</td><td>0.118</td><td>36.1%</td><td>41.3%</td><td>33.7%</td><td>2.15×</td></tr></tbody></table><p>Review capacity: 25 orders a day per checkpoint; thresholds set on validation data.</p></div>
   </details>
   <details>
     <summary>Scope and reproducibility</summary>
-    <div class="evidence-body">NorthEast HealthLink Distributors Pvt. Ltd. is entirely hypothetical. All orders, customers, products and outcomes were generated by a seeded simulation (seed 20260915). Scale: 99,433 total order records—95,912 completed, 3,026 cancelled and 495 test—plus 301,757 order lines, 1,462,000 inventory rows, 500 products, 200 customers, 25 suppliers, 6 carriers and 4 warehouses. The original build references <code>./run_pipeline.sh</code>; that pipeline and its raw exports are not included in this public web repository, so the training and reconciliation claims cannot be independently rerun from this page. The original build did not create a native .pbix, use NLEM medicine names or OSM routes, run the DataCo/Olist benchmark, or record a demo video. The portfolio screenshots show this HTML prototype. A separate saved Power BI build pack uses different data and model results and is not mixed into this web case.</div>
+    <div class="evidence-body">NorthEast HealthLink Distributors Pvt. Ltd. is entirely hypothetical. All orders, customers, products and outcomes were generated by a seeded simulation (seed 20260915). Scale: 100,000 orders (Jan 2024 – Dec 2025), 309,776 order lines, 1,462,000 inventory snapshots, 300,000 checkpoint predictions, 7,623 interventions, 1,975 stock-transfer scenarios, 500 products, 200 customers, 6 carriers and 4 warehouses. Every figure on this page and in the Power BI report is computed from the same 15-file CSV contract; the report's Data Checks page reconciles 18 headline numbers against an independent pandas script. The Automation view is the exception: it documents an earlier engineering prototype with a separately retrained model.</div>
   </details>
 </article>
 </section>
@@ -1037,52 +442,77 @@
 <span class="proof">Order diagnostic</span>
 <button id="closeDrawer" aria-label="Close diagnostic">✕</button>
 </div>
-<h2 id="drawerOrder">ORD-0089628</h2>
-<div class="big-risk" id="drawerRisk">High</div>
-<p style="color:var(--muted);margin-top:-8px">Predicted OTIF failure risk band</p>
+<h2 id="drawerOrder"></h2>
+<div class="big-risk" id="drawerRisk"></div>
+<p style="color:var(--muted);margin-top:-8px" id="drawerRiskSub">Predicted OTIF failure risk</p>
 <div class="drawer-grid">
-<div>
-<small>Warehouse</small>
-<b id="drawerWh">WH-TSK</b>
+<div><small>Warehouse</small><b id="drawerWh"></b></div>
+<div><small>Customer</small><b id="drawerTier"></b></div>
+<div><small>Raised at</small><b id="drawerCp"></b></div>
+<div><small>Priority score</small><b id="drawerPriority"></b></div>
+<div><small>Created</small><b id="drawerCreated"></b></div>
+<div><small>Due</small><b id="drawerDue"></b></div>
 </div>
-<div>
-<small>Customer</small>
-<b id="drawerTier">Platinum</b>
-</div>
-<div>
-<small>Time remaining</small>
-<b id="drawerTime">25.8 hours</b>
-</div>
-<div>
-<small>Priority score</small>
-<b id="drawerPriority">5.10</b>
-</div>
-</div>
-<p id="drawerReason"></p><h3>Evidence to check before acting</h3><p id="drawerEvidence"></p><p class="scope-note">An order-specific event timeline and numeric failure probability were not exported for these sample rows. Time remaining and priority above match the selected row; they are captured values, not a live countdown.</p>
+<h3>Likely driver</h3><p id="drawerReason"></p>
 <h3>Governed recommendation</h3>
 <div class="action-box">
-<b>ALLOCATION REVIEW</b>
-<p>Candidate intervention shown for this mockup: inspect stock and inbound evidence for the selected order. Any final action requires human approval; the system does not autonomously change the order.</p>
+<b id="drawerOwner"></b>
+<p id="drawerAction"></p>
 </div>
+<p class="scope-note" id="drawerDecision"></p>
 </aside>
 
 <script>
-const views=[...document.querySelectorAll('.view')], nav=[...document.querySelectorAll('.nav-btn')];
-const drawer=document.getElementById('drawer'),overlay=document.getElementById('overlay');
-const whSel=document.getElementById('whFilter'),whNote=document.getElementById('whNote');
-const queueRows=[...document.querySelectorAll('#queue .queue-row')];
-const queueBodies=[...new Set([...document.querySelectorAll('.queue-row')].map(r=>r.parentElement))];
-let current='executive', lastFocus=null;
-const text=(id,value)=>document.getElementById(id).textContent=value;
-function closeDrawer(){const wasOpen=drawer.classList.contains('open');drawer.classList.remove('open');overlay.classList.remove('on');drawer.setAttribute('aria-hidden','true');drawer.inert=true;if(wasOpen&&lastFocus)lastFocus.focus();}
-function openDrawer(row){lastFocus=row.querySelector('.order-button')||row;const c=[...row.cells].map(x=>x.textContent.trim());text('drawerOrder',c[0]);text('drawerWh',c[1]);text('drawerTier',c[2]);text('drawerRisk',c[3]);text('drawerTime',c[5].replace('h',' hours'));text('drawerPriority',c[6]);text('drawerReason',c[4]);text('drawerEvidence',c[4].includes('inbound')?'Check the stock snapshot and inbound ETA available at the scoring checkpoint. Confirm feasibility and the original delivery promise before approval.':'Check stock available to allocate at the scoring checkpoint and the original delivery promise. Final accepted delivery quantity defines the outcome and must not be used as an early predictor.');drawer.inert=false;drawer.classList.add('open');overlay.classList.add('on');drawer.setAttribute('aria-hidden','false');drawer.tabIndex=-1;}
-drawer.inert=true;
-document.querySelectorAll('.queue-row').forEach(r=>{const id=r.cells[0].textContent.trim();r.setAttribute('aria-label','Inspect '+id);const button=document.createElement('button');button.type='button';button.className='order-button';button.textContent=id;button.setAttribute('aria-label','Inspect order '+id);button.addEventListener('click',e=>{e.stopPropagation();openDrawer(r);});button.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();e.stopPropagation();}});button.addEventListener('keyup',e=>{if(e.key==='Enter'){e.preventDefault();e.stopPropagation();openDrawer(r);}});r.cells[0].replaceChildren(button);r.addEventListener('click',()=>openDrawer(r));});
-document.getElementById('closeDrawer').addEventListener('click',closeDrawer);
-document.addEventListener('keydown',e=>{if(!drawer.classList.contains('open'))return;if(e.key==='Escape')closeDrawer();if(e.key==='Tab'){e.preventDefault();document.getElementById('closeDrawer').focus();}});
-function sampleReasons(){const counts={};queueRows.forEach(r=>{const reason=r.cells[4].textContent.trim();counts[reason]=(counts[reason]||0)+1;});const target=document.getElementById('reasonCounts');Object.entries(counts).forEach(([reason,count])=>{const el=document.createElement('div');el.className='cause';const label=document.createElement('span');label.textContent=reason;const track=document.createElement('div');track.className='track';const bar=document.createElement('i');bar.style.width=count/queueRows.length*100+'%';track.append(bar);const value=document.createElement('b');value.textContent=count;el.append(label,track,value);target.append(el);});}
-sampleReasons();
-function applyWh(){const wh=whSel.value,all=wh==='ALL';queueBodies.forEach(tb=>{let shown=0;tb.querySelectorAll('.queue-row').forEach(r=>{r.hidden=!all&&r.cells[1].textContent.trim()!==wh;if(!r.hidden)shown++;});let empty=tb.querySelector('.empty-row');if(!empty){empty=document.createElement('tr');empty.className='empty-row';const td=document.createElement('td');td.colSpan=tb.closest('table').querySelectorAll('th').length;empty.append(td);tb.append(empty);}empty.hidden=shown>0;empty.cells[0].textContent='No '+wh+' orders in this exported sample; this does not imply no alerts in the warehouse.';});document.querySelectorAll('.bar-item[data-wh]').forEach(b=>b.hidden=!all&&b.dataset.wh!==wh);document.querySelectorAll('svg [data-wh]').forEach(g=>{if(!all&&g.dataset.wh!==wh)g.setAttribute('hidden','');else g.removeAttribute('hidden');});const count=queueRows.filter(r=>!r.hidden).length;const label=document.querySelector('#queue .table-head>span');if(label)label.textContent='Showing '+count+' of 6 exported sample rows';document.querySelector('#queue .kpis').hidden=!all;document.querySelector('#inventory .split>article:first-child').hidden=!all;document.querySelector('#execution .split>article:nth-child(2)').hidden=!all;document.querySelector('#execution .table-card').hidden=!all;whNote.classList.add('on');const scopes={executive:'Network overview. KPIs cover all warehouses; the trend is explicitly illustrative. Warehouse-level OTIF source values were not exported.',customers:'Network customer sample. Customer-to-warehouse breakdowns were not exported.',queue:all?'Network summary with six exported order rows. The selector filters the sample, not the complete alert population.':'Order sample filtered to '+wh+'. Network summary cards are hidden because warehouse-level KPI exports are unavailable.',inventory:all?'Network inventory summary and six-row warehouse count sample. Product bars show five network sample rows.':'Warehouse count sample for '+wh+'. Network product rows and totals are hidden; product-to-warehouse mapping was not exported.',execution:all?'Network comparison. Select a warehouse to inspect its reported processing row.':'Reported warehouse processing for '+wh+'. Carrier and supplier summaries are hidden because warehouse-level breakdowns were not exported.',automation:'Captured Phase 5 run, not a live workflow. PR-AUC 0.3516 belongs to a separately retrained model.',trust:'Original-build validation figures. They describe a different model version from the captured Phase 5 run; the public page does not include the training pipeline.'};whNote.textContent=scopes[current];}
-function show(id){closeDrawer();current=id;views.forEach(v=>v.classList.toggle('active',v.id===id));nav.forEach(b=>{const active=b.dataset.view===id;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});const supports=['queue','inventory','execution'].includes(id);whSel.disabled=!supports;if(!supports)whSel.value='ALL';text('filterLabel',supports?'Filter displayed sample':'Network / captured view');applyWh();window.scrollTo({top:0,behavior:'smooth'});}
-nav.forEach(b=>b.addEventListener('click',()=>show(b.dataset.view)));document.querySelectorAll('[data-jump]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.jump)));whSel.addEventListener('change',()=>{closeDrawer();applyWh();});show('executive');
-</script></body></html>
+const D={"ALL":{"orders":100000,"ot":0.83605,"if":0.87891,"otif":0.73843,"failed":26157,"failedCr":19.84,"valueCr":75.64,"otifMonsoon":0.67501,"otifDry":0.77016,"trend":[["2024-01",0.77967,false],["2024-02",0.74987,false],["2024-03",0.75188,false],["2024-04",0.77969,false],["2024-05",0.76751,false],["2024-06",0.69861,true],["2024-07",0.67504,true],["2024-08",0.67185,true],["2024-09",0.66329,true],["2024-10",0.7493,false],["2024-11",0.78604,false],["2024-12",0.77601,false],["2025-01",0.79355,false],["2025-02",0.75403,false],["2025-03",0.74625,false],["2025-04",0.77636,false],["2025-05",0.79101,false],["2025-06",0.70499,true],["2025-07",0.65699,true],["2025-08",0.66356,true],["2025-09",0.66675,true],["2025-10",0.76193,false],["2025-11",0.78371,false],["2025-12",0.77501,false]],"causes":[["Inventory shortage",0.42214],["Warehouse backlog",0.23871],["Carrier reliability",0.14818],["Planning variance",0.14119],["Route and weather",0.03135],["Supplier delay",0.01843]],"custBelow":200,"custN":200,"custAvgGap":-19.2,"stratWorst":{"name":"Synthetic Account 001","gap":-25.2},"custTop":[{"name":"Synthetic Account 056","tier":"Core","seg":"Clinic","otif":0.73051,"value":5899647},{"name":"Synthetic Account 030","tier":"Core","seg":"Clinic","otif":0.7141,"value":5878119},{"name":"Synthetic Account 099","tier":"Core","seg":"Clinic","otif":0.73989,"value":5740804},{"name":"Synthetic Account 008","tier":"Core","seg":"Clinic","otif":0.73634,"value":5648887},{"name":"Synthetic Account 121","tier":"Core","seg":"Clinic","otif":0.72574,"value":5414957},{"name":"Synthetic Account 036","tier":"Strategic","seg":"Pharmacy","otif":0.75419,"value":5391530}],"open":1881,"openCr":1.46,"openRisk":0.58187,"alerts":7623,"approval":0.81713,"completion":0.85166,"daysToComplete":1.0,"otifAfter":0.35344,"queue":[{"id":"NHL-006497","wh":"WH-TSK","tier":"Standard","seg":"Hospital","band":"Critical","risk":0.914,"reason":"Inventory shortage","cp":"Allocation complete","action":"Transfer stock or approve a substitute","owner":"Warehouse Lead","decision":"Approved","created":"12 Jul 2024","due":"13 Jul 2024","prio":0.89,"value":46063},{"id":"NHL-041743","wh":"WH-GHY","tier":"Strategic","seg":"Clinic","band":"Critical","risk":0.93,"reason":"Inventory shortage","cp":"Release","action":"Review network stock, transfer, inbound expedition, or approved substitute","owner":"Inventory Planner","decision":"Pending","created":"25 Nov 2025","due":"26 Nov 2025","prio":0.869,"value":18897},{"id":"NHL-073907","wh":"WH-DBR","tier":"Standard","seg":"Institution","band":"Critical","risk":0.928,"reason":"Inventory shortage","cp":"Release","action":"Review network stock, transfer, inbound expedition, or approved substitute","owner":"Inventory Planner","decision":"Approved","created":"30 Aug 2025","due":"31 Aug 2025","prio":0.863,"value":25631},{"id":"NHL-040979","wh":"WH-GHY","tier":"Core","seg":"Clinic","band":"Critical","risk":0.714,"reason":"Inventory shortage","cp":"Release","action":"Review network stock, transfer, inbound expedition, or approved substitute","owner":"Inventory Planner","decision":"Approved","created":"18 Apr 2025","due":"19 Apr 2025","prio":0.861,"value":33867},{"id":"NHL-054582","wh":"WH-TSK","tier":"Standard","seg":"Hospital","band":"Critical","risk":0.915,"reason":"Inventory shortage","cp":"Allocation complete","action":"Transfer stock or approve a substitute","owner":"Warehouse Lead","decision":"Pending","created":"25 Aug 2024","due":"26 Aug 2024","prio":0.855,"value":24538},{"id":"NHL-056256","wh":"WH-GHY","tier":"Core","seg":"Hospital","band":"Critical","risk":0.925,"reason":"Inventory shortage","cp":"Release","action":"Review network stock, transfer, inbound expedition, or approved substitute","owner":"Inventory Planner","decision":"Approved","created":"12 Jun 2025","due":"13 Jun 2025","prio":0.853,"value":13498},{"id":"NHL-008848","wh":"WH-JRH","tier":"Strategic","seg":"Clinic","band":"Critical","risk":0.895,"reason":"Inventory shortage","cp":"Release","action":"Review network stock, transfer, inbound expedition, or approved substitute","owner":"Inventory Planner","decision":"Pending","created":"23 Dec 2025","due":"24 Dec 2025","prio":0.852,"value":21702},{"id":"NHL-005188","wh":"WH-GHY","tier":"Standard","seg":"Institution","band":"Critical","risk":0.788,"reason":"Inventory shortage","cp":"Release","action":"Review network stock, transfer, inbound expedition, or approved substitute","owner":"Inventory Planner","decision":"Approved","created":"24 Feb 2024","due":"25 Feb 2024","prio":0.852,"value":22182}],"available":140086,"onHand":168603,"nearExpiry":2693,"stockoutSkus":4,"belowRop":131,"stockoutRate":0.01506,"catStockout":[["Endocrine",0.02516],["Neurology",0.02317],["Diagnostics",0.02185],["Psychiatry",0.02077],["ENT",0.01908],["Respiratory",0.01879]],"coldUtil":0.85235,"pickUtil":0.73399,"breachDays":272,"whUtil":0.82457,"carriers":[["HealthRoute",0.74512,0.84108,14995],["Brahmaputra Express",0.74382,0.84005,19131],["RapidMeds",0.74022,0.83751,15952],["ValleyLink",0.73963,0.84144,13093],["EastLine",0.73239,0.83023,17047],["NE Cargo",0.73112,0.82863,19782]],"lanes":[["WH-TSK → WH-GHY",276,0.78771,0.54579,2132],["WH-JRH → WH-GHY",259,0.79002,0.55197,2038],["WH-DBR → WH-GHY",257,0.78598,0.54444,2149],["WH-JRH → WH-DBR",163,0.79119,0.50092,1234],["WH-GHY → WH-DBR",160,0.78337,0.5415,1260],["WH-TSK → WH-DBR",154,0.78843,0.54747,1103]],"byWh":[["WH-DBR","Dibrugarh",0.73644,24112,0.82934,0.01678,39],["WH-GHY","Guwahati",0.73173,38770,0.84987,0.01416,40],["WH-JRH","Jorhat",0.75229,19103,0.79907,0.01367,30],["WH-TSK","Tinsukia",0.74083,18015,0.7908,0.01561,35]]},"WH-DBR":{"orders":24112,"ot":0.83589,"if":0.87753,"otif":0.73644,"failed":6355,"failedCr":4.79,"valueCr":18.17,"otifMonsoon":0.67312,"otifDry":0.76787,"trend":[["2024-01",0.77465,false],["2024-02",0.73313,false],["2024-03",0.76798,false],["2024-04",0.77605,false],["2024-05",0.76157,false],["2024-06",0.68683,true],["2024-07",0.68774,true],["2024-08",0.66914,true],["2024-09",0.66012,true],["2024-10",0.74294,false],["2024-11",0.78579,false],["2024-12",0.77286,false],["2025-01",0.78932,false],["2025-02",0.76116,false],["2025-03",0.72191,false],["2025-04",0.77327,false],["2025-05",0.78698,false],["2025-06",0.69459,true],["2025-07",0.66006,true],["2025-08",0.64995,true],["2025-09",0.67846,true],["2025-10",0.7651,false],["2025-11",0.81002,false],["2025-12",0.76465,false]],"causes":[["Inventory shortage",0.4181],["Warehouse backlog",0.25193],["Carrier reliability",0.14288],["Planning variance",0.14146],["Route and weather",0.02738],["Supplier delay",0.01825]],"custBelow":200,"custN":200,"custAvgGap":-19.4,"stratWorst":{"name":"Synthetic Account 024","gap":-32.2},"custTop":[{"name":"Synthetic Account 099","tier":"Core","seg":"Clinic","otif":0.77528,"value":1470409},{"name":"Synthetic Account 176","tier":"Core","seg":"Clinic","otif":0.72043,"value":1456529},{"name":"Synthetic Account 056","tier":"Core","seg":"Clinic","otif":0.69231,"value":1386582},{"name":"Synthetic Account 030","tier":"Core","seg":"Clinic","otif":0.66492,"value":1383079},{"name":"Synthetic Account 036","tier":"Strategic","seg":"Pharmacy","otif":0.75401,"value":1358126},{"name":"Synthetic Account 083","tier":"Strategic","seg":"Pharmacy","otif":0.8141,"value":1356916}],"open":451,"openCr":0.35,"openRisk":0.59049,"alerts":1791,"approval":0.823,"completion":0.84871,"daysToComplete":1.0,"otifAfter":0.34053,"queue":[{"id":"NHL-073907","wh":"WH-DBR","tier":"Standard","seg":"Institution","band":"Critical","risk":0.928,"reason":"Inventory shortage","cp":"Release","action":"Review network stock, transfer, inbound expedition, or approved substitute","owner":"Inventory Planner","decision":"Approved","created":"30 Aug 2025","due":"31 Aug 2025","prio":0.863,"value":25631},{"id":"NHL-094947","wh":"WH-DBR","tier":"Standard","seg":"Hospital","band":"Critical","risk":0.804,"reason":"Inventory shortage","cp":"Allocation complete","action":"Transfer stock or approve a substitute","owner":"Warehouse Lead","decision":"Approved","created":"29 Jun 2025","due":"30 Jun 2025","prio":0.846,"value":24561},{"id":"NHL-033937","wh":"WH-DBR","tier":"Standard","seg":"Pharmacy","band":"Critical","risk":0.919,"reason":"Inventory shortage","cp":"Allocation complete","action":"Transfer stock or approve a substitute","owner":"Warehouse Lead","decision":"Approved","created":"25 Jan 2025","due":"26 Jan 2025","prio":0.845,"value":22301},{"id":"NHL-020454","wh":"WH-DBR","tier":"Core","seg":"Hospital","band":"High","risk":0.537,"reason":"Warehouse backlog","cp":"Dispatch","action":"Review approved carrier option, expedite, or communicate early","owner":"Transport Coordinator","decision":"Pending","created":"17 Jul 2024","due":"18 Jul 2024","prio":0.834,"value":48646},{"id":"NHL-097737","wh":"WH-DBR","tier":"Standard","seg":"Pharmacy","band":"Critical","risk":0.889,"reason":"Inventory shortage","cp":"Release","action":"Review network stock, transfer, inbound expedition, or approved substitute","owner":"Inventory Planner","decision":"Pending","created":"13 Jul 2024","due":"14 Jul 2024","prio":0.819,"value":23442},{"id":"NHL-057105","wh":"WH-DBR","tier":"Core","seg":"Clinic","band":"Critical","risk":0.821,"reason":"Inventory shortage","cp":"Release","action":"Review network stock, transfer, inbound expedition, or approved substitute","owner":"Inventory Planner","decision":"Approved","created":"16 Jul 2025","due":"17 Jul 2025","prio":0.819,"value":15210},{"id":"NHL-073852","wh":"WH-DBR","tier":"Core","seg":"Clinic","band":"Medium","risk":0.283,"reason":"Carrier reliability","cp":"Dispatch","action":"Review approved carrier option, expedite, or communicate early","owner":"Transport Coordinator","decision":"Pending","created":"20 Sep 2024","due":"21 Sep 2024","prio":0.815,"value":34181},{"id":"NHL-097737","wh":"WH-DBR","tier":"Standard","seg":"Pharmacy","band":"Critical","risk":0.889,"reason":"Inventory shortage","cp":"Allocation complete","action":"Transfer stock or approve a substitute","owner":"Warehouse Lead","decision":"Pending","created":"14 Jul 2024","due":"15 Jul 2024","prio":0.814,"value":23442}],"available":34205,"onHand":41254,"nearExpiry":674,"stockoutSkus":0,"belowRop":39,"stockoutRate":0.01678,"catStockout":[["Endocrine",0.03866],["Musculoskeletal",0.03853],["Diagnostics",0.03184],["Neurology",0.02974],["Critical care",0.02751],["Ophthalmology",0.02383]],"coldUtil":0.85056,"pickUtil":0.73629,"breachDays":68,"whUtil":0.82934,"carriers":[["Brahmaputra Express",0.74347,0.84133,4670],["HealthRoute",0.74259,0.84489,3578],["RapidMeds",0.73698,0.83479,3783],["NE Cargo",0.73537,0.83203,4852],["ValleyLink",0.72977,0.83916,3090],["EastLine",0.72892,0.82508,4139]],"lanes":[["WH-DBR → WH-GHY",257,0.78598,0.54444,2149],["WH-JRH → WH-DBR",163,0.79119,0.50092,1234],["WH-GHY → WH-DBR",160,0.78337,0.5415,1260],["WH-TSK → WH-DBR",154,0.78843,0.54747,1103],["WH-DBR → WH-JRH",135,0.79112,0.49912,1051],["WH-DBR → WH-TSK",102,0.78874,0.54357,759]]},"WH-GHY":{"orders":38770,"ot":0.82904,"if":0.87692,"otif":0.73173,"failed":10401,"failedCr":7.87,"valueCr":29.26,"otifMonsoon":0.66718,"otifDry":0.76411,"trend":[["2024-01",0.77356,false],["2024-02",0.74729,false],["2024-03",0.74576,false],["2024-04",0.76771,false],["2024-05",0.76453,false],["2024-06",0.6993,true],["2024-07",0.65366,true],["2024-08",0.66687,true],["2024-09",0.65289,true],["2024-10",0.75536,false],["2024-11",0.77465,false],["2024-12",0.76579,false],["2025-01",0.79338,false],["2025-02",0.73639,false],["2025-03",0.73879,false],["2025-04",0.78189,false],["2025-05",0.79287,false],["2025-06",0.70254,true],["2025-07",0.66039,true],["2025-08",0.65855,true],["2025-09",0.64318,true],["2025-10",0.74153,false],["2025-11",0.77162,false],["2025-12",0.77273,false]],"causes":[["Inventory shortage",0.42332],["Warehouse backlog",0.28401],["Planning variance",0.12605],["Carrier reliability",0.12518],["Route and weather",0.02327],["Supplier delay",0.01817]],"custBelow":200,"custN":200,"custAvgGap":-19.9,"stratWorst":{"name":"Synthetic Account 183","gap":-27.7},"custTop":[{"name":"Synthetic Account 099","tier":"Core","seg":"Clinic","otif":0.7608,"value":2271430},{"name":"Synthetic Account 127","tier":"Strategic","seg":"Pharmacy","otif":0.73897,"value":2194020},{"name":"Synthetic Account 142","tier":"Strategic","seg":"Pharmacy","otif":0.80443,"value":2188258},{"name":"Synthetic Account 121","tier":"Core","seg":"Clinic","otif":0.70922,"value":2162191},{"name":"Synthetic Account 008","tier":"Core","seg":"Clinic","otif":0.76378,"value":2158378},{"name":"Synthetic Account 056","tier":"Core","seg":"Clinic","otif":0.74368,"value":2154060}],"open":710,"openCr":0.53,"openRisk":0.58482,"alerts":2883,"approval":0.81686,"completion":0.84798,"daysToComplete":1.0,"otifAfter":0.3305,"queue":[{"id":"NHL-041743","wh":"WH-GHY","tier":"Strategic","seg":"Clinic","band":"Critical","risk":0.93,"reason":"Inventory shortage","cp":"Release","action":"Review network stock, transfer, inbound expedition, or approved substitute","owner":"Inventory Planner","decision":"Pending","created":"25 Nov 2025","due":"26 Nov 2025","prio":0.869,"value":18897},{"id":"NHL-040979","wh":"WH-GHY","tier":"Core","seg":"Clinic","band":"Critical","risk":0.714,"reason":"Inventory shortage","cp":"Release","action":"Review network stock, transfer, inbound expedition, or approved substitute","owner":"Inventory Planner","decision":"Approved","created":"18 Apr 2025","due":"19 Apr 2025","prio":0.861,"value":33867},{"id":"NHL-056256","wh":"WH-GHY","tier":"Core","seg":"Hospital","band":"Critical","risk":0.925,"reason":"Inventory shortage","cp":"Release","action":"Review network stock, transfer, inbound expedition, or approved substitute","owner":"Inventory Planner","decision":"Approved","created":"12 Jun 2025","due":"13 Jun 2025","prio":0.853,"value":13498},{"id":"NHL-005188","wh":"WH-GHY","tier":"Standard","seg":"Institution","band":"Critical","risk":0.788,"reason":"Inventory shortage","cp":"Release","action":"Review network stock, transfer, inbound expedition, or approved substitute","owner":"Inventory Planner","decision":"Approved","created":"24 Feb 2024","due":"25 Feb 2024","prio":0.852,"value":22182},{"id":"NHL-070257","wh":"WH-GHY","tier":"Strategic","seg":"Institution","band":"Critical","risk":0.894,"reason":"Inventory shortage","cp":"Release","action":"Review network stock, transfer, inbound expedition, or approved substitute","owner":"Inventory Planner","decision":"Pending","created":"18 Jun 2024","due":"19 Jun 2024","prio":0.843,"value":14987},{"id":"NHL-042052","wh":"WH-GHY","tier":"Core","seg":"Hospital","band":"Critical","risk":0.862,"reason":"Inventory shortage","cp":"Allocation complete","action":"Transfer stock or approve a substitute","owner":"Warehouse Lead","decision":"Approved","created":"11 Aug 2025","due":"12 Aug 2025","prio":0.84,"value":21413},{"id":"NHL-014837","wh":"WH-GHY","tier":"Core","seg":"Hospital","band":"Medium","risk":0.398,"reason":"Carrier reliability","cp":"Dispatch","action":"Review approved carrier option, expedite, or communicate early","owner":"Transport Coordinator","decision":"Pending","created":"17 Jun 2024","due":"18 Jun 2024","prio":0.835,"value":42851},{"id":"NHL-017391","wh":"WH-GHY","tier":"Core","seg":"Hospital","band":"Medium","risk":0.448,"reason":"Supplier delay","cp":"Dispatch","action":"Review approved carrier option, expedite, or communicate early","owner":"Transport Coordinator","decision":"Approved","created":"16 Sep 2025","due":"17 Sep 2025","prio":0.832,"value":41892}],"available":34713,"onHand":41871,"nearExpiry":665,"stockoutSkus":1,"belowRop":40,"stockoutRate":0.01416,"catStockout":[["Endocrine",0.03154],["Diagnostics",0.02652],["ENT",0.02242],["Paediatrics",0.02232],["Emergency care",0.02203],["Nutrition",0.02196]],"coldUtil":0.85465,"pickUtil":0.73217,"breachDays":68,"whUtil":0.84987,"carriers":[["Brahmaputra Express",0.74049,0.83552,7387],["ValleyLink",0.73771,0.83488,5166],["RapidMeds",0.73638,0.82964,6187],["HealthRoute",0.73206,0.8288,5923],["EastLine",0.72582,0.82635,6565],["NE Cargo",0.7201,0.82074,7542]],"lanes":[["WH-TSK → WH-GHY",276,0.78771,0.54579,2132],["WH-JRH → WH-GHY",259,0.79002,0.55197,2038],["WH-DBR → WH-GHY",257,0.78598,0.54444,2149],["WH-GHY → WH-DBR",160,0.78337,0.5415,1260],["WH-GHY → WH-JRH",121,0.79606,0.55258,846],["WH-GHY → WH-TSK",108,0.7927,0.5483,772]]},"WH-JRH":{"orders":19103,"ot":0.8495,"if":0.88232,"otif":0.75229,"failed":4732,"failedCr":3.65,"valueCr":14.48,"otifMonsoon":0.68433,"otifDry":0.78622,"trend":[["2024-01",0.78491,false],["2024-02",0.76913,false],["2024-03",0.72619,false],["2024-04",0.82084,false],["2024-05",0.79345,false],["2024-06",0.70171,true],["2024-07",0.68821,true],["2024-08",0.68634,true],["2024-09",0.67571,true],["2024-10",0.76744,false],["2024-11",0.8242,false],["2024-12",0.80076,false],["2025-01",0.81091,false],["2025-02",0.76934,false],["2025-03",0.77133,false],["2025-04",0.7715,false],["2025-05",0.79733,false],["2025-06",0.73333,true],["2025-07",0.63614,true],["2025-08",0.6688,true],["2025-09",0.68523,true],["2025-10",0.7985,false],["2025-11",0.77681,false],["2025-12",0.7988,false]],"causes":[["Inventory shortage",0.44146],["Warehouse backlog",0.18491],["Carrier reliability",0.17139],["Planning variance",0.15427],["Route and weather",0.02768],["Supplier delay",0.02029]],"custBelow":200,"custN":200,"custAvgGap":-17.9,"stratWorst":{"name":"Synthetic Account 124","gap":-29.7},"custTop":[{"name":"Synthetic Account 030","tier":"Core","seg":"Clinic","otif":0.77143,"value":1362001},{"name":"Synthetic Account 008","tier":"Core","seg":"Clinic","otif":0.80368,"value":1254625},{"name":"Synthetic Account 088","tier":"Strategic","seg":"Pharmacy","otif":0.72109,"value":1145139},{"name":"Synthetic Account 004","tier":"Strategic","seg":"Pharmacy","otif":0.79012,"value":1141389},{"name":"Synthetic Account 156","tier":"Core","seg":"Clinic","otif":0.78832,"value":1131075},{"name":"Synthetic Account 014","tier":"Standard","seg":"Pharmacy","otif":0.72358,"value":1121135}],"open":339,"openCr":0.27,"openRisk":0.60524,"alerts":1388,"approval":0.80331,"completion":0.8565,"daysToComplete":1.0,"otifAfter":0.37487,"queue":[{"id":"NHL-008848","wh":"WH-JRH","tier":"Strategic","seg":"Clinic","band":"Critical","risk":0.895,"reason":"Inventory shortage","cp":"Release","action":"Review network stock, transfer, inbound expedition, or approved substitute","owner":"Inventory Planner","decision":"Pending","created":"23 Dec 2025","due":"24 Dec 2025","prio":0.852,"value":21702},{"id":"NHL-008848","wh":"WH-JRH","tier":"Strategic","seg":"Clinic","band":"Critical","risk":0.895,"reason":"Inventory shortage","cp":"Allocation complete","action":"Transfer stock or approve a substitute","owner":"Warehouse Lead","decision":"Approved","created":"24 Dec 2025","due":"25 Dec 2025","prio":0.835,"value":21702},{"id":"NHL-006743","wh":"WH-JRH","tier":"Core","seg":"Pharmacy","band":"Critical","risk":0.743,"reason":"Inventory shortage","cp":"Release","action":"Review network stock, transfer, inbound expedition, or approved substitute","owner":"Inventory Planner","decision":"Pending","created":"02 Dec 2024","due":"03 Dec 2024","prio":0.833,"value":15221},{"id":"NHL-024510","wh":"WH-JRH","tier":"Standard","seg":"Pharmacy","band":"High","risk":0.562,"reason":"Inventory shortage","cp":"Dispatch","action":"Review approved carrier option, expedite, or communicate early","owner":"Transport Coordinator","decision":"Approved","created":"25 Jul 2025","due":"26 Jul 2025","prio":0.818,"value":54736},{"id":"NHL-083398","wh":"WH-JRH","tier":"Standard","seg":"Pharmacy","band":"Medium","risk":0.398,"reason":"Carrier reliability","cp":"Dispatch","action":"Review approved carrier option, expedite, or communicate early","owner":"Transport Coordinator","decision":"Pending","created":"29 Sep 2025","due":"30 Sep 2025","prio":0.818,"value":32783},{"id":"NHL-059932","wh":"WH-JRH","tier":"Core","seg":"Hospital","band":"Medium","risk":0.315,"reason":"Carrier reliability","cp":"Dispatch","action":"Review approved carrier option, expedite, or communicate early","owner":"Transport Coordinator","decision":"Pending","created":"21 Nov 2025","due":"22 Nov 2025","prio":0.812,"value":27191},{"id":"NHL-034118","wh":"WH-JRH","tier":"Standard","seg":"Pharmacy","band":"Critical","risk":0.769,"reason":"Inventory shortage","cp":"Allocation complete","action":"Transfer stock or approve a substitute","owner":"Warehouse Lead","decision":"Pending","created":"29 Jul 2024","due":"30 Jul 2024","prio":0.807,"value":35459},{"id":"NHL-022582","wh":"WH-JRH","tier":"Core","seg":"Hospital","band":"Critical","risk":0.797,"reason":"Inventory shortage","cp":"Allocation complete","action":"Transfer stock or approve a substitute","owner":"Warehouse Lead","decision":"Pending","created":"08 Nov 2025","due":"09 Nov 2025","prio":0.804,"value":25184}],"available":36454,"onHand":43786,"nearExpiry":707,"stockoutSkus":2,"belowRop":30,"stockoutRate":0.01367,"catStockout":[["Psychiatry",0.03678],["Emergency care",0.03067],["ENT",0.02652],["Neurology",0.02354],["Anti-infectives",0.02167],["Antiseptics",0.02098]],"coldUtil":0.85052,"pickUtil":0.73286,"breachDays":68,"whUtil":0.79907,"carriers":[["HealthRoute",0.77083,0.85629,2832],["EastLine",0.75642,0.84799,3309],["ValleyLink",0.7528,0.85483,2411],["Brahmaputra Express",0.75034,0.85152,3657],["NE Cargo",0.74625,0.84295,3795],["RapidMeds",0.74024,0.8464,3099]],"lanes":[["WH-JRH → WH-GHY",259,0.79002,0.55197,2038],["WH-JRH → WH-DBR",163,0.79119,0.50092,1234],["WH-DBR → WH-JRH",135,0.79112,0.49912,1051],["WH-JRH → WH-TSK",126,0.78041,0.53635,936],["WH-GHY → WH-JRH",121,0.79606,0.55258,846],["WH-TSK → WH-JRH",114,0.78612,0.54713,882]]},"WH-TSK":{"orders":18015,"ot":0.83708,"if":0.88143,"otif":0.74083,"failed":4669,"failedCr":3.53,"valueCr":13.73,"otifMonsoon":0.68452,"otifDry":0.76917,"trend":[["2024-01",0.79473,false],["2024-02",0.75862,false],["2024-03",0.77243,false],["2024-04",0.7663,false],["2024-05",0.7541,false],["2024-06",0.70862,true],["2024-07",0.69111,true],["2024-08",0.66988,true],["2024-09",0.67717,true],["2024-10",0.72624,false],["2024-11",0.77204,false],["2024-12",0.7766,false],["2025-01",0.7815,false],["2025-02",0.76744,false],["2025-03",0.76853,false],["2025-04",0.7739,false],["2025-05",0.78499,false],["2025-06",0.69531,true],["2025-07",0.66709,true],["2025-08",0.68725,true],["2025-09",0.68101,true],["2025-10",0.7619,false],["2025-11",0.78393,false],["2025-12",0.76726,false]],"causes":[["Inventory shortage",0.40544],["Carrier reliability",0.18312],["Warehouse backlog",0.17434],["Planning variance",0.16128],["Route and weather",0.05847],["Supplier delay",0.01735]],"custBelow":200,"custN":200,"custAvgGap":-18.9,"stratWorst":{"name":"Synthetic Account 159","gap":-28.2},"custTop":[{"name":"Synthetic Account 056","tier":"Core","seg":"Clinic","otif":0.76159,"value":1283868},{"name":"Synthetic Account 030","tier":"Core","seg":"Clinic","otif":0.75188,"value":1192617},{"name":"Synthetic Account 123","tier":"Strategic","seg":"Pharmacy","otif":0.72358,"value":1075539},{"name":"Synthetic Account 006","tier":"Standard","seg":"Pharmacy","otif":0.81416,"value":1035760},{"name":"Synthetic Account 008","tier":"Core","seg":"Clinic","otif":0.69286,"value":1017549},{"name":"Synthetic Account 014","tier":"Standard","seg":"Pharmacy","otif":0.80159,"value":1013362}],"open":381,"openCr":0.32,"openRisk":0.54535,"alerts":1561,"approval":0.82319,"completion":0.85759,"daysToComplete":1.0,"otifAfter":0.39111,"queue":[{"id":"NHL-006497","wh":"WH-TSK","tier":"Standard","seg":"Hospital","band":"Critical","risk":0.914,"reason":"Inventory shortage","cp":"Allocation complete","action":"Transfer stock or approve a substitute","owner":"Warehouse Lead","decision":"Approved","created":"12 Jul 2024","due":"13 Jul 2024","prio":0.89,"value":46063},{"id":"NHL-054582","wh":"WH-TSK","tier":"Standard","seg":"Hospital","band":"Critical","risk":0.915,"reason":"Inventory shortage","cp":"Allocation complete","action":"Transfer stock or approve a substitute","owner":"Warehouse Lead","decision":"Pending","created":"25 Aug 2024","due":"26 Aug 2024","prio":0.855,"value":24538},{"id":"NHL-006497","wh":"WH-TSK","tier":"Standard","seg":"Hospital","band":"Critical","risk":0.914,"reason":"Inventory shortage","cp":"Dispatch","action":"Review approved carrier option, expedite, or communicate early","owner":"Transport Coordinator","decision":"Approved","created":"11 Jul 2024","due":"12 Jul 2024","prio":0.848,"value":46063},{"id":"NHL-023804","wh":"WH-TSK","tier":"Core","seg":"Institution","band":"High","risk":0.502,"reason":"Warehouse backlog","cp":"Dispatch","action":"Review approved carrier option, expedite, or communicate early","owner":"Transport Coordinator","decision":"Pending","created":"20 Jun 2025","due":"21 Jun 2025","prio":0.837,"value":40345},{"id":"NHL-095012","wh":"WH-TSK","tier":"Core","seg":"Hospital","band":"Critical","risk":0.806,"reason":"Inventory shortage","cp":"Dispatch","action":"Review approved carrier option, expedite, or communicate early","owner":"Transport Coordinator","decision":"Pending","created":"18 Aug 2024","due":"19 Aug 2024","prio":0.832,"value":82414},{"id":"NHL-082190","wh":"WH-TSK","tier":"Standard","seg":"Hospital","band":"Critical","risk":0.769,"reason":"Inventory shortage","cp":"Release","action":"Review network stock, transfer, inbound expedition, or approved substitute","owner":"Inventory Planner","decision":"Pending","created":"25 May 2024","due":"26 May 2024","prio":0.821,"value":18857},{"id":"NHL-095012","wh":"WH-TSK","tier":"Core","seg":"Hospital","band":"Critical","risk":0.806,"reason":"Inventory shortage","cp":"Allocation complete","action":"Transfer stock or approve a substitute","owner":"Warehouse Lead","decision":"Pending","created":"18 Aug 2024","due":"19 Aug 2024","prio":0.821,"value":82414},{"id":"NHL-024961","wh":"WH-TSK","tier":"Strategic","seg":"Pharmacy","band":"Critical","risk":0.828,"reason":"Inventory shortage","cp":"Allocation complete","action":"Transfer stock or approve a substitute","owner":"Warehouse Lead","decision":"Pending","created":"14 Feb 2024","due":"15 Feb 2024","prio":0.808,"value":24125}],"available":34714,"onHand":41692,"nearExpiry":647,"stockoutSkus":1,"belowRop":35,"stockoutRate":0.01561,"catStockout":[["Blood products",0.0285],["Dermatology",0.02844],["Respiratory",0.02765],["Neurology",0.02736],["Antidotes",0.02128],["Psychiatry",0.02022]],"coldUtil":0.85223,"pickUtil":0.73583,"breachDays":68,"whUtil":0.7908,"carriers":[["RapidMeds",0.75269,0.84842,2883],["HealthRoute",0.75019,0.84711,2662],["Brahmaputra Express",0.74451,0.83582,3417],["ValleyLink",0.7432,0.84501,2426],["NE Cargo",0.73254,0.82549,3593],["EastLine",0.72512,0.8263,3034]],"lanes":[["WH-TSK → WH-GHY",276,0.78771,0.54579,2132],["WH-TSK → WH-DBR",154,0.78843,0.54747,1103],["WH-JRH → WH-TSK",126,0.78041,0.53635,936],["WH-TSK → WH-JRH",114,0.78612,0.54713,882],["WH-GHY → WH-TSK",108,0.7927,0.5483,772],["WH-DBR → WH-TSK",102,0.78874,0.54357,759]]},"meta":{"lines":309776,"invRows":1462000,"preds":300000,"interventions":7623,"products":500,"customers":200,"carriers":6,"scenarios":1975,"from":"Jan 2024","to":"Dec 2025","latest":"31 Dec 2025","capture25":0.35612,"random25":0.18275,"hit25":0.50971,"models":[{"ModelName":"IF risk at order release","PredictionCheckpoint":"Order release","Target":"Incomplete fulfilment","PRAUC":0.386,"ROCAUC":0.716,"Brier":0.087,"Precision":0.32,"Recall":0.497,"Threshold":0.134,"DailyCapacity":25,"TopQueueCapture":0.496,"TopQueueHitRate":0.314,"TopQueueLift":2.71,"BaseRate":0.116},{"ModelName":"OTIF risk after allocation","PredictionCheckpoint":"After allocation","Target":"Late or incomplete","PRAUC":0.469,"ROCAUC":0.69,"Brier":0.169,"Precision":0.493,"Recall":0.351,"Threshold":0.359,"DailyCapacity":25,"TopQueueCapture":0.337,"TopQueueHitRate":0.465,"TopQueueLift":1.84,"BaseRate":0.253},{"ModelName":"OT risk at dispatch","PredictionCheckpoint":"At dispatch","Target":"Late delivery","PRAUC":0.363,"ROCAUC":0.736,"Brier":0.118,"Precision":0.361,"Recall":0.413,"Threshold":0.253,"DailyCapacity":25,"TopQueueCapture":0.393,"TopQueueHitRate":0.337,"TopQueueLift":2.15,"BaseRate":0.157}]}};
+const views=[...document.querySelectorAll('.view')],nav=[...document.querySelectorAll('.nav-btn')];
+const drawer=document.getElementById('drawer'),overlay=document.getElementById('overlay'),whSel=document.getElementById('whFilter'),whNote=document.getElementById('whNote');
+const $=id=>document.getElementById(id),set=(id,v)=>{$(id).textContent=v;};
+const pct=(x,d=1)=>x==null?'n/a':(Math.round(x*Math.pow(10,d+2)+1e-6)/Math.pow(10,d)).toFixed(d)+'%',num=n=>n.toLocaleString('en-US'),inr=n=>'₹'+Math.round(n).toLocaleString('en-IN');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
+let current='executive',lastFocus=null,rows=[];
+const WHN=Object.fromEntries(D.ALL.byWh.map(w=>[w[0],w[1]]));
+function closeDrawer(){const was=drawer.classList.contains('open');drawer.classList.remove('open');overlay.classList.remove('on');drawer.setAttribute('aria-hidden','true');drawer.inert=true;if(was&&lastFocus)lastFocus.focus();}
+function openDrawer(q,btn){lastFocus=btn;set('drawerOrder',q.id);set('drawerRisk',q.band+' · '+pct(q.risk,0));set('drawerWh',q.wh+' · '+WHN[q.wh]);set('drawerTier',q.tier+' · '+q.seg);set('drawerCp',q.cp);set('drawerPriority',q.prio.toFixed(2));set('drawerCreated',q.created);set('drawerDue',q.due);set('drawerReason',q.reason+'. Check the stock snapshot, warehouse backlog and carrier evidence available at the '+q.cp.toLowerCase()+' checkpoint before approving.');set('drawerOwner',q.owner.toUpperCase());set('drawerAction',q.action+'. Any final action requires human approval; the system does not change the order on its own.');set('drawerDecision','Decision status: '+q.decision+' · order value '+inr(q.value)+'.');drawer.inert=false;drawer.classList.add('open');overlay.classList.add('on');drawer.setAttribute('aria-hidden','false');$('closeDrawer').focus();}
+drawer.inert=true;$('closeDrawer').addEventListener('click',closeDrawer);overlay.addEventListener('click',closeDrawer);
+document.addEventListener('keydown',e=>{if(!drawer.classList.contains('open'))return;if(e.key==='Escape')closeDrawer();if(e.key==='Tab'){e.preventDefault();$('closeDrawer').focus();}});
+function queueRows(target,list,withPill){const tb=$(target);tb.replaceChildren();if(!list.length){tb.innerHTML='<tr class="empty-row"><td colspan="7">No open interventions in this scope.</td></tr>';return;}
+list.forEach(q=>{const tr=document.createElement('tr');tr.className='queue-row';tr.innerHTML='<td></td><td>'+q.wh+'</td><td>'+(withPill?'<span class="pill">'+esc(q.tier)+'</span>':esc(q.tier))+'</td><td><span class="risk">'+q.band+' · '+pct(q.risk,0)+'</span></td><td>'+esc(q.reason)+'</td><td>'+q.due+'</td><td class="priority">'+q.prio.toFixed(2)+'</td>';
+const b=document.createElement('button');b.type='button';b.className='order-button';b.textContent=q.id;b.setAttribute('aria-label','Inspect order '+q.id);b.addEventListener('click',e=>{e.stopPropagation();openDrawer(q,b);});tr.cells[0].append(b);tr.addEventListener('click',()=>openDrawer(q,b));tb.append(tr);});}
+function bars(target,items,cls){$(target).innerHTML=items.map(([label,val,width,extra])=>'<div class="bar-item'+(cls?' '+cls:'')+'"><span>'+esc(label)+'</span><div class="track"><i style="width:'+Math.max(2,Math.min(100,width)).toFixed(1)+'%"></i></div><b>'+val+'</b></div>').join('');}
+function trend(d){const t=d.trend,x0=44,x1=740,y=v=>18+(0.95-v)/(0.95-0.55)*170,step=(x1-x0)/(t.length-1);let s='';
+[0.6,0.7,0.8,0.9].forEach(v=>{s+='<line x1="'+x0+'" x2="'+x1+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="#26364c"/><text x="4" y="'+(y(v)+4)+'" fill="#8294ac" font-size="11">'+v*100+'%</text>';});
+t.forEach((p,i)=>{if(p[2])s+='<rect x="'+(x0+i*step-step/2)+'" y="14" width="'+step+'" height="178" fill="#ff6b6b" opacity=".12"/>';});
+s+='<line x1="'+x0+'" x2="'+x1+'" y1="'+y(0.93)+'" y2="'+y(0.93)+'" stroke="#a7f432" stroke-dasharray="6 6"/>';
+const pts=t.map((p,i)=>(x0+i*step).toFixed(1)+','+y(p[1]).toFixed(1)).join(' ');
+s+='<polygon points="'+x0+',192 '+pts+' '+x1+',192" fill="#47dec9" opacity=".12"/><polyline points="'+pts+'" fill="none" stroke="#47dec9" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>';
+t.forEach((p,i)=>{s+='<circle cx="'+(x0+i*step).toFixed(1)+'" cy="'+y(p[1]).toFixed(1)+'" r="3.5" fill="'+(p[2]?'#ff6b6b':'#47dec9')+'"><title>'+p[0]+': '+pct(p[1])+'</title></circle>';});
+t.forEach((p,i)=>{if(i%3===0){const [yy,mm]=p[0].split('-');s+='<text x="'+(x0+i*step).toFixed(1)+'" y="214" text-anchor="middle" fill="#8294ac" font-size="11">'+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+mm-1]+' '+yy.slice(2)+'</text>';}});
+$('trend').innerHTML=s;}
+function render(){const wh=whSel.value,d=D[wh],all=wh==='ALL',scope=all?'all warehouses':wh+' · '+WHN[wh];
+set('exStamp',num(d.orders)+' orders · '+D.meta.from+' – '+D.meta.to);set('trendScope',all?'Network':wh);
+set('kOT',pct(d.ot,2));set('kOTs',((d.ot-0.95)*100).toFixed(1)+' pp vs 95% target');set('kIF',pct(d.if,2));set('kIFs',((d.if-0.97)*100).toFixed(1)+' pp vs 97% target');
+set('kOTIF',pct(d.otif,2));set('kOTIFs',((0.93-d.otif)*100).toFixed(2)+' pp below 93%');set('kFail','₹'+d.failedCr.toFixed(2)+' Cr');set('kFails',num(d.failed)+' orders missed OTIF');
+set('kOpen',num(d.open));set('kOpens','₹'+d.openCr.toFixed(2)+' Cr waiting on a decision');
+trend(d);const cmax=d.causes[0][1];bars('causes',d.causes.map(c=>[c[0],pct(c[1],0),c[1]/cmax*100]));$('causes').querySelectorAll('.bar-item').forEach(b=>b.className='cause');
+queueRows('exQueue',d.queue.slice(0,3),true);
+set('cBelow',d.custBelow+' / '+d.custN);set('cBelows',pct(d.custBelow/d.custN,0)+' of accounts below target');set('cGap',d.custAvgGap.toFixed(1)+' pp');
+set('cStrat',d.stratWorst?d.stratWorst.gap.toFixed(1)+' pp':'n/a');set('cStrats',d.stratWorst?d.stratWorst.name:'No Strategic accounts in scope');
+$('custTable').innerHTML=d.custTop.map(c=>'<tr><td>'+esc(c.name)+'</td><td>'+(c.tier==='Strategic'?'<span class="pill">Strategic</span>':c.tier)+'</td><td>'+c.seg+'</td><td>'+pct(c.otif)+'</td><td>93%</td><td class="down">'+((c.otif-0.93)*100).toFixed(1)+' pp</td><td>'+inr(c.value)+'</td></tr>').join('');
+set('qOpen',num(d.open));set('qOpens','of '+num(d.alerts)+' alerts raised');set('qRisk',pct(d.openRisk,1));set('qAppr',pct(d.approval,1));set('qApprs','Owner approved the alert');
+set('qComp',pct(d.completion,1));set('qComps','Of approved · avg '+d.daysToComplete.toFixed(1)+' days');set('qCount','Top '+d.queue.length+' of '+num(d.open)+' open');queueRows('qTable',d.queue,false);
+set('invStamp','Latest snapshot '+D.meta.latest);set('iAvail',num(d.available));set('iRop',num(d.belowRop));set('iOut',num(d.stockoutSkus));
+const smax=d.catStockout[0][1];bars('catBars',d.catStockout.map(c=>[c[0],pct(c[1],2),c[1]/smax*100]),'bad');
+let sv='';const ws=D.ALL.byWh,m=Math.max(...ws.map(w=>w[5]))*1.15;ws.forEach((w,i)=>{const h=w[5]/m*190,x=40+i*120,on=all||w[0]===wh;sv+='<g opacity="'+(on?1:.25)+'"><rect x="'+x+'" y="'+(230-h)+'" width="80" height="'+h+'" rx="6" fill="#ff6b6b"/><text x="'+(x+40)+'" y="'+(222-h)+'" text-anchor="middle" fill="#f4f7fb" font-size="14">'+pct(w[5],2)+'</text><text x="'+(x+40)+'" y="256" text-anchor="middle" fill="#f4f7fb" font-size="13">'+w[1]+'</text><text x="'+(x+40)+'" y="274" text-anchor="middle" fill="#91a2b9" font-size="11">'+w[6]+' SKUs below ROP</text></g>';});
+$('whStock').innerHTML='<line x1="20" x2="510" y1="230" y2="230" stroke="#25354d"/>'+sv;
+bars('whBars',ws.map(w=>[w[1]+' · util '+pct(w[4],0),pct(w[2]),w[2]*100]));$('whBars').querySelectorAll('.bar-item').forEach((b,i)=>{if(!all&&ws[i][0]!==wh)b.style.opacity='.3';});
+set('carScope','6 carriers · '+scope);bars('carBars',d.carriers.map(c=>[c[0],pct(c[1]),c[1]*100]));
+$('laneTable').innerHTML=d.lanes.map(l=>'<tr><td>'+l[0]+'</td><td>'+num(l[1])+'</td><td>'+num(l[4])+'</td><td>'+pct(l[2],0)+'</td><td>'+pct(l[3],0)+'</td><td class="up">−'+((l[2]-l[3])*100).toFixed(1)+' pp</td></tr>').join('');
+const notes={executive:'Showing '+scope+'. Every figure comes from the same CSVs as the Power BI report.',customers:'Customer OTIF on orders shipped from '+scope+'.',queue:'Open interventions for '+scope+', ranked by priority. Select an order for its diagnostic.',inventory:'Inventory for '+scope+'. Category bars and stock cards follow the warehouse selector.',execution:'Warehouse comparison is network-wide; carrier and lane figures follow the selector ('+scope+').',automation:'Earlier engineering prototype with a separately retrained model; not filtered by warehouse.',trust:'Validation for the 100,000-order dataset used in the Power BI report.'};
+whNote.textContent=notes[current];}
+function show(id){closeDrawer();current=id;views.forEach(v=>v.classList.toggle('active',v.id===id));nav.forEach(b=>{const a=b.dataset.view===id;b.classList.toggle('active',a);b.setAttribute('aria-pressed',String(a));});
+const supports=!['automation','trust'].includes(id);whSel.disabled=!supports;set('filterLabel',supports?'Warehouse':'Network view');render();window.scrollTo({top:0,behavior:'smooth'});}
+nav.forEach(b=>b.addEventListener('click',()=>show(b.dataset.view)));document.querySelectorAll('[data-jump]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.jump)));
+whSel.addEventListener('change',()=>{closeDrawer();render();});show('executive');
+</script>
+</body>
+</html>
