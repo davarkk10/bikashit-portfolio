@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>NorthEast HealthLink — Control Tower Redesign</title>
+  <title>NorthEast HealthLink — Control Tower</title>
   <meta name="description" content="Interactive synthetic OTIF and inventory risk control tower by Bikashit Baruah.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23070c16'/%3E%3Cpath d='M15 42V22h7v20h-7zm13 0V12h8v30h-8zm14 0V28h7v14h-7z' fill='%23a7f432'/%3E%3C/svg%3E">
   <style>
@@ -30,7 +30,9 @@
     .evidence-table{overflow:auto}
     .evidence-table table{min-width:680px}
   </style>
-</head>
+<style>
+[hidden]{display:none!important}.select:disabled{opacity:.65}.filter-label{font-size:.7rem;color:var(--muted)}.scope-note{color:var(--muted);font-size:.76rem;margin:12px 0}.queue-row:focus-visible{outline:2px solid var(--acid);outline-offset:-2px}.drawer:not(.open){visibility:hidden}.view-scope{padding:10px 14px;border:1px solid var(--line);border-radius:10px;margin-bottom:16px;font-size:.75rem;color:var(--muted)}
+</style></head>
 <body>
 <div class="app">
   <aside class="sidebar">
@@ -61,7 +63,7 @@
       <button class="nav-btn" data-view="trust">
 <span>✓</span>Trust center</button>
     </nav>
-    <div class="side-foot">Seed 20260915 · 24 months<br>Last refresh: 26 Sep 2026<a href="index.html">← Portfolio</a>
+    <div class="side-foot">Seed 20260915 · 24 months<br>Captured build: 26 Sep 2026<a href="index.html">← Portfolio</a>
 </div>
   </aside>
 
@@ -72,7 +74,7 @@
 <span>Early warning → prioritized human action</span>
 </div>
 <div class="filters">
-<select class="select" id="whFilter" aria-label="Warehouse">
+<label class="filter-label" for="whFilter" id="filterLabel">Network view</label><select class="select" id="whFilter" aria-label="Warehouse">
 <option value="ALL">All warehouses</option>
 <option>WH-TSK</option>
 <option>WH-DBR</option>
@@ -80,7 +82,7 @@
 <option>WH-GHY</option>
 </select>
 <span class="icon-btn" title="Data is fixed for this proof of concept">24 months · fixed</span>
-<span class="proof">Validated POC</span>
+<span class="proof">Synthetic demo</span>
 </div>
 </header>
     <div class="content">
@@ -139,21 +141,21 @@
           <article class="card chart-card">
 <div class="card-head">
 <div>
-<h2>12-week OTIF trajectory</h2>
-<span>Every week remains below the 92% commitment</span>
+<h2>Illustrative OTIF trajectory</h2>
+<span>Schematic illustration; weekly source values are not included in this web export.</span>
 </div>
-<span>Weekly · final test period</span>
+<span>Illustration · network only</span>
 </div>
 <div class="chart-wrap">
 <div class="legend">
 <span>
 <i>
-</i>Actual OTIF</span>
+</i>Illustrative OTIF</span>
 <span class="target">
 <i>
 </i>Target 92%</span>
 </div>
-<svg viewBox="0 0 760 220" role="img" aria-label="Weekly OTIF trend from 74.4 to 78.6 percent, below 92 percent target">
+<svg viewBox="0 0 760 220" role="img" aria-label="Schematic OTIF trend, not a chart of exported weekly observations">
 <defs>
 <linearGradient id="area" x1="0" y1="0" x2="0" y2="1">
 <stop offset="0" stop-color="#47dec9" stop-opacity=".35"/>
@@ -196,43 +198,18 @@
 <article class="card">
 <div class="card-head">
 <div>
-<h2>Failure contribution</h2>
-<span>Open queue · dominant governed reason</span>
+<h2>Reasons in the displayed sample</h2>
+<span>Six ranked orders · each counted once</span>
 </div>
 </div>
-<div class="cause-list">
-<div class="cause">
-<span>Inbound delay</span>
-<div class="track">
-<i style="width:46%">
-</i>
-</div>
-<b>2,263</b>
-</div>
-<div class="cause">
-<span>Stock shortage</span>
-<div class="track">
-<i style="width:42%">
-</i>
-</div>
-<b>2,072</b>
-</div>
-<div class="cause">
-<span>No dominant reason</span>
-<div class="track">
-<i style="width:12%;background:var(--amber)">
-</i>
-</div>
-<b>597</b>
-</div>
-</div>
+<div class="cause-list" id="reasonCounts"></div><p class="scope-note" style="padding:0 18px">Sample counts only; not the 3,535-alert population.</p>
 </article>
 <article class="card decision-strip">
 <div>
-<b>Highest-value next move</b>
-<p>Prioritize Platinum orders with stock shortage and less than 32 hours remaining.</p>
+<b>Candidate review</b>
+<p>Inspect the ranked sample and verify stock availability and inbound timing before approving an intervention.</p>
 </div>
-<button class="btn primary" data-jump="queue">Review 6 urgent →</button>
+<button class="btn primary" data-jump="queue">Inspect ranked sample →</button>
 </article>
 </div>
         </div>
@@ -242,7 +219,7 @@
 <h2>Urgent intervention queue</h2>
 <small>Ranked by failure probability × urgency × value × recoverability</small>
 </div>
-<button class="btn" data-jump="queue">Full queue →</button>
+<button class="btn" data-jump="queue">Inspect 6-row sample →</button>
 </div>
 <div class="table-scroll">
 <table>
@@ -331,8 +308,8 @@
 <article class="card table-card">
 <div class="table-head">
 <div>
-<h2>Largest gaps by order value</h2>
-<small>Sort logic keeps commercially important accounts visible</small>
+<h2>Customer sample, sorted by order value</h2>
+<small>Five displayed accounts · not a complete customer ranking</small>
 </div>
 </div>
 <div class="table-scroll">
@@ -434,10 +411,10 @@
 <article class="card table-card">
 <div class="table-head">
 <div>
-<h2>Ranked interventions</h2>
+<h2>Ranked intervention sample</h2>
 <small>Select any row to inspect evidence and recommended action</small>
 </div>
-<span class="pill">Showing top 6</span>
+<span class="pill">Showing 6 sample rows</span>
 </div>
 <div class="table-scroll">
 <table>
@@ -522,7 +499,7 @@
 </tbody>
 </table>
 </div>
-<div class="limit">Priority is a capped product of failure probability × time urgency × essential-product weight × customer-tier weight × exposure weight × recoverability. The ranking has no hidden input.</div>
+<div class="limit">Priority is a capped product of failure probability × time urgency × essential-product weight × customer-tier weight × exposure weight × recoverability. The exported page does not include the individual multiplier values; scores are displayed as reported, not recomputed here.</div>
 </article>
 </section>
 
@@ -543,14 +520,14 @@
 </div>
 <div class="stat">
 <b>56.5d</b>
-<span>Average days of supply</span>
+<span>Network average days of supply</span>
 </div>
 <div class="stat">
 <b class="down">6+</b>
-<span>SKUs below 10 days</span>
+<span>Reported low-supply sample (6 rows)</span>
 </div>
 </div>
-<div class="bar-list">
+<p class="scope-note" style="padding:0 18px">Five displayed product rows from the six-row network sample. Product-to-warehouse mapping was not exported.</p><div class="bar-list">
 <div class="bar-item bad">
 <span>Respiratory · 0169</span>
 <div class="track">
@@ -596,37 +573,12 @@
 <article class="card">
 <div class="card-head">
 <div>
-<h2>Flagged sample by warehouse</h2>
+<h2>Low-supply sample by warehouse</h2>
 <span>Count among the six shortest days-of-supply rows</span>
 </div>
 </div>
 <div class="chart-wrap">
-<svg viewBox="0 0 520 280" role="img" aria-label="Warehouse inventory risk matrix">
-<g fill="#101d2e" stroke="#2b3b52">
-<rect data-wh="WH-TSK" x="20" y="30" width="110" height="210" rx="12"/>
-<rect data-wh="WH-JOR" x="145" y="30" width="110" height="210" rx="12"/>
-<rect data-wh="WH-GHY" x="270" y="30" width="110" height="210" rx="12"/>
-<rect data-wh="WH-DBR" x="395" y="30" width="110" height="210" rx="12"/>
-</g>
-<g fill="#ff6b6b">
-<circle data-wh="WH-TSK" cx="75" cy="170" r="18"/>
-<circle data-wh="WH-JOR" cx="200" cy="115" r="38"/>
-<circle data-wh="WH-GHY" cx="325" cy="95" r="18"/>
-<circle data-wh="WH-DBR" cx="450" cy="150" r="10" fill="#607189"/>
-</g>
-<g fill="#f4f7fb" font-size="14" text-anchor="middle">
-<text data-wh="WH-TSK" x="75" y="266">TSK</text>
-<text data-wh="WH-JOR" x="200" y="266">JOR</text>
-<text data-wh="WH-GHY" x="325" y="266">GHY</text>
-<text data-wh="WH-DBR" x="450" y="266">DBR</text>
-</g>
-<g fill="#0b111b" font-size="14" font-weight="800" text-anchor="middle">
-<text data-wh="WH-TSK" x="75" y="175">1</text>
-<text data-wh="WH-JOR" x="200" y="120">4</text>
-<text data-wh="WH-GHY" x="325" y="100">1</text>
-<text data-wh="WH-DBR" x="450" y="155">0</text>
-</g>
-</svg>
+<svg viewBox="0 0 520 280" role="img" aria-label="Low-supply sample counts: Tinsukia 1, Jorhat 4, Guwahati 1, Dibrugarh 0. Bar heights use a zero to four count scale."><line x1="32" x2="505" y1="230" y2="230" stroke="#25354d"/><text x="8" y="235" fill="#91a2b9" font-size="13">0</text><line x1="32" x2="505" y1="185" y2="185" stroke="#25354d"/><text x="8" y="190" fill="#91a2b9" font-size="13">1</text><line x1="32" x2="505" y1="140" y2="140" stroke="#25354d"/><text x="8" y="145" fill="#91a2b9" font-size="13">2</text><line x1="32" x2="505" y1="95" y2="95" stroke="#25354d"/><text x="8" y="100" fill="#91a2b9" font-size="13">3</text><line x1="32" x2="505" y1="50" y2="50" stroke="#25354d"/><text x="8" y="55" fill="#91a2b9" font-size="13">4</text><g data-wh="WH-TSK"><rect x="55" y="185" width="70" height="45" rx="5" fill="#ff6b6b"/><text x="90" y="175" text-anchor="middle" fill="#f4f7fb">1</text><text x="90" y="260" text-anchor="middle" fill="#f4f7fb">TSK</text></g><g data-wh="WH-JOR"><rect x="175" y="50" width="70" height="180" rx="5" fill="#ff6b6b"/><text x="210" y="40" text-anchor="middle" fill="#f4f7fb">4</text><text x="210" y="260" text-anchor="middle" fill="#f4f7fb">JOR</text></g><g data-wh="WH-GHY"><rect x="295" y="185" width="70" height="45" rx="5" fill="#ff6b6b"/><text x="330" y="175" text-anchor="middle" fill="#f4f7fb">1</text><text x="330" y="260" text-anchor="middle" fill="#f4f7fb">GHY</text></g><g data-wh="WH-DBR"><rect x="415" y="230" width="70" height="0" rx="5" fill="#ff6b6b"/><text x="450" y="220" text-anchor="middle" fill="#f4f7fb">0</text><text x="450" y="260" text-anchor="middle" fill="#f4f7fb">DBR</text></g></svg>
 </div>
 </article>
 </div>
@@ -645,14 +597,14 @@
 <div class="card-head">
 <div>
 <h2>Warehouse processing</h2>
-<span>Backlog ratio / average hours</span>
+<span>Backlog ratio (0–100% bar scale) / average processing hours</span>
 </div>
 </div>
 <div class="bar-list">
 <div class="bar-item" data-wh="WH-DBR">
 <span>WH-DBR · 6.60h</span>
 <div class="track">
-<i style="width:80%">
+<i style="width:8%">
 </i>
 </div>
 <b>8%</b>
@@ -660,7 +612,7 @@
 <div class="bar-item" data-wh="WH-GHY">
 <span>WH-GHY · 6.61h</span>
 <div class="track">
-<i style="width:60%">
+<i style="width:6%">
 </i>
 </div>
 <b>6%</b>
@@ -668,7 +620,7 @@
 <div class="bar-item" data-wh="WH-TSK">
 <span>WH-TSK · 6.60h</span>
 <div class="track">
-<i style="width:60%">
+<i style="width:6%">
 </i>
 </div>
 <b>6%</b>
@@ -676,7 +628,7 @@
 <div class="bar-item" data-wh="WH-JOR">
 <span>WH-JOR · 6.60h</span>
 <div class="track">
-<i style="width:40%">
+<i style="width:4%">
 </i>
 </div>
 <b>4%</b>
@@ -687,7 +639,7 @@
 <div class="card-head">
 <div>
 <h2>Carrier on-time performance</h2>
-<span>Observed carrier spread: 2.2pp</span>
+<span>Network only · four-carrier sample · spread 2.2pp</span>
 </div>
 </div>
 <div class="bar-list">
@@ -730,7 +682,7 @@
 <div class="table-head">
 <div>
 <h2>Weakest supplier receipt performance</h2>
-<small>Sampled purchase-order ledger</small>
+<small>Network only · archived sampled purchase-order ledger</small>
 </div>
 </div>
 <div class="table-scroll">
@@ -785,13 +737,13 @@
 <header class="page-head">
 <div>
 <h1>Prediction → approved action</h1>
-<p>A real scored order moved through a governed workflow with a PostgreSQL audit trail.</p>
+<p>A captured synthetic order run through the API and PostgreSQL; this web page replays saved results and does not execute the workflow.</p>
 </div>
 <span class="timestamp">Run run-20260926T141000Z-44e3ad</span>
 </header>
 <div class="kpis">
 <article class="card kpi">
-<div class="kpi-label">Release PR-AUC</div>
+<div class="kpi-label">Phase 5 release PR-AUC</div>
 <strong>0.3516</strong>
 <small>Base rate 11.66%</small>
 </article>
@@ -819,7 +771,7 @@
 <article class="card">
 <div class="card-head">
 <div>
-<h2>Live order journey</h2>
+<h2>Captured order journey</h2>
 <span>NHL-LIVE-20260926141000 · 72.2% risk · High</span>
 </div>
 <span class="pill">PICK_PRIORITY</span>
@@ -857,7 +809,7 @@
 <div class="card-head">
 <div>
 <h2>State-changing trace</h2>
-<span>14 of 32 executed nodes</span>
+<span>Six displayed stages · reported run: 32 executed nodes</span>
 </div>
 </div>
 <div class="trace">
@@ -910,7 +862,7 @@
 <div class="cause">
 <span>Implemented + tested</span>
 <div class="track">
-<i style="width:78%;background:var(--cyan)">
+<i style="width:63.64%;background:var(--cyan)">
 </i>
 </div>
 <b>7</b>
@@ -918,7 +870,7 @@
 <div class="cause">
 <span>Built · gap noted</span>
 <div class="track">
-<i style="width:33%;background:var(--amber)">
+<i style="width:27.27%;background:var(--amber)">
 </i>
 </div>
 <b>3</b>
@@ -926,7 +878,7 @@
 <div class="cause">
 <span>Future enhancement</span>
 <div class="track">
-<i style="width:12%;background:var(--muted)">
+<i style="width:9.09%;background:var(--muted)">
 </i>
 </div>
 <b>1</b>
@@ -964,7 +916,7 @@
 <div class="card-head" style="padding:0">
 <div>
 <h2>Verification results</h2>
-<span>Reconciled and reproducible evidence</span>
+<span>Reported checks from the original build</span>
 </div>
 </div>
 <div class="ring">
@@ -984,7 +936,7 @@
 <article class="card">
 <div class="card-head">
 <div>
-<h2>Temporal test performance</h2>
+<h2>Original build: temporal test performance</h2>
 <span>All checkpoints beat naive and rule baselines</span>
 </div>
 </div>
@@ -1070,7 +1022,7 @@
   </details>
   <details>
     <summary>Scope and reproducibility</summary>
-    <div class="evidence-body">NorthEast HealthLink Distributors Pvt. Ltd. is entirely hypothetical. All orders, customers, products and outcomes were generated by a seeded simulation (seed 20260915). Scale: 99,433 total order records—95,912 completed, 3,026 cancelled and 495 test—plus 301,757 order lines, 1,462,000 inventory rows, 500 products, 200 customers, 25 suppliers, 6 carriers and 4 warehouses. <code>./run_pipeline.sh</code> rebuilds the project. The original build did not create a native .pbix, use NLEM medicine names or OSM routes, run the DataCo/Olist benchmark, or record screenshots and a demo video.</div>
+    <div class="evidence-body">NorthEast HealthLink Distributors Pvt. Ltd. is entirely hypothetical. All orders, customers, products and outcomes were generated by a seeded simulation (seed 20260915). Scale: 99,433 total order records—95,912 completed, 3,026 cancelled and 495 test—plus 301,757 order lines, 1,462,000 inventory rows, 500 products, 200 customers, 25 suppliers, 6 carriers and 4 warehouses. The original build references <code>./run_pipeline.sh</code>; that pipeline and its raw exports are not included in this public web repository, so the training and reconciliation claims cannot be independently rerun from this page. The original build did not create a native .pbix, use NLEM medicine names or OSM routes, run the DataCo/Olist benchmark, or record a demo video. The portfolio screenshots show this HTML prototype. A separate saved Power BI build pack uses different data and model results and is not mixed into this web case.</div>
   </details>
 </article>
 </section>
@@ -1086,7 +1038,7 @@
 <button id="closeDrawer" aria-label="Close diagnostic">✕</button>
 </div>
 <h2 id="drawerOrder">ORD-0089628</h2>
-<div class="big-risk">High</div>
+<div class="big-risk" id="drawerRisk">High</div>
 <p style="color:var(--muted);margin-top:-8px">Predicted OTIF failure risk band</p>
 <div class="drawer-grid">
 <div>
@@ -1095,93 +1047,42 @@
 </div>
 <div>
 <small>Customer</small>
-<b>Platinum</b>
+<b id="drawerTier">Platinum</b>
 </div>
 <div>
 <small>Time remaining</small>
-<b>25.8 hours</b>
+<b id="drawerTime">25.8 hours</b>
 </div>
 <div>
 <small>Priority score</small>
-<b>5.10</b>
+<b id="drawerPriority">5.10</b>
 </div>
 </div>
-<h3>Likely driver</h3>
-<p>Stock shortage at release. The accepted quantity does not cover the full ordered quantity; no cross-SKU offset is permitted by the KPI contract.</p>
-<h3>Order timeline</h3>
-<div class="timeline">
-<div class="milestone">
-<span>T+0h</span>
-<div class="dot-line">
-<i>
-</i>
-</div>
-<div>
-<b>Order placed + released</b>
-<small>Risk scored using only release-available features</small>
-</div>
-</div>
-<div class="milestone">
-<span>T+1–4h</span>
-<div class="dot-line">
-<i>
-</i>
-</div>
-<div>
-<b>Pick window</b>
-<small>Quantity shortfall remains recoverable</small>
-</div>
-</div>
-<div class="milestone">
-<span>T+6.6h</span>
-<div class="dot-line">
-<i>
-</i>
-</div>
-<div>
-<b>Expected dispatch</b>
-<small>Original promise remains SLA baseline</small>
-</div>
-</div>
-</div>
+<p id="drawerReason"></p><h3>Evidence to check before acting</h3><p id="drawerEvidence"></p><p class="scope-note">An order-specific event timeline and numeric failure probability were not exported for these sample rows. Time remaining and priority above match the selected row; they are captured values, not a live countdown.</p>
 <h3>Governed recommendation</h3>
 <div class="action-box">
 <b>ALLOCATION REVIEW</b>
-<p>Candidate intervention shown for this mockup: prioritize review of essential lines. Any final action requires human approval; the system does not autonomously change the order.</p>
+<p>Candidate intervention shown for this mockup: inspect stock and inbound evidence for the selected order. Any final action requires human approval; the system does not autonomously change the order.</p>
 </div>
 </aside>
 
 <script>
-  const views=[...document.querySelectorAll('.view')], nav=[...document.querySelectorAll('.nav-btn')];
-  function show(id){views.forEach(v=>v.classList.toggle('active',v.id===id));nav.forEach(b=>b.classList.toggle('active',b.dataset.view===id));window.scrollTo({top:0,behavior:'smooth'});}
-  nav.forEach(b=>b.addEventListener('click',()=>show(b.dataset.view)));
-  document.querySelectorAll('[data-jump]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.jump)));
-  const drawer=document.getElementById('drawer'),overlay=document.getElementById('overlay'),drawerOrder=document.getElementById('drawerOrder');
-  const drawerWh=document.getElementById('drawerWh');
-  function openDrawer(order,wh){drawerOrder.textContent=order;if(wh)drawerWh.textContent=wh;drawer.classList.add('open');overlay.classList.add('on');drawer.setAttribute('aria-hidden','false');}
-  function closeDrawer(){drawer.classList.remove('open');overlay.classList.remove('on');drawer.setAttribute('aria-hidden','true');}
-  document.querySelectorAll('.queue-row').forEach(r=>r.addEventListener('click',()=>openDrawer(r.cells[0].textContent,r.cells[1].textContent.trim())));
-  document.getElementById('closeDrawer').addEventListener('click',closeDrawer);overlay.addEventListener('click',closeDrawer);document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer()});
-  /* Warehouse filter */
-  const whSel=document.getElementById('whFilter'),whNote=document.getElementById('whNote');
-  const queueBodies=[...new Set([...document.querySelectorAll('.queue-row')].map(r=>r.parentElement))];
-  function applyWh(wh){
-    const all=wh==='ALL';
-    queueBodies.forEach(tb=>{
-      let shown=0;
-      tb.querySelectorAll('.queue-row').forEach(r=>{const ok=all||r.cells[1].textContent.trim()===wh;r.hidden=!ok;if(ok)shown++;});
-      let empty=tb.querySelector('.empty-row');
-      if(!shown){if(!empty){empty=document.createElement('tr');empty.className='empty-row';empty.innerHTML='<td colspan="'+tb.closest('table').querySelectorAll('th').length+'"></td>';tb.appendChild(empty);}empty.cells[0].textContent='No orders from '+wh+' in this ranked sample.';empty.hidden=false;}
-      else if(empty)empty.hidden=true;
-    });
-    document.querySelectorAll('.bar-item[data-wh]').forEach(b=>b.hidden=!all&&b.dataset.wh!==wh);
-    document.querySelectorAll('svg [data-wh]').forEach(el=>el.classList.toggle('wh-dim',!all&&el.dataset.wh!==wh));
-    whNote.classList.toggle('on',!all);
-    whNote.innerHTML=all?'':'Filtered to <b>'+wh+'</b> — intervention queues, warehouse processing and the inventory risk matrix. Network KPIs and charts stay network-wide.';
-    try{sessionStorage.setItem('ct-wh',wh)}catch(e){}
-  }
-  whSel.addEventListener('change',()=>applyWh(whSel.value));
-  try{const saved=sessionStorage.getItem('ct-wh');if(saved&&[...whSel.options].some(o=>o.value===saved)){whSel.value=saved;applyWh(saved);}}catch(e){}
-</script>
-</body>
-</html>
+const views=[...document.querySelectorAll('.view')], nav=[...document.querySelectorAll('.nav-btn')];
+const drawer=document.getElementById('drawer'),overlay=document.getElementById('overlay');
+const whSel=document.getElementById('whFilter'),whNote=document.getElementById('whNote');
+const queueRows=[...document.querySelectorAll('#queue .queue-row')];
+const queueBodies=[...new Set([...document.querySelectorAll('.queue-row')].map(r=>r.parentElement))];
+let current='executive', lastFocus=null;
+const text=(id,value)=>document.getElementById(id).textContent=value;
+function closeDrawer(){drawer.classList.remove('open');overlay.classList.remove('on');drawer.setAttribute('aria-hidden','true');drawer.inert=true;if(lastFocus)lastFocus.focus();}
+function openDrawer(row){lastFocus=row;const c=[...row.cells].map(x=>x.textContent.trim());text('drawerOrder',c[0]);text('drawerWh',c[1]);text('drawerTier',c[2]);text('drawerRisk',c[3]);text('drawerTime',c[5].replace('h',' hours'));text('drawerPriority',c[6]);text('drawerReason',c[4]);text('drawerEvidence',c[4].includes('inbound')?'Check the stock snapshot and inbound ETA available at the scoring checkpoint. Confirm feasibility and the original delivery promise before approval.':'Check stock available to allocate at the scoring checkpoint and the original delivery promise. Final accepted delivery quantity defines the outcome and must not be used as an early predictor.');drawer.inert=false;drawer.classList.add('open');overlay.classList.add('on');drawer.setAttribute('aria-hidden','false');document.getElementById('closeDrawer').focus();}
+drawer.inert=true;
+document.querySelectorAll('.queue-row').forEach(r=>{r.tabIndex=0;r.setAttribute('aria-label','Inspect '+r.cells[0].textContent.trim());r.addEventListener('click',()=>openDrawer(r));r.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openDrawer(r);}});});
+document.getElementById('closeDrawer').addEventListener('click',closeDrawer);overlay.addEventListener('click',closeDrawer);
+document.addEventListener('keydown',e=>{if(!drawer.classList.contains('open'))return;if(e.key==='Escape')closeDrawer();if(e.key==='Tab'){e.preventDefault();document.getElementById('closeDrawer').focus();}});
+function sampleReasons(){const counts={};queueRows.forEach(r=>{const reason=r.cells[4].textContent.trim();counts[reason]=(counts[reason]||0)+1;});const target=document.getElementById('reasonCounts');Object.entries(counts).forEach(([reason,count])=>{const el=document.createElement('div');el.className='cause';const label=document.createElement('span');label.textContent=reason;const track=document.createElement('div');track.className='track';const bar=document.createElement('i');bar.style.width=count/queueRows.length*100+'%';track.append(bar);const value=document.createElement('b');value.textContent=count;el.append(label,track,value);target.append(el);});}
+sampleReasons();
+function applyWh(){const wh=whSel.value,all=wh==='ALL';queueBodies.forEach(tb=>{let shown=0;tb.querySelectorAll('.queue-row').forEach(r=>{r.hidden=!all&&r.cells[1].textContent.trim()!==wh;if(!r.hidden)shown++;});let empty=tb.querySelector('.empty-row');if(!empty){empty=document.createElement('tr');empty.className='empty-row';const td=document.createElement('td');td.colSpan=tb.closest('table').querySelectorAll('th').length;empty.append(td);tb.append(empty);}empty.hidden=shown>0;empty.cells[0].textContent='No '+wh+' orders in this exported sample; this does not imply no alerts in the warehouse.';});document.querySelectorAll('.bar-item[data-wh]').forEach(b=>b.hidden=!all&&b.dataset.wh!==wh);document.querySelectorAll('svg [data-wh]').forEach(g=>{if(!all&&g.dataset.wh!==wh)g.setAttribute('hidden','');else g.removeAttribute('hidden');});const count=queueRows.filter(r=>!r.hidden).length;const label=document.querySelector('#queue .table-head>span');if(label)label.textContent='Showing '+count+' of 6 exported sample rows';document.querySelector('#queue .kpis').hidden=!all;document.querySelector('#inventory .split>article:first-child').hidden=!all;document.querySelector('#execution .split>article:nth-child(2)').hidden=!all;document.querySelector('#execution .table-card').hidden=!all;whNote.classList.add('on');const scopes={executive:'Network overview. KPIs cover all warehouses; the trend is explicitly illustrative. Warehouse-level OTIF source values were not exported.',customers:'Network customer sample. Customer-to-warehouse breakdowns were not exported.',queue:all?'Network summary with six exported order rows. The selector filters the sample, not the complete alert population.':'Order sample filtered to '+wh+'. Network summary cards are hidden because warehouse-level KPI exports are unavailable.',inventory:all?'Network inventory summary and six-row warehouse count sample. Product bars show five network sample rows.':'Warehouse count sample for '+wh+'. Network product rows and totals are hidden; product-to-warehouse mapping was not exported.',execution:all?'Network comparison. Select a warehouse to inspect its reported processing row.':'Reported warehouse processing for '+wh+'. Carrier and supplier summaries are hidden because warehouse-level breakdowns were not exported.',automation:'Captured Phase 5 run, not a live workflow. PR-AUC 0.3516 belongs to a separately retrained model.',trust:'Original-build validation figures. They describe a different model version from the captured Phase 5 run; the public page does not include the training pipeline.'};whNote.textContent=scopes[current];}
+function show(id){closeDrawer();current=id;views.forEach(v=>v.classList.toggle('active',v.id===id));nav.forEach(b=>{const active=b.dataset.view===id;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});const supports=['queue','inventory','execution'].includes(id);whSel.disabled=!supports;if(!supports)whSel.value='ALL';text('filterLabel',supports?'Filter displayed sample':'Network / captured view');applyWh();window.scrollTo({top:0,behavior:'smooth'});}
+nav.forEach(b=>b.addEventListener('click',()=>show(b.dataset.view)));document.querySelectorAll('[data-jump]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.jump)));whSel.addEventListener('change',()=>{closeDrawer();applyWh();});show('executive');
+</script></body></html>
