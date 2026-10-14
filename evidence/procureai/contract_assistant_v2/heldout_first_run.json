@@ -1,0 +1,1069 @@
+{
+  "summary": {
+    "set": "heldout.jsonl",
+    "n": 68,
+    "correct": 64,
+    "accuracy": 0.9411764705882353,
+    "answerable_correct": 58,
+    "answerable_n": 62,
+    "wrong_answers_given": 0,
+    "abstained_when_answerable": 4,
+    "by_type": {
+      "contract": "39/40",
+      "policy": "2/5",
+      "invoice": "12/12",
+      "quote": "5/5",
+      "unanswerable": "6/6"
+    }
+  },
+  "rows": [
+    {
+      "q": "when does CTR00122 expire",
+      "type": "contract:end",
+      "answerable": true,
+      "answer": "2026-11-29",
+      "file": "CTR00122.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "The agreement starts on 2024-05-31 and ends on 2026-11-29.",
+        "heading": "2 Term",
+        "citation": "[CTR00122.pdf, page 1]",
+        "file": "CTR00122.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "what's the ceiling on yearly price increases in CTR00067",
+      "type": "contract:escalation",
+      "answerable": true,
+      "answer": "9.0 percent",
+      "file": "CTR00067.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Annual price escalation must not exceed 9.0 percent without a signed amendment.",
+        "heading": "4 Price adjustment",
+        "citation": "[CTR00067.pdf, page 1]",
+        "file": "CTR00067.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "what pay terms did we agree in CTR00188",
+      "type": "contract:payment",
+      "answerable": true,
+      "answer": "PT003",
+      "file": "CTR00188.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Payment follows term PT003 after complete evidence and approval.",
+        "heading": "8 Payment",
+        "citation": "[CTR00188.pdf, page 1]",
+        "file": "CTR00188.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "If we want to end CTR00182, how much notice is needed?",
+      "type": "contract:notice",
+      "answerable": true,
+      "answer": "90 days",
+      "file": "CTR00182.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Either party may terminate with 90 days written notice, subject to open obligations.",
+        "heading": "9 Termination",
+        "citation": "[CTR00182.pdf, page 1]",
+        "file": "CTR00182.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "how many days warning do we owe to get out of CTR00071",
+      "type": "contract:notice",
+      "answerable": true,
+      "answer": "45 days",
+      "file": "CTR00071.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Either party may terminate with 45 days written notice, subject to open obligations.",
+        "heading": "9 Termination",
+        "citation": "[CTR00071.pdf, page 1]",
+        "file": "CTR00071.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "does CTR00146 roll over by itself at the end",
+      "type": "contract:renewal",
+      "answerable": true,
+      "answer": "not enabled",
+      "file": "CTR00146.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Auto renewal is not enabled.",
+        "heading": "2 Term",
+        "citation": "[CTR00146.pdf, page 1]",
+        "file": "CTR00146.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "roughly how much is CTR00238 worth",
+      "type": "contract:value",
+      "answerable": true,
+      "answer": "19,727,888.06",
+      "file": "CTR00238.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "The indicative contract value is INR 19,727,888.06.",
+        "heading": "3 Commercial value",
+        "citation": "[CTR00238.pdf, page 1]",
+        "file": "CTR00238.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "who is the vendor on CTR00082?",
+      "type": "contract:supplier",
+      "answerable": true,
+      "answer": "Sterling Consumer Products 82",
+      "file": "CTR00082.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "This synthetic agreement is between NorthEast Consumer Products Pvt. Ltd. and Sterling Consumer Products 82.",
+        "heading": "1 Parties and scope",
+        "citation": "[CTR00082.pdf, page 1]",
+        "file": "CTR00082.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "what's the ceiling on yearly price increases in CTR00156",
+      "type": "contract:escalation",
+      "answerable": true,
+      "answer": "0.0 percent",
+      "file": "CTR00156.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Annual price escalation must not exceed 0.0 percent without a signed amendment.",
+        "heading": "4 Price adjustment",
+        "citation": "[CTR00156.pdf, page 1]",
+        "file": "CTR00156.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "what's the ceiling on yearly price increases in CTR00020",
+      "type": "contract:escalation",
+      "answerable": true,
+      "answer": "7.0 percent",
+      "file": "CTR00020.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Annual price escalation must not exceed 7.0 percent without a signed amendment.",
+        "heading": "4 Price adjustment",
+        "citation": "[CTR00020.pdf, page 1]",
+        "file": "CTR00020.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "will CTR00228 renew automatically?",
+      "type": "contract:renewal",
+      "answerable": true,
+      "answer": "not enabled",
+      "file": "CTR00228.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Auto renewal is not enabled.",
+        "heading": "2 Term",
+        "citation": "[CTR00228.pdf, page 1]",
+        "file": "CTR00228.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "which state's courts and law apply to CTR00264?",
+      "type": "contract:law",
+      "answerable": true,
+      "answer": "West Bengal",
+      "file": "CTR00264.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "This synthetic agreement uses West Bengal as the illustrative governing-law state.",
+        "heading": "10 Governing law",
+        "citation": "[CTR00264.pdf, page 1]",
+        "file": "CTR00264.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "when does CTR00187 expire",
+      "type": "contract:end",
+      "answerable": true,
+      "answer": "2025-08-30",
+      "file": "CTR00187.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "The agreement starts on 2023-08-31 and ends on 2025-08-30.",
+        "heading": "2 Term",
+        "citation": "[CTR00187.pdf, page 1]",
+        "file": "CTR00187.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "who is the vendor on CTR00041?",
+      "type": "contract:supplier",
+      "answerable": true,
+      "answer": "Horizon Foods 41",
+      "file": "CTR00041.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "This synthetic agreement is between NorthEast Consumer Products Pvt. Ltd. and Horizon Foods 41.",
+        "heading": "1 Parties and scope",
+        "citation": "[CTR00041.pdf, page 1]",
+        "file": "CTR00041.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "roughly how much is CTR00043 worth",
+      "type": "contract:value",
+      "answerable": true,
+      "answer": "9,220,803.51",
+      "file": "CTR00043.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "The indicative contract value is INR 9,220,803.51.",
+        "heading": "3 Commercial value",
+        "citation": "[CTR00043.pdf, page 1]",
+        "file": "CTR00043.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "does CTR00070 roll over by itself at the end",
+      "type": "contract:renewal",
+      "answerable": true,
+      "answer": "enabled",
+      "file": "CTR00070.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Auto renewal is enabled.",
+        "heading": "2 Term",
+        "citation": "[CTR00070.pdf, page 1]",
+        "file": "CTR00070.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "jurisdiction for CTR00275",
+      "type": "contract:law",
+      "answerable": true,
+      "answer": "Delhi",
+      "file": "CTR00275.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "This synthetic agreement uses Delhi as the illustrative governing-law state.",
+        "heading": "10 Governing law",
+        "citation": "[CTR00275.pdf, page 1]",
+        "file": "CTR00275.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "who is the vendor on CTR00037?",
+      "type": "contract:supplier",
+      "answerable": true,
+      "answer": "Evergreen Industries 37",
+      "file": "CTR00037.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "This synthetic agreement is between NorthEast Consumer Products Pvt. Ltd. and Evergreen Industries 37.",
+        "heading": "1 Parties and scope",
+        "citation": "[CTR00037.pdf, page 1]",
+        "file": "CTR00037.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "will CTR00225 renew automatically?",
+      "type": "contract:renewal",
+      "answerable": true,
+      "answer": "enabled",
+      "file": "CTR00225.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Auto renewal is enabled.",
+        "heading": "2 Term",
+        "citation": "[CTR00225.pdf, page 1]",
+        "file": "CTR00225.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "last day CTR00265 is valid?",
+      "type": "contract:end",
+      "answerable": true,
+      "answer": "2024-11-14",
+      "file": "CTR00265.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "The agreement starts on 2023-11-15 and ends on 2024-11-14.",
+        "heading": "2 Term",
+        "citation": "[CTR00265.pdf, page 1]",
+        "file": "CTR00265.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "By how much can prices go up each year under CTR00220?",
+      "type": "contract:escalation",
+      "answerable": true,
+      "answer": "7.0 percent",
+      "file": "CTR00220.pdf",
+      "ok": false,
+      "response": {
+        "abstain": true,
+        "reason": "The documents never mention: prices, year"
+      }
+    },
+    {
+      "q": "who is the vendor on CTR00093?",
+      "type": "contract:supplier",
+      "answerable": true,
+      "answer": "Pioneer Industries 93",
+      "file": "CTR00093.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "This synthetic agreement is between NorthEast Consumer Products Pvt. Ltd. and Pioneer Industries 93.",
+        "heading": "1 Parties and scope",
+        "citation": "[CTR00093.pdf, page 1]",
+        "file": "CTR00093.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "jurisdiction for CTR00098",
+      "type": "contract:law",
+      "answerable": true,
+      "answer": "Maharashtra",
+      "file": "CTR00098.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "This synthetic agreement uses Maharashtra as the illustrative governing-law state.",
+        "heading": "10 Governing law",
+        "citation": "[CTR00098.pdf, page 1]",
+        "file": "CTR00098.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "who is the vendor on CTR00160?",
+      "type": "contract:supplier",
+      "answerable": true,
+      "answer": "Pragati Logistics 160",
+      "file": "CTR00160.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "This synthetic agreement is between NorthEast Consumer Products Pvt. Ltd. and Pragati Logistics 160.",
+        "heading": "1 Parties and scope",
+        "citation": "[CTR00160.pdf, page 1]",
+        "file": "CTR00160.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "who is the vendor on CTR00157?",
+      "type": "contract:supplier",
+      "answerable": true,
+      "answer": "Evergreen Industries 157",
+      "file": "CTR00157.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "This synthetic agreement is between NorthEast Consumer Products Pvt. Ltd. and Evergreen Industries 157.",
+        "heading": "1 Parties and scope",
+        "citation": "[CTR00157.pdf, page 1]",
+        "file": "CTR00157.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "which state's courts and law apply to CTR00235?",
+      "type": "contract:law",
+      "answerable": true,
+      "answer": "Assam",
+      "file": "CTR00235.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "This synthetic agreement uses Assam as the illustrative governing-law state.",
+        "heading": "10 Governing law",
+        "citation": "[CTR00235.pdf, page 1]",
+        "file": "CTR00235.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "will CTR00055 renew automatically?",
+      "type": "contract:renewal",
+      "answerable": true,
+      "answer": "enabled",
+      "file": "CTR00055.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Auto renewal is enabled.",
+        "heading": "2 Term",
+        "citation": "[CTR00055.pdf, page 1]",
+        "file": "CTR00055.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "which state's courts and law apply to CTR00065?",
+      "type": "contract:law",
+      "answerable": true,
+      "answer": "Assam",
+      "file": "CTR00065.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "This synthetic agreement uses Assam as the illustrative governing-law state.",
+        "heading": "10 Governing law",
+        "citation": "[CTR00065.pdf, page 1]",
+        "file": "CTR00065.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "will CTR00119 renew automatically?",
+      "type": "contract:renewal",
+      "answerable": true,
+      "answer": "not enabled",
+      "file": "CTR00119.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Auto renewal is not enabled.",
+        "heading": "2 Term",
+        "citation": "[CTR00119.pdf, page 1]",
+        "file": "CTR00119.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "who is the vendor on CTR00261?",
+      "type": "contract:supplier",
+      "answerable": true,
+      "answer": "Brahmaputra Packaging 86",
+      "file": "CTR00261.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "This synthetic agreement is between NorthEast Consumer Products Pvt. Ltd. and Brahmaputra Packaging 86.",
+        "heading": "1 Parties and scope",
+        "citation": "[CTR00261.pdf, page 1]",
+        "file": "CTR00261.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "how many days warning do we owe to get out of CTR00244",
+      "type": "contract:notice",
+      "answerable": true,
+      "answer": "60 days",
+      "file": "CTR00244.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Either party may terminate with 60 days written notice, subject to open obligations.",
+        "heading": "9 Termination",
+        "citation": "[CTR00244.pdf, page 1]",
+        "file": "CTR00244.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "what pay terms did we agree in CTR00019",
+      "type": "contract:payment",
+      "answerable": true,
+      "answer": "PT001",
+      "file": "CTR00019.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Payment follows term PT001 after complete evidence and approval.",
+        "heading": "8 Payment",
+        "citation": "[CTR00019.pdf, page 1]",
+        "file": "CTR00019.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "If we want to end CTR00051, how much notice is needed?",
+      "type": "contract:notice",
+      "answerable": true,
+      "answer": "60 days",
+      "file": "CTR00051.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Either party may terminate with 60 days written notice, subject to open obligations.",
+        "heading": "9 Termination",
+        "citation": "[CTR00051.pdf, page 1]",
+        "file": "CTR00051.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "which state's courts and law apply to CTR00224?",
+      "type": "contract:law",
+      "answerable": true,
+      "answer": "West Bengal",
+      "file": "CTR00224.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "This synthetic agreement uses West Bengal as the illustrative governing-law state.",
+        "heading": "10 Governing law",
+        "citation": "[CTR00224.pdf, page 1]",
+        "file": "CTR00224.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "CTR00029 kicks in from which date?",
+      "type": "contract:start",
+      "answerable": true,
+      "answer": "2023-09-15",
+      "file": "CTR00029.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "The agreement starts on 2023-09-15 and ends on 2025-09-14.",
+        "heading": "2 Term",
+        "citation": "[CTR00029.pdf, page 1]",
+        "file": "CTR00029.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "which state's courts and law apply to CTR00120?",
+      "type": "contract:law",
+      "answerable": true,
+      "answer": "West Bengal",
+      "file": "CTR00120.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "This synthetic agreement uses West Bengal as the illustrative governing-law state.",
+        "heading": "10 Governing law",
+        "citation": "[CTR00120.pdf, page 1]",
+        "file": "CTR00120.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "If we want to end CTR00276, how much notice is needed?",
+      "type": "contract:notice",
+      "answerable": true,
+      "answer": "30 days",
+      "file": "CTR00276.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Either party may terminate with 30 days written notice, subject to open obligations.",
+        "heading": "9 Termination",
+        "citation": "[CTR00276.pdf, page 1]",
+        "file": "CTR00276.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "CTR00212 kicks in from which date?",
+      "type": "contract:start",
+      "answerable": true,
+      "answer": "2024-05-02",
+      "file": "CTR00212.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "The agreement starts on 2024-05-02 and ends on 2026-11-01.",
+        "heading": "2 Term",
+        "citation": "[CTR00212.pdf, page 1]",
+        "file": "CTR00212.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "what's the ceiling on yearly price increases in CTR00027",
+      "type": "contract:escalation",
+      "answerable": true,
+      "answer": "7.0 percent",
+      "file": "CTR00027.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Annual price escalation must not exceed 7.0 percent without a signed amendment.",
+        "heading": "4 Price adjustment",
+        "citation": "[CTR00027.pdf, page 1]",
+        "file": "CTR00027.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "jurisdiction for CTR00209",
+      "type": "contract:law",
+      "answerable": true,
+      "answer": "Delhi",
+      "file": "CTR00209.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "This synthetic agreement uses Delhi as the illustrative governing-law state.",
+        "heading": "10 Governing law",
+        "citation": "[CTR00209.pdf, page 1]",
+        "file": "CTR00209.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "How big does a purchase have to be before we need 3 competing quotes?",
+      "type": "policy",
+      "answerable": true,
+      "answer": "500,000",
+      "file": "procurement_policy.pdf",
+      "ok": false,
+      "response": {
+        "abstain": true,
+        "reason": "No sentence in the documents answers this"
+      }
+    },
+    {
+      "q": "how far can an invoice price drift from the PO before someone must check it",
+      "type": "policy",
+      "answerable": true,
+      "answer": "two percent",
+      "file": "invoice_approval_policy.pdf",
+      "ok": false,
+      "response": {
+        "abstain": true,
+        "reason": "The documents never mention: far, before, someone, check"
+      }
+    },
+    {
+      "q": "At what invoice value does a senior person have to sign off?",
+      "type": "policy",
+      "answerable": true,
+      "answer": "1,000,000",
+      "file": "invoice_approval_policy.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Invoices above INR 1,000,000 or with bank-detail changes require senior approval.",
+        "heading": "4 Escalation",
+        "citation": "[invoice_approval_policy.pdf, page 1]",
+        "file": "invoice_approval_policy.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "Can an AI recommendation release a payment on its own?",
+      "type": "policy",
+      "answerable": true,
+      "answer": "No AI recommendation",
+      "file": "procurement_policy.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "No AI recommendation can create a binding purchase, supplier change, contract change or payment release.",
+        "heading": "4 Human approval",
+        "citation": "[procurement_policy.pdf, page 1]",
+        "file": "procurement_policy.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "what happens if a supplier sends the same invoice number twice",
+      "type": "policy",
+      "answerable": true,
+      "answer": "held for investigation",
+      "file": "invoice_approval_policy.pdf",
+      "ok": false,
+      "response": {
+        "abstain": true,
+        "reason": "The documents never mention: happens, sends, number"
+      }
+    },
+    {
+      "q": "how much do we owe in total on INV0000010",
+      "type": "invoice:gross",
+      "answerable": true,
+      "answer": "43,915.67",
+      "file": "INV0000010.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Gross INR 43,915.67",
+        "heading": "",
+        "citation": "[INV0000010.pdf, page 1]",
+        "file": "INV0000010.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "INV0000037 is billed against which PO",
+      "type": "invoice:po",
+      "answerable": true,
+      "answer": "PO0000061",
+      "file": "INV0000037.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Purchase order PO0000061",
+        "heading": "",
+        "citation": "[INV0000037.pdf, page 1]",
+        "file": "INV0000037.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "INV0000014 is billed against which PO",
+      "type": "invoice:po",
+      "answerable": true,
+      "answer": "PO0000050",
+      "file": "INV0000014.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Purchase order PO0000050",
+        "heading": "",
+        "citation": "[INV0000014.pdf, page 1]",
+        "file": "INV0000014.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "payment for INV0000026 falls due when?",
+      "type": "invoice:due",
+      "answerable": true,
+      "answer": "2024-03-05",
+      "file": "INV0000026.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Due date 2024-03-05",
+        "heading": "",
+        "citation": "[INV0000026.pdf, page 1]",
+        "file": "INV0000026.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "how much do we owe in total on INV0000053",
+      "type": "invoice:gross",
+      "answerable": true,
+      "answer": "259,003.47",
+      "file": "INV0000053.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Gross INR 259,003.47",
+        "heading": "",
+        "citation": "[INV0000053.pdf, page 1]",
+        "file": "INV0000053.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "INV0000038 is billed against which PO",
+      "type": "invoice:po",
+      "answerable": true,
+      "answer": "PO0000040",
+      "file": "INV0000038.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Purchase order PO0000040",
+        "heading": "",
+        "citation": "[INV0000038.pdf, page 1]",
+        "file": "INV0000038.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "how much do we owe in total on INV0000076",
+      "type": "invoice:gross",
+      "answerable": true,
+      "answer": "273,377.63",
+      "file": "INV0000076.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Gross INR 273,377.63",
+        "heading": "",
+        "citation": "[INV0000076.pdf, page 1]",
+        "file": "INV0000076.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "how much do we owe in total on INV0000020",
+      "type": "invoice:gross",
+      "answerable": true,
+      "answer": "112,242.19",
+      "file": "INV0000020.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Gross INR 112,242.19",
+        "heading": "",
+        "citation": "[INV0000020.pdf, page 1]",
+        "file": "INV0000020.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "payment for INV0000044 falls due when?",
+      "type": "invoice:due",
+      "answerable": true,
+      "answer": "2024-01-31",
+      "file": "INV0000044.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Due date 2024-01-31",
+        "heading": "",
+        "citation": "[INV0000044.pdf, page 1]",
+        "file": "INV0000044.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "how much do we owe in total on INV0000050",
+      "type": "invoice:gross",
+      "answerable": true,
+      "answer": "245,783.05",
+      "file": "INV0000050.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Gross INR 245,783.05",
+        "heading": "",
+        "citation": "[INV0000050.pdf, page 1]",
+        "file": "INV0000050.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "payment for INV0000080 falls due when?",
+      "type": "invoice:due",
+      "answerable": true,
+      "answer": "2024-02-28",
+      "file": "INV0000080.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Due date 2024-02-28",
+        "heading": "",
+        "citation": "[INV0000080.pdf, page 1]",
+        "file": "INV0000080.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "payment for INV0000017 falls due when?",
+      "type": "invoice:due",
+      "answerable": true,
+      "answer": "2024-03-23",
+      "file": "INV0000017.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "Due date 2024-03-23",
+        "heading": "",
+        "citation": "[INV0000017.pdf, page 1]",
+        "file": "INV0000017.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "quotation QUOTE0011 was submitted for which RFQ number",
+      "type": "quote:rfq",
+      "answerable": true,
+      "answer": "RFQ000004",
+      "file": "QUOTE0011.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "RFQ RFQ000004",
+        "heading": "",
+        "citation": "[QUOTE0011.pdf, page 1]",
+        "file": "QUOTE0011.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "quotation QUOTE0017 was submitted for which RFQ number",
+      "type": "quote:rfq",
+      "answerable": true,
+      "answer": "RFQ000006",
+      "file": "QUOTE0017.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "RFQ RFQ000006",
+        "heading": "",
+        "citation": "[QUOTE0017.pdf, page 1]",
+        "file": "QUOTE0017.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "quotation QUOTE0023 was submitted for which RFQ number",
+      "type": "quote:rfq",
+      "answerable": true,
+      "answer": "RFQ000008",
+      "file": "QUOTE0023.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "RFQ RFQ000008",
+        "heading": "",
+        "citation": "[QUOTE0023.pdf, page 1]",
+        "file": "QUOTE0023.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "quotation QUOTE0029 was submitted for which RFQ number",
+      "type": "quote:rfq",
+      "answerable": true,
+      "answer": "RFQ000010",
+      "file": "QUOTE0029.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "RFQ RFQ000010",
+        "heading": "",
+        "citation": "[QUOTE0029.pdf, page 1]",
+        "file": "QUOTE0029.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "quotation QUOTE0035 was submitted for which RFQ number",
+      "type": "quote:rfq",
+      "answerable": true,
+      "answer": "RFQ000012",
+      "file": "QUOTE0035.pdf",
+      "ok": true,
+      "response": {
+        "abstain": false,
+        "answer": "RFQ RFQ000012",
+        "heading": "",
+        "citation": "[QUOTE0035.pdf, page 1]",
+        "file": "QUOTE0035.pdf",
+        "page": 1
+      }
+    },
+    {
+      "q": "what % penalty do we charge if CTR00187 delivers late",
+      "type": "unanswerable",
+      "answerable": false,
+      "answer": null,
+      "file": null,
+      "ok": true,
+      "response": {
+        "abstain": true,
+        "reason": "The documents never mention: penalty, charge, delivers, late"
+      }
+    },
+    {
+      "q": "warranty period on goods under CTR00238?",
+      "type": "unanswerable",
+      "answerable": false,
+      "answer": null,
+      "file": null,
+      "ok": true,
+      "response": {
+        "abstain": true,
+        "reason": "The documents never mention: warranty"
+      }
+    },
+    {
+      "q": "who signed CTR00182 on behalf of the supplier",
+      "type": "unanswerable",
+      "answerable": false,
+      "answer": null,
+      "file": null,
+      "ok": true,
+      "response": {
+        "abstain": true,
+        "reason": "No sentence in the documents answers this"
+      }
+    },
+    {
+      "q": "insurance cover the vendor must carry under CTR00187",
+      "type": "unanswerable",
+      "answerable": false,
+      "answer": null,
+      "file": null,
+      "ok": true,
+      "response": {
+        "abstain": true,
+        "reason": "The documents never mention: insurance, cover, carry"
+      }
+    },
+    {
+      "q": "notice period to terminate CTR00777",
+      "type": "unanswerable",
+      "answerable": false,
+      "answer": null,
+      "file": null,
+      "ok": true,
+      "response": {
+        "abstain": true,
+        "reason": "No document found for CTR00777"
+      }
+    },
+    {
+      "q": "what is the exchange rate clause in CTR00082",
+      "type": "unanswerable",
+      "answerable": false,
+      "answer": null,
+      "file": null,
+      "ok": true,
+      "response": {
+        "abstain": true,
+        "reason": "The documents never mention: exchange, rate, clause"
+      }
+    }
+  ]
+}

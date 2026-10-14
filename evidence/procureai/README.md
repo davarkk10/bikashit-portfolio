@@ -36,6 +36,14 @@ The generator uses seed `20260927`, creates transaction CSVs and 402 synthetic P
 
 The first-release delay model tied its supplier-history baseline. [`ml_delay_rebuild/`](ml_delay_rebuild/) shows why: on the original data the best possible PR-AUC is 0.576, and v2 reaches 0.574. With richer delivery drivers (distance and route, supplier load, lead-time promises, flood and festival calendars, dispatch notices and disruption warnings), v3 reaches 0.612 at order time and 0.651 three days before delivery. Delivery outcomes for v3 were re-simulated; the folder's README states how.
 
+## Invoice anomaly v2 (October 2026)
+
+First-release anomalies were all rule-detectable. [`invoice_anomaly_v2/`](invoice_anomaly_v2/) adds split bills, price creep and near-duplicates, each with legitimate look-alikes. On those conditions the model reaches PR-AUC 0.858 against 0.188 for the best hand-written rules.
+
+## Contract assistant v2 (October 2026)
+
+[`contract_assistant_v2/`](contract_assistant_v2/) rebuilds retrieval and tests it on 68 unseen questions frozen before any code was written: 64/68 correct on the first and only run, with no wrong answers. v1's 56% stays on record.
+
 ## FastAPI decision layer
 
 The API turns ProcureAI's analytical outputs into integration-ready services that can be called by an approval workflow, ERP prototype, web front end, or n8n flow.

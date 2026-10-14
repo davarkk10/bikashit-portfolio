@@ -86,7 +86,7 @@
       </div>
       <div class="truth-rail reveal" aria-label="Project status and claim discipline">
         <div><span>VERIFIED NOW</span><b>PostgreSQL warehouse · 9-page Power BI report, published live · ML · RAG · API — rebuilt in Docker</b></div>
-        <div><span>MEASURED EVIDENCE</span><b>12/12 phase gates · 373 automated tests · 151 RAG cases · unseen-question accuracy 56%</b></div>
+        <div><span>MEASURED EVIDENCE</span><b>12/12 phase gates · 373 automated tests · 151 RAG cases · unseen-question accuracy 56% (v1) → 94% (v2)</b></div>
         <div><span>CLAIM DISCIPLINE</span><b>Synthetic proof of concept · not production deployment</b></div>
       </div>
     </section>
@@ -180,10 +180,10 @@
           <span>VERIFIED IMPLEMENTATION</span>
           <h3>Measured, tested and reproducible</h3>
           <ul>
-            <li>Invoice model PR-AUC 1.00 vs policy rules 0.48 — refined rules also reach 1.00, so no model lift is claimed</li>
+            <li>Invoice v2: on conditions rules miss (split bills, price creep, near-duplicates) the model reaches PR-AUC 0.86 against 0.19 for the best hand-written rules</li>
             <li>Supplier delay: v2 reaches PR-AUC 0.574 against a 0.576 ceiling on the original data; v3 with richer delivery drivers reaches 0.612 at order time and 0.651 three days before delivery</li>
             <li>402 PDFs indexed into 3,772 page-aware chunks</li>
-            <li>151/151 RAG evaluation cases passed; first run on 25 unseen questions: 56% correct, kept as reported</li>
+            <li>Contract assistant: v1 scored 56% on its first unseen run, kept as reported; v2 scores 64/68 (94%) on a new frozen set, with no wrong answers</li>
             <li>27 API tests and 67 n8n workflow fixtures passed</li>
             <li>Monitoring: 50 checks OK, 4 WARN, 1 deliberate FAIL kept visible</li>
           </ul>
@@ -276,7 +276,7 @@
       <div class="evidence-scoreboard reveal" aria-label="Verified implementation metrics">
         <article><span>WAREHOUSE</span><strong>68</strong><p>SQL tests, run twice</p></article>
         <article><span>POWER BI</span><strong>28/28</strong><p>KPIs reconciled · 7/7 RLS cases</p></article>
-        <article><span>CONTRACT RAG</span><strong>56%</strong><p>first run on unseen questions (151/151 tuned set)</p></article>
+        <article><span>CONTRACT RAG</span><strong>94%</strong><p>v2 first run on 68 unseen questions · v1 was 56%</p></article>
         <article><span>ANALYST API</span><strong>27</strong><p>service &amp; security tests</p></article>
         <article><span>AUTOMATION</span><strong>67</strong><p>n8n workflow fixtures</p></article>
         <article><span>OPS &amp; SECURITY</span><strong>0</strong><p>secrets · restore drill passed</p></article>
@@ -333,6 +333,38 @@
         <div class="delay-notes">
           <p><b>Strongest driver.</b> Supplier load against capacity, about five times stronger than any other. It is also the one buyers control.</p>
           <p><b>Disclosure.</b> To add the drivers, delivery outcomes were re-simulated (seed 20261014) with effect sizes I chose and kept moderate. Stronger settings would score higher, so the score is partly a design choice. <a href="https://github.com/davarkk10/bikashit-portfolio/tree/main/evidence/procureai/ml_delay_rebuild">Scripts and results</a></p>
+        </div>
+      </div>
+      <div class="delay-lab reveal" id="invoice-model" aria-labelledby="inv-lab-title">
+        <div class="delay-lab-head">
+          <span>MODEL REBUILD · INVOICE ANOMALIES · OCTOBER 2026</span>
+          <h3 id="inv-lab-title">Conditions that single-invoice rules miss</h3>
+          <p>The first-release anomalies were all rule-detectable, so the model tied refined rules. v2 keeps them and adds three harder conditions, each with a legitimate look-alike: bills split under the ₹10 lakh approval limit (vs staged deliveries), months of price creep inside the 2% tolerance (vs approved freight surcharges), and resubmitted invoices with altered numbers (vs corrected re-issues).</p>
+        </div>
+        <div class="delay-steps">
+          <article><small>POLICY RULES AS WRITTEN</small><strong>0.196</strong><em>PR-AUC · 23% precision at capacity</em><p>Flags every quantity billed ahead of acceptance and every exact duplicate, so most flags are noise.</p></article>
+          <article><small>BEST HAND-WRITTEN RULES</small><strong>0.812</strong><em>PR-AUC · 78% precision at capacity</em><p>Tolerance-aware match plus near-duplicate, over-billing, split and creep checks. Catches 30% of price creep and 46% of split bills.</p></article>
+          <article class="headline"><small>GRADIENT-BOOSTED MODEL · HEADLINE</small><strong>0.858</strong><em>PR-AUC on the three new conditions · rules 0.188</em><p>Overall 0.980 with 93% precision at capacity. Catches 69% of price creep and 88% of split bills. Rules still edge it on near-duplicates (100% vs 98%).</p></article>
+        </div>
+        <div class="delay-notes">
+          <p><b>Why the model wins here.</b> Creep and splitting only show up across months of a supplier's invoices or several bills on one PO. A single-invoice rule can't see that pattern.</p>
+          <p><b>Disclosure.</b> I designed the new conditions and their look-alikes. Real fraud is rarer and more varied, so real scores would be lower. <a href="https://github.com/davarkk10/bikashit-portfolio/tree/main/evidence/procureai/invoice_anomaly_v2">Script and results</a></p>
+        </div>
+      </div>
+      <div class="delay-lab reveal" id="contract-assistant" aria-labelledby="rag-lab-title">
+        <div class="delay-lab-head">
+          <span>REBUILD · CONTRACT ASSISTANT · OCTOBER 2026</span>
+          <h3 id="rag-lab-title">From 56% to 94% on unseen questions, with no wrong answers</h3>
+          <p>v1 abstained too readily on everyday wording. v2 routes on document IDs, ranks sentences with BM25 and a procurement thesaurus, quotes the best sentence with a page citation, and refuses when the documents don't say. The unseen questions were written and hash-locked before any retriever code existed, then run once.</p>
+        </div>
+        <div class="delay-steps">
+          <article><small>V1 · FIRST UNSEEN RUN</small><strong>56%</strong><em>25 questions</em><p>Kept as reported. Tuned scores flatter, so the first run stays on record.</p></article>
+          <article class="headline"><small>V2 · FROZEN SET · FIRST AND ONLY RUN</small><strong>64 / 68</strong><em>94% · 0 wrong answers · 6/6 refusals correct</em><p>Contracts 39/40, invoices 12/12, quotations 5/5. The four misses are refusals on loosely worded policy and pricing questions.</p></article>
+          <article><small>LIMIT</small><strong>Same author</strong><em>questions and assistant</em><p>I wrote both, including the thesaurus. A test set from someone else would be a stronger check, and the new set isn't directly comparable with v1's.</p></article>
+        </div>
+        <div class="delay-notes">
+          <p><b>Safe by design.</b> Answers are quoted, never generated, and every one carries a [file, page] citation.</p>
+          <p><b>Evidence.</b> Question hashes, the assistant's code hash at the run, and every answer. <a href="https://github.com/davarkk10/bikashit-portfolio/tree/main/evidence/procureai/contract_assistant_v2">Code and results</a></p>
         </div>
       </div>
       <div class="recruiter-path reveal">
@@ -532,7 +564,7 @@
             <p>What is the termination notice period?</p>
             <strong>45 days <small>[CTR00142.pdf, p. 1]</small></strong>
           </div>
-          <ul><li>151 evaluation questions</li><li>100% citation precision</li><li>56% on first unseen run</li><li>Injection refused</li></ul>
+          <ul><li>151 evaluation questions</li><li>100% citation precision</li><li>Unseen: v1 56% · v2 94%</li><li>Injection refused</li></ul>
         </article>
 
         <article class="work-card agent reveal">

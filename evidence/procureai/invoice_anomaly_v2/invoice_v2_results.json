@@ -1,0 +1,104 @@
+{
+  "invoices": 51692,
+  "test_invoices": 14570,
+  "test_positives": 1546,
+  "test_prevalence": 0.10610844200411805,
+  "review_capacity_k": 1546,
+  "val_pr_auc_model": 0.9780705218107048,
+  "test": {
+    "policy rules": {
+      "pr_auc": 0.1956799851961935,
+      "roc_auc": 0.7257942149193767,
+      "precision_at_k": 0.2335058214747736,
+      "recall_at_k": 0.2335058214747736,
+      "flagged": 5390,
+      "precision_flagged": 0.22189239332096475,
+      "recall_flagged": 0.7736093143596378
+    },
+    "refined rules": {
+      "pr_auc": 0.8124996910487219,
+      "roc_auc": 0.9068753506314147,
+      "precision_at_k": 0.7781371280724451,
+      "recall_at_k": 0.7781371280724451,
+      "flagged": 1707,
+      "precision_flagged": 0.7457527826596367,
+      "recall_flagged": 0.8234152652005174
+    },
+    "model": {
+      "pr_auc": 0.9797870946689817,
+      "roc_auc": 0.9955541823871384,
+      "precision_at_k": 0.925614489003881,
+      "recall_at_k": 0.925614489003881
+    }
+  },
+  "test_subtle_only_pr_auc": {
+    "policy rules": 0.03850941416350195,
+    "refined rules": 0.18791764427893956,
+    "model": 0.8578226581020346
+  },
+  "recall_by_type": {
+    "BANK_DETAIL_CHANGE": {
+      "n": 170,
+      "policy_rules": 1.0,
+      "refined_rules": 1.0,
+      "model_top_k": 1.0
+    },
+    "MISSING_PO_REFERENCE": {
+      "n": 134,
+      "policy_rules": 1.0,
+      "refined_rules": 1.0,
+      "model_top_k": 1.0
+    },
+    "NEAR_DUPLICATE": {
+      "n": 111,
+      "policy_rules": 0.3783783783783784,
+      "refined_rules": 1.0,
+      "model_top_k": 0.9819819819819819
+    },
+    "PRICE_CREEP": {
+      "n": 341,
+      "policy_rules": 0.375366568914956,
+      "refined_rules": 0.3020527859237537,
+      "model_top_k": 0.6920821114369502
+    },
+    "PRICE_MISMATCH": {
+      "n": 326,
+      "policy_rules": 1.0,
+      "refined_rules": 1.0,
+      "model_top_k": 1.0
+    },
+    "PROBABLE_DUPLICATE": {
+      "n": 141,
+      "policy_rules": 0.9716312056737588,
+      "refined_rules": 1.0,
+      "model_top_k": 1.0
+    },
+    "QUANTITY_MISMATCH": {
+      "n": 258,
+      "policy_rules": 1.0,
+      "refined_rules": 1.0,
+      "model_top_k": 1.0
+    },
+    "SPLIT_BELOW_APPROVAL": {
+      "n": 65,
+      "policy_rules": 0.015384615384615385,
+      "refined_rules": 0.46153846153846156,
+      "model_top_k": 0.8769230769230769
+    }
+  },
+  "model_minus_refined_pr_auc_95ci": [
+    0.1516596922644164,
+    0.18144445492460304
+  ],
+  "label_counts": {
+    "CLEAN": 46587,
+    "PRICE_MISMATCH": 1161,
+    "QUANTITY_MISMATCH": 957,
+    "PRICE_CREEP": 822,
+    "BANK_DETAIL_CHANGE": 576,
+    "PROBABLE_DUPLICATE": 500,
+    "MISSING_PO_REFERENCE": 486,
+    "NEAR_DUPLICATE": 380,
+    "SPLIT_BELOW_APPROVAL": 223
+  }
+}

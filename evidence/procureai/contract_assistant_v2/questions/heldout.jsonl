@@ -1,0 +1,68 @@
+{"q": "when does CTR00122 expire", "type": "contract:end", "answerable": true, "answer": "2026-11-29", "file": "CTR00122.pdf"}
+{"q": "what's the ceiling on yearly price increases in CTR00067", "type": "contract:escalation", "answerable": true, "answer": "9.0 percent", "file": "CTR00067.pdf"}
+{"q": "what pay terms did we agree in CTR00188", "type": "contract:payment", "answerable": true, "answer": "PT003", "file": "CTR00188.pdf"}
+{"q": "If we want to end CTR00182, how much notice is needed?", "type": "contract:notice", "answerable": true, "answer": "90 days", "file": "CTR00182.pdf"}
+{"q": "how many days warning do we owe to get out of CTR00071", "type": "contract:notice", "answerable": true, "answer": "45 days", "file": "CTR00071.pdf"}
+{"q": "does CTR00146 roll over by itself at the end", "type": "contract:renewal", "answerable": true, "answer": "not enabled", "file": "CTR00146.pdf"}
+{"q": "roughly how much is CTR00238 worth", "type": "contract:value", "answerable": true, "answer": "19,727,888.06", "file": "CTR00238.pdf"}
+{"q": "who is the vendor on CTR00082?", "type": "contract:supplier", "answerable": true, "answer": "Sterling Consumer Products 82", "file": "CTR00082.pdf"}
+{"q": "what's the ceiling on yearly price increases in CTR00156", "type": "contract:escalation", "answerable": true, "answer": "0.0 percent", "file": "CTR00156.pdf"}
+{"q": "what's the ceiling on yearly price increases in CTR00020", "type": "contract:escalation", "answerable": true, "answer": "7.0 percent", "file": "CTR00020.pdf"}
+{"q": "will CTR00228 renew automatically?", "type": "contract:renewal", "answerable": true, "answer": "not enabled", "file": "CTR00228.pdf"}
+{"q": "which state's courts and law apply to CTR00264?", "type": "contract:law", "answerable": true, "answer": "West Bengal", "file": "CTR00264.pdf"}
+{"q": "when does CTR00187 expire", "type": "contract:end", "answerable": true, "answer": "2025-08-30", "file": "CTR00187.pdf"}
+{"q": "who is the vendor on CTR00041?", "type": "contract:supplier", "answerable": true, "answer": "Horizon Foods 41", "file": "CTR00041.pdf"}
+{"q": "roughly how much is CTR00043 worth", "type": "contract:value", "answerable": true, "answer": "9,220,803.51", "file": "CTR00043.pdf"}
+{"q": "does CTR00070 roll over by itself at the end", "type": "contract:renewal", "answerable": true, "answer": "enabled", "file": "CTR00070.pdf"}
+{"q": "jurisdiction for CTR00275", "type": "contract:law", "answerable": true, "answer": "Delhi", "file": "CTR00275.pdf"}
+{"q": "who is the vendor on CTR00037?", "type": "contract:supplier", "answerable": true, "answer": "Evergreen Industries 37", "file": "CTR00037.pdf"}
+{"q": "will CTR00225 renew automatically?", "type": "contract:renewal", "answerable": true, "answer": "enabled", "file": "CTR00225.pdf"}
+{"q": "last day CTR00265 is valid?", "type": "contract:end", "answerable": true, "answer": "2024-11-14", "file": "CTR00265.pdf"}
+{"q": "By how much can prices go up each year under CTR00220?", "type": "contract:escalation", "answerable": true, "answer": "7.0 percent", "file": "CTR00220.pdf"}
+{"q": "who is the vendor on CTR00093?", "type": "contract:supplier", "answerable": true, "answer": "Pioneer Industries 93", "file": "CTR00093.pdf"}
+{"q": "jurisdiction for CTR00098", "type": "contract:law", "answerable": true, "answer": "Maharashtra", "file": "CTR00098.pdf"}
+{"q": "who is the vendor on CTR00160?", "type": "contract:supplier", "answerable": true, "answer": "Pragati Logistics 160", "file": "CTR00160.pdf"}
+{"q": "who is the vendor on CTR00157?", "type": "contract:supplier", "answerable": true, "answer": "Evergreen Industries 157", "file": "CTR00157.pdf"}
+{"q": "which state's courts and law apply to CTR00235?", "type": "contract:law", "answerable": true, "answer": "Assam", "file": "CTR00235.pdf"}
+{"q": "will CTR00055 renew automatically?", "type": "contract:renewal", "answerable": true, "answer": "enabled", "file": "CTR00055.pdf"}
+{"q": "which state's courts and law apply to CTR00065?", "type": "contract:law", "answerable": true, "answer": "Assam", "file": "CTR00065.pdf"}
+{"q": "will CTR00119 renew automatically?", "type": "contract:renewal", "answerable": true, "answer": "not enabled", "file": "CTR00119.pdf"}
+{"q": "who is the vendor on CTR00261?", "type": "contract:supplier", "answerable": true, "answer": "Brahmaputra Packaging 86", "file": "CTR00261.pdf"}
+{"q": "how many days warning do we owe to get out of CTR00244", "type": "contract:notice", "answerable": true, "answer": "60 days", "file": "CTR00244.pdf"}
+{"q": "what pay terms did we agree in CTR00019", "type": "contract:payment", "answerable": true, "answer": "PT001", "file": "CTR00019.pdf"}
+{"q": "If we want to end CTR00051, how much notice is needed?", "type": "contract:notice", "answerable": true, "answer": "60 days", "file": "CTR00051.pdf"}
+{"q": "which state's courts and law apply to CTR00224?", "type": "contract:law", "answerable": true, "answer": "West Bengal", "file": "CTR00224.pdf"}
+{"q": "CTR00029 kicks in from which date?", "type": "contract:start", "answerable": true, "answer": "2023-09-15", "file": "CTR00029.pdf"}
+{"q": "which state's courts and law apply to CTR00120?", "type": "contract:law", "answerable": true, "answer": "West Bengal", "file": "CTR00120.pdf"}
+{"q": "If we want to end CTR00276, how much notice is needed?", "type": "contract:notice", "answerable": true, "answer": "30 days", "file": "CTR00276.pdf"}
+{"q": "CTR00212 kicks in from which date?", "type": "contract:start", "answerable": true, "answer": "2024-05-02", "file": "CTR00212.pdf"}
+{"q": "what's the ceiling on yearly price increases in CTR00027", "type": "contract:escalation", "answerable": true, "answer": "7.0 percent", "file": "CTR00027.pdf"}
+{"q": "jurisdiction for CTR00209", "type": "contract:law", "answerable": true, "answer": "Delhi", "file": "CTR00209.pdf"}
+{"q": "How big does a purchase have to be before we need 3 competing quotes?", "type": "policy", "answerable": true, "answer": "500,000", "file": "procurement_policy.pdf"}
+{"q": "how far can an invoice price drift from the PO before someone must check it", "type": "policy", "answerable": true, "answer": "two percent", "file": "invoice_approval_policy.pdf"}
+{"q": "At what invoice value does a senior person have to sign off?", "type": "policy", "answerable": true, "answer": "1,000,000", "file": "invoice_approval_policy.pdf"}
+{"q": "Can an AI recommendation release a payment on its own?", "type": "policy", "answerable": true, "answer": "No AI recommendation", "file": "procurement_policy.pdf"}
+{"q": "what happens if a supplier sends the same invoice number twice", "type": "policy", "answerable": true, "answer": "held for investigation", "file": "invoice_approval_policy.pdf"}
+{"q": "how much do we owe in total on INV0000010", "type": "invoice:gross", "answerable": true, "answer": "43,915.67", "file": "INV0000010.pdf"}
+{"q": "INV0000037 is billed against which PO", "type": "invoice:po", "answerable": true, "answer": "PO0000061", "file": "INV0000037.pdf"}
+{"q": "INV0000014 is billed against which PO", "type": "invoice:po", "answerable": true, "answer": "PO0000050", "file": "INV0000014.pdf"}
+{"q": "payment for INV0000026 falls due when?", "type": "invoice:due", "answerable": true, "answer": "2024-03-05", "file": "INV0000026.pdf"}
+{"q": "how much do we owe in total on INV0000053", "type": "invoice:gross", "answerable": true, "answer": "259,003.47", "file": "INV0000053.pdf"}
+{"q": "INV0000038 is billed against which PO", "type": "invoice:po", "answerable": true, "answer": "PO0000040", "file": "INV0000038.pdf"}
+{"q": "how much do we owe in total on INV0000076", "type": "invoice:gross", "answerable": true, "answer": "273,377.63", "file": "INV0000076.pdf"}
+{"q": "how much do we owe in total on INV0000020", "type": "invoice:gross", "answerable": true, "answer": "112,242.19", "file": "INV0000020.pdf"}
+{"q": "payment for INV0000044 falls due when?", "type": "invoice:due", "answerable": true, "answer": "2024-01-31", "file": "INV0000044.pdf"}
+{"q": "how much do we owe in total on INV0000050", "type": "invoice:gross", "answerable": true, "answer": "245,783.05", "file": "INV0000050.pdf"}
+{"q": "payment for INV0000080 falls due when?", "type": "invoice:due", "answerable": true, "answer": "2024-02-28", "file": "INV0000080.pdf"}
+{"q": "payment for INV0000017 falls due when?", "type": "invoice:due", "answerable": true, "answer": "2024-03-23", "file": "INV0000017.pdf"}
+{"q": "quotation QUOTE0011 was submitted for which RFQ number", "type": "quote:rfq", "answerable": true, "answer": "RFQ000004", "file": "QUOTE0011.pdf"}
+{"q": "quotation QUOTE0017 was submitted for which RFQ number", "type": "quote:rfq", "answerable": true, "answer": "RFQ000006", "file": "QUOTE0017.pdf"}
+{"q": "quotation QUOTE0023 was submitted for which RFQ number", "type": "quote:rfq", "answerable": true, "answer": "RFQ000008", "file": "QUOTE0023.pdf"}
+{"q": "quotation QUOTE0029 was submitted for which RFQ number", "type": "quote:rfq", "answerable": true, "answer": "RFQ000010", "file": "QUOTE0029.pdf"}
+{"q": "quotation QUOTE0035 was submitted for which RFQ number", "type": "quote:rfq", "answerable": true, "answer": "RFQ000012", "file": "QUOTE0035.pdf"}
+{"q": "what % penalty do we charge if CTR00187 delivers late", "type": "unanswerable", "answerable": false, "answer": null, "file": null}
+{"q": "warranty period on goods under CTR00238?", "type": "unanswerable", "answerable": false, "answer": null, "file": null}
+{"q": "who signed CTR00182 on behalf of the supplier", "type": "unanswerable", "answerable": false, "answer": null, "file": null}
+{"q": "insurance cover the vendor must carry under CTR00187", "type": "unanswerable", "answerable": false, "answer": null, "file": null}
+{"q": "notice period to terminate CTR00777", "type": "unanswerable", "answerable": false, "answer": null, "file": null}
+{"q": "what is the exchange rate clause in CTR00082", "type": "unanswerable", "answerable": false, "answer": null, "file": null}

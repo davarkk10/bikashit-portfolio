@@ -1,0 +1,60 @@
+{"q": "Which payment term applies to CTR00145?", "type": "contract:payment", "answerable": true, "answer": "PT002", "file": "CTR00145.pdf"}
+{"q": "Which payment term applies to CTR00223?", "type": "contract:payment", "answerable": true, "answer": "PT004", "file": "CTR00223.pdf"}
+{"q": "What is the end date of CTR00204?", "type": "contract:end", "answerable": true, "answer": "2025-11-13", "file": "CTR00204.pdf"}
+{"q": "What is the end date of CTR00018?", "type": "contract:end", "answerable": true, "answer": "2026-01-18", "file": "CTR00018.pdf"}
+{"q": "Which payment term applies to CTR00154?", "type": "contract:payment", "answerable": true, "answer": "PT003", "file": "CTR00154.pdf"}
+{"q": "What is the end date of CTR00164?", "type": "contract:end", "answerable": true, "answer": "2025-04-29", "file": "CTR00164.pdf"}
+{"q": "Which supplier is party to CTR00077?", "type": "contract:supplier", "answerable": true, "answer": "Horizon Industries 77", "file": "CTR00077.pdf"}
+{"q": "What is the governing law state for CTR00234?", "type": "contract:law", "answerable": true, "answer": "Assam", "file": "CTR00234.pdf"}
+{"q": "What is the end date of CTR00115?", "type": "contract:end", "answerable": true, "answer": "2025-09-23", "file": "CTR00115.pdf"}
+{"q": "Which supplier is party to CTR00206?", "type": "contract:supplier", "answerable": true, "answer": "Summit Services 31", "file": "CTR00206.pdf"}
+{"q": "What is the annual price escalation cap in CTR00039?", "type": "contract:escalation", "answerable": true, "answer": "5.0 percent", "file": "CTR00039.pdf"}
+{"q": "What is the start date of CTR00219?", "type": "contract:start", "answerable": true, "answer": "2023-07-24", "file": "CTR00219.pdf"}
+{"q": "Price escalation limit for contract CTR00116", "type": "contract:escalation", "answerable": true, "answer": "7.0 percent", "file": "CTR00116.pdf"}
+{"q": "What is the contract value of CTR00114?", "type": "contract:value", "answerable": true, "answer": "6,021,238.34", "file": "CTR00114.pdf"}
+{"q": "What is the start date of CTR00217?", "type": "contract:start", "answerable": true, "answer": "2023-12-16", "file": "CTR00217.pdf"}
+{"q": "Is auto renewal enabled for CTR00260?", "type": "contract:renewal", "answerable": true, "answer": "not enabled", "file": "CTR00260.pdf"}
+{"q": "What is the annual price escalation cap in CTR00072?", "type": "contract:escalation", "answerable": true, "answer": "5.0 percent", "file": "CTR00072.pdf"}
+{"q": "Which payment term applies to CTR00203?", "type": "contract:payment", "answerable": true, "answer": "PT004", "file": "CTR00203.pdf"}
+{"q": "What is the governing law state for CTR00239?", "type": "contract:law", "answerable": true, "answer": "Delhi", "file": "CTR00239.pdf"}
+{"q": "Is auto renewal enabled for CTR00150?", "type": "contract:renewal", "answerable": true, "answer": "enabled", "file": "CTR00150.pdf"}
+{"q": "What is the start date of CTR00179?", "type": "contract:start", "answerable": true, "answer": "2024-02-07", "file": "CTR00179.pdf"}
+{"q": "What is the annual price escalation cap in CTR00007?", "type": "contract:escalation", "answerable": true, "answer": "3.0 percent", "file": "CTR00007.pdf"}
+{"q": "Notice days required to terminate CTR00013", "type": "contract:notice", "answerable": true, "answer": "45 days", "file": "CTR00013.pdf"}
+{"q": "Notice days required to terminate CTR00159", "type": "contract:notice", "answerable": true, "answer": "30 days", "file": "CTR00159.pdf"}
+{"q": "What is the governing law state for CTR00192?", "type": "contract:law", "answerable": true, "answer": "Assam", "file": "CTR00192.pdf"}
+{"q": "What is the annual price escalation cap in CTR00062?", "type": "contract:escalation", "answerable": true, "answer": "3.0 percent", "file": "CTR00062.pdf"}
+{"q": "What is the start date of CTR00202?", "type": "contract:start", "answerable": true, "answer": "2023-12-23", "file": "CTR00202.pdf"}
+{"q": "Price escalation limit for contract CTR00084", "type": "contract:escalation", "answerable": true, "answer": "9.0 percent", "file": "CTR00084.pdf"}
+{"q": "What is the governing law state for CTR00081?", "type": "contract:law", "answerable": true, "answer": "West Bengal", "file": "CTR00081.pdf"}
+{"q": "What is the governing law state for CTR00175?", "type": "contract:law", "answerable": true, "answer": "Maharashtra", "file": "CTR00175.pdf"}
+{"q": "What is the start date of CTR00088?", "type": "contract:start", "answerable": true, "answer": "2024-01-26", "file": "CTR00088.pdf"}
+{"q": "What is the contract value of CTR00100?", "type": "contract:value", "answerable": true, "answer": "17,201,209.28", "file": "CTR00100.pdf"}
+{"q": "Is auto renewal enabled for CTR00030?", "type": "contract:renewal", "answerable": true, "answer": "not enabled", "file": "CTR00030.pdf"}
+{"q": "Price escalation limit for contract CTR00211", "type": "contract:escalation", "answerable": true, "answer": "7.0 percent", "file": "CTR00211.pdf"}
+{"q": "What termination notice period applies to CTR00074?", "type": "contract:notice", "answerable": true, "answer": "60 days", "file": "CTR00074.pdf"}
+{"q": "What is the start date of CTR00253?", "type": "contract:start", "answerable": true, "answer": "2024-09-17", "file": "CTR00253.pdf"}
+{"q": "What is the annual price escalation cap in CTR00232?", "type": "contract:escalation", "answerable": true, "answer": "3.0 percent", "file": "CTR00232.pdf"}
+{"q": "Which payment term applies to CTR00017?", "type": "contract:payment", "answerable": true, "answer": "PT003", "file": "CTR00017.pdf"}
+{"q": "What is the end date of CTR00102?", "type": "contract:end", "answerable": true, "answer": "2026-03-09", "file": "CTR00102.pdf"}
+{"q": "Which payment term applies to CTR00178?", "type": "contract:payment", "answerable": true, "answer": "PT001", "file": "CTR00178.pdf"}
+{"q": "Purchases above what amount require three quotations?", "type": "policy", "answerable": true, "answer": "500,000", "file": "procurement_policy.pdf"}
+{"q": "What price difference triggers documented review?", "type": "policy", "answerable": true, "answer": "two percent", "file": "invoice_approval_policy.pdf"}
+{"q": "Which invoices require senior approval?", "type": "policy", "answerable": true, "answer": "1,000,000", "file": "invoice_approval_policy.pdf"}
+{"q": "What is the gross amount of invoice INV0000001?", "type": "invoice:gross", "answerable": true, "answer": "200,330.23", "file": "INV0000001.pdf"}
+{"q": "Which purchase order does INV0000004 reference?", "type": "invoice:po", "answerable": true, "answer": "PO0000033", "file": "INV0000004.pdf"}
+{"q": "Which purchase order does INV0000072 reference?", "type": "invoice:po", "answerable": true, "answer": "PO0000112", "file": "INV0000072.pdf"}
+{"q": "What is the gross amount of invoice INV0000007?", "type": "invoice:gross", "answerable": true, "answer": "458,449.25", "file": "INV0000007.pdf"}
+{"q": "Which purchase order does INV0000062 reference?", "type": "invoice:po", "answerable": true, "answer": "PO0000139", "file": "INV0000062.pdf"}
+{"q": "Which purchase order does INV0000067 reference?", "type": "invoice:po", "answerable": true, "answer": "PO0000129", "file": "INV0000067.pdf"}
+{"q": "What is the gross amount of invoice INV0000018?", "type": "invoice:gross", "answerable": true, "answer": "759,471.33", "file": "INV0000018.pdf"}
+{"q": "What is the gross amount of invoice INV0000031?", "type": "invoice:gross", "answerable": true, "answer": "4,759.77", "file": "INV0000031.pdf"}
+{"q": "Which purchase order does INV0000039 reference?", "type": "invoice:po", "answerable": true, "answer": "PO0000051", "file": "INV0000039.pdf"}
+{"q": "Which purchase order does INV0000019 reference?", "type": "invoice:po", "answerable": true, "answer": "PO0000019", "file": "INV0000019.pdf"}
+{"q": "Which RFQ does QUOTE0001 answer?", "type": "quote:rfq", "answerable": true, "answer": "RFQ000001", "file": "QUOTE0001.pdf"}
+{"q": "Which RFQ does QUOTE0002 answer?", "type": "quote:rfq", "answerable": true, "answer": "RFQ000001", "file": "QUOTE0002.pdf"}
+{"q": "Which RFQ does QUOTE0003 answer?", "type": "quote:rfq", "answerable": true, "answer": "RFQ000001", "file": "QUOTE0003.pdf"}
+{"q": "Which RFQ does QUOTE0004 answer?", "type": "quote:rfq", "answerable": true, "answer": "RFQ000002", "file": "QUOTE0004.pdf"}
+{"q": "Which RFQ does QUOTE0005 answer?", "type": "quote:rfq", "answerable": true, "answer": "RFQ000002", "file": "QUOTE0005.pdf"}
+{"q": "What late delivery penalty applies to CTR00223?", "type": "unanswerable", "answerable": false, "answer": null, "file": null}
+{"q": "What is the termination notice period for CTR00999?", "type": "unanswerable", "answerable": false, "answer": null, "file": null}
