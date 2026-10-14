@@ -1,0 +1,154 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "cf064a31bceae08995cf",
+  "position": {
+    "x": 1082,
+    "y": 286,
+    "z": 90000,
+    "height": 370,
+    "width": 776,
+    "tabOrder": 96
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Built with",
+                    "textStyle": {
+                      "fontSize": "15pt",
+                      "color": "#46E8BD",
+                      "fontFamily": "Segoe UI",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Gradient-boosted decision trees in Python (scikit-learn), trained on invoices to Mar 2025, chosen on Apr–Jun 2025, tested once on Jul 2025 onward.",
+                    "textStyle": {
+                      "fontSize": "11pt",
+                      "color": "#C2D4CD",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Signals: price over PO, quantity over order, a supplier's price drift over 120 days, several invoices on one PO near the ₹10 lakh approval limit, near-matching invoice numbers.",
+                    "textStyle": {
+                      "fontSize": "11pt",
+                      "color": "#C2D4CD",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Hard cases: bills split under the approval limit, months of price creep inside the 2% tolerance, resubmitted invoices with altered numbers. Each has a legitimate look-alike.",
+                    "textStyle": {
+                      "fontSize": "11pt",
+                      "color": "#C2D4CD",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Disclosure: the hard cases and look-alikes were designed for this test, so real scores would be lower.",
+                    "textStyle": {
+                      "fontSize": "11pt",
+                      "color": "#C2D4CD",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

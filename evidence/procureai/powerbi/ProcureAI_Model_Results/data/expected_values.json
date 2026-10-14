@@ -1,0 +1,20 @@
+{
+  "Invoices": 51692,
+  "Invoice Value (INR)": 11749291916.38,
+  "Test Invoices": 14570,
+  "Test Conditions": 1546,
+  "Model Flagged (test)": 1546,
+  "Model Precision (test)": 0.9256,
+  "Model Recall (test)": 0.9256,
+  "Rules Flagged (test)": 1707,
+  "Rules Precision (test)": 0.7458,
+  "Rules Recall (test)": 0.8234,
+  "POs Modelled": 53057,
+  "Test POs": 13484,
+  "Test Late %": 0.369,
+  "Flagged Late % (order time)": 0.6363,
+  "Flagged Late % (3 days before)": 0.6675,
+  "Late Caught (order time)": 0.4311,
+  "Contract Correct": 64,
+  "Contract Questions": 68
+}

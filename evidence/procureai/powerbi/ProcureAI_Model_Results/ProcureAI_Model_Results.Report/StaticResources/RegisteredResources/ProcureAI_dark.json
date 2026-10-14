@@ -1,0 +1,210 @@
+{
+  "name": "ProcureAI dark",
+  "dataColors": [
+    "#46E8BD",
+    "#FF8A7A",
+    "#FFCB66",
+    "#5B9BE8",
+    "#9BF7DC",
+    "#B4A9FF",
+    "#9BD16A",
+    "#E58BC5"
+  ],
+  "good": "#46E8BD",
+  "neutral": "#FFCB66",
+  "bad": "#FF8A7A",
+  "maximum": "#FF8A7A",
+  "center": "#2C5A4F",
+  "minimum": "#10211D",
+  "foreground": "#EEF6F2",
+  "foregroundNeutralSecondary": "#C2D4CD",
+  "foregroundNeutralTertiary": "#8FA49C",
+  "background": "#10211D",
+  "backgroundLight": "#163029",
+  "backgroundNeutral": "#24413A",
+  "tableAccent": "#46E8BD",
+  "hyperlink": "#46E8BD",
+  "visitedHyperlink": "#9BF7DC",
+  "textClasses": {
+    "callout": {
+      "fontSize": 28,
+      "fontFace": "Segoe UI Bold",
+      "color": "#EEF6F2"
+    },
+    "title": {
+      "fontSize": 12,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#EEF6F2"
+    },
+    "header": {
+      "fontSize": 12,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#EEF6F2"
+    },
+    "label": {
+      "fontSize": 10,
+      "fontFace": "Segoe UI",
+      "color": "#C2D4CD"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#10211D"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#24413A"
+              }
+            },
+            "radius": 12
+          }
+        ],
+        "dropShadow": [
+          {
+            "show": false
+          }
+        ],
+        "title": [
+          {
+            "show": true,
+            "fontColor": {
+              "solid": {
+                "color": "#EEF6F2"
+              }
+            },
+            "fontSize": 12,
+            "fontFamily": "Segoe UI Semibold"
+          }
+        ],
+        "subTitle": [
+          {
+            "fontColor": {
+              "solid": {
+                "color": "#8FA49C"
+              }
+            }
+          }
+        ],
+        "categoryAxis": [
+          {
+            "labelColor": {
+              "solid": {
+                "color": "#C2D4CD"
+              }
+            },
+            "titleColor": {
+              "solid": {
+                "color": "#8FA49C"
+              }
+            }
+          }
+        ],
+        "valueAxis": [
+          {
+            "labelColor": {
+              "solid": {
+                "color": "#8FA49C"
+              }
+            },
+            "titleColor": {
+              "solid": {
+                "color": "#8FA49C"
+              }
+            },
+            "gridlineColor": {
+              "solid": {
+                "color": "#24413A"
+              }
+            }
+          }
+        ],
+        "legend": [
+          {
+            "labelColor": {
+              "solid": {
+                "color": "#C2D4CD"
+              }
+            }
+          }
+        ],
+        "labels": [
+          {
+            "color": {
+              "solid": {
+                "color": "#EEF6F2"
+              }
+            }
+          }
+        ],
+        "visualHeader": [
+          {
+            "foreground": {
+              "solid": {
+                "color": "#C2D4CD"
+              }
+            },
+            "background": {
+              "solid": {
+                "color": "#10211D"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#07110F"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "outspace": [
+          {
+            "color": {
+              "solid": {
+                "color": "#07110F"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "filterCard": {
+      "*": {
+        "backgroundColor": [
+          {
+            "solid": {
+              "color": "#10211D"
+            }
+          }
+        ],
+        "foregroundColor": [
+          {
+            "solid": {
+              "color": "#EEF6F2"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+warehouse_id,warehouse_name,city,flood_region
+WH001,Guwahati DC,Guwahati,Brahmaputra lower
+WH002,Tinsukia DC,Tinsukia,Brahmaputra upper
+WH003,Dibrugarh DC,Dibrugarh,Brahmaputra upper
+WH004,Jorhat DC,Jorhat,Brahmaputra upper
+WH005,Silchar DC,Silchar,Barak valley
+WH006,Tezpur DC,Tezpur,Brahmaputra lower

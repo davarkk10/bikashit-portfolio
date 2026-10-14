@@ -1,0 +1,7 @@
+driver,pr_auc_lost_when_removed
+Supplier load vs capacity,0.0383
+Promised vs quoted lead time,0.007
+Festival calendar,0.0032
+Order size vs usual,0.0021
+Distance and route,0.0017
+Flood-risk history,-0.0092

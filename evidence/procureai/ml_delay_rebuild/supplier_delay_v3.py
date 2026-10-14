@@ -220,3 +220,33 @@ print("chosen:", chosen, "| lift CI:", summary["v3_minus_v2_test_pr_auc_95ci"])
 print("capacity:", {k: (round(v['precision'], 3), round(v['recall'], 3)) for k, v in curve.items()})
 print("ablation:", {k: round(v, 3) for k, v in summary["ablation_val_pr_auc_drop"].items()})
 print("pre-arrival:", chosen_pre, {k: (round(v["precision"],3), round(v["recall"],3)) for k,v in pre_curve.items()})
+
+# ------------------------------------------------------------------ optional: scored rows for Power BI
+if len(sys.argv) > 4:
+    EXP = Path(sys.argv[4]); EXP.mkdir(parents=True, exist_ok=True)
+    parts = []
+    for name, d in (("Train", train), ("Validation", val), ("Test", test)):
+        d = d.copy(); d["split"] = name
+        if name != "Train":
+            d["p_order"] = l3(d); d["p_pre"] = lp(d)
+        parts.append(d)
+    E = pd.concat(parts)
+    k = int(0.25 * len(test))
+    E["flag_order"] = 0; E["flag_pre"] = 0
+    tmask = E.split == "Test"
+    E.loc[E[tmask].sort_values("p_order", ascending=False).index[:k], "flag_order"] = 1
+    E.loc[E[tmask].sort_values("p_pre", ascending=False).index[:k], "flag_pre"] = 1
+    E["promise_slack_days"] = E.lead_days - E.quoted_lead_time_days
+    E["advisory"] = ((E.advisory_destination + E.advisory_corridor) > 0).astype(int)
+    cols = ["po_id", "order_date", "promised_delivery_date", "receipt_date", "supplier_id", "warehouse_id", "po_value", "late",
+            "lead_days", "quoted_lead_time_days", "promise_slack_days", "road_distance_km", "route_type", "utilisation",
+            "festival_window", "dest_flood_risk", "dispatched_by_rescore", "dispatch_slip_seen", "advisory", "hist_rate",
+            "split", "p_order", "p_pre", "flag_order", "flag_pre"]
+    E = E[cols].rename(columns={"promised_delivery_date": "promised_date", "hist_rate": "supplier_past_late_rate"})
+    for c in ("order_date", "promised_date", "receipt_date"):
+        E[c] = pd.to_datetime(E[c]).dt.date
+    for c in ("p_order", "p_pre", "utilisation", "supplier_past_late_rate", "dest_flood_risk"):
+        E[c] = E[c].round(4)
+    E["po_value"] = E.po_value.round(2)
+    E.to_csv(EXP / "fact_po.csv", index=False)
+    print("exported", len(E), "POs; test flagged", int(E.flag_order.sum()))

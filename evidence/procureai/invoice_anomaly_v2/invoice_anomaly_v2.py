@@ -326,3 +326,29 @@ for n, r in res.items(): print(n, {k: round(v, 3) if isinstance(v, float) else v
 print("subtle-only PR-AUC", {k: round(v, 3) for k, v in res_sub.items()})
 for t, r in by_type.items(): print(t, {k: round(v, 3) if isinstance(v, float) else v for k, v in r.items()})
 print("CI", summary["model_minus_refined_pr_auc_95ci"]); print(summary["label_counts"])
+
+# ------------------------------------------------------------------ optional: scored rows for Power BI
+if len(sys.argv) > 4:
+    EXP = Path(sys.argv[4]); EXP.mkdir(parents=True, exist_ok=True)
+    simple = {"PRICE_MISMATCH", "QUANTITY_MISMATCH", "BANK_DETAIL_CHANGE", "MISSING_PO_REFERENCE", "PROBABLE_DUPLICATE"}
+    names = {"PRICE_MISMATCH": "Price over tolerance", "QUANTITY_MISMATCH": "Quantity over order", "BANK_DETAIL_CHANGE": "Bank detail change",
+             "MISSING_PO_REFERENCE": "Missing PO", "PROBABLE_DUPLICATE": "Exact duplicate", "SPLIT_BELOW_APPROVAL": "Split below approval",
+             "PRICE_CREEP": "Price creep", "NEAR_DUPLICATE": "Near-duplicate", "": "No condition"}
+    out = X[["invoice_id", "invoice_date", "supplier_id", "po_id", "invoice_gross_amount", "label", "rules_policy", "rules_refined",
+             "max_var", "sup_var_120d", "prior_inv_same_po", "num_similar_prior"]].copy()
+    out["split"] = np.where(out.invoice_date <= TRAIN_END, "Train", np.where(out.invoice_date <= VAL_END, "Validation", "Test"))
+    sc = pd.concat([pd.Series(va_p, index=va.index), te.p])
+    out["model_score"] = sc.reindex(out.index).round(6)
+    top = te.sort_values("p", ascending=False).head(K).index
+    out["model_flag"] = 0; out.loc[top, "model_flag"] = 1
+    out["condition"] = out.label.map(names)
+    out["condition_group"] = np.where(out.label.isin(simple), "Simple mismatch", np.where(out.label.isin(subtle), "Hard case", "No condition"))
+    out["is_condition"] = (out.label != "").astype(int)
+    out = out.drop(columns="label").rename(columns={"invoice_gross_amount": "gross_amount", "max_var": "max_price_var",
+                                                     "sup_var_120d": "supplier_price_drift_120d", "num_similar_prior": "similar_number_seen"})
+    out["invoice_date"] = out.invoice_date.dt.date
+    for c in ("prior_inv_same_po", "similar_number_seen"):
+        out[c] = out[c].fillna(0).astype(int)
+    out["gross_amount"] = out.gross_amount.round(2); out["max_price_var"] = out.max_price_var.round(4); out["supplier_price_drift_120d"] = out.supplier_price_drift_120d.round(5)
+    out.to_csv(EXP / "fact_invoice.csv", index=False)
+    print("exported", len(out), "invoices")

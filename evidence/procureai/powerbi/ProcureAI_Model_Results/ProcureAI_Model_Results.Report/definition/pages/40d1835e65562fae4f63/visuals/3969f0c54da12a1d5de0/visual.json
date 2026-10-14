@@ -1,0 +1,154 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "3969f0c54da12a1d5de0",
+  "position": {
+    "x": 1002,
+    "y": 116,
+    "z": 90000,
+    "height": 430,
+    "width": 856,
+    "tabOrder": 245
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "How it was built",
+                    "textStyle": {
+                      "fontSize": "15pt",
+                      "color": "#46E8BD",
+                      "fontFamily": "Segoe UI",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Invoice risk: gradient-boosted decision trees vs hand-written audit rules.",
+                    "textStyle": {
+                      "fontSize": "13pt",
+                      "color": "#C2D4CD",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Late delivery: logistic regression vs each supplier's past late rate, scored at order time and 3 days before delivery.",
+                    "textStyle": {
+                      "fontSize": "13pt",
+                      "color": "#C2D4CD",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Contract assistant: BM25 search with a procurement thesaurus; answers quoted with citations.",
+                    "textStyle": {
+                      "fontSize": "13pt",
+                      "color": "#C2D4CD",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Train to Mar 2025, choose on Apr–Jun 2025, test once on Jul 2025 onward. Python, scikit-learn, Power BI.",
+                    "textStyle": {
+                      "fontSize": "13pt",
+                      "color": "#C2D4CD",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,25 @@
+area,method,role,method_order,metric,value
+Invoice risk,Policy rules as written,Rules,1,pr_auc,0.1957
+Invoice risk,Policy rules as written,Rules,1,pr_auc_hard,0.0385
+Invoice risk,Policy rules as written,Rules,1,precision_at_capacity,0.2335
+Invoice risk,Best hand-written rules,Rules,2,pr_auc,0.8125
+Invoice risk,Best hand-written rules,Rules,2,pr_auc_hard,0.1879
+Invoice risk,Best hand-written rules,Rules,2,precision_at_capacity,0.7781
+Invoice risk,Gradient boosting,Model,3,pr_auc,0.9798
+Invoice risk,Gradient boosting,Model,3,pr_auc_hard,0.8578
+Invoice risk,Gradient boosting,Model,3,precision_at_capacity,0.9256
+Late delivery,Supplier history only,Baseline,1,pr_auc,0.5635
+Late delivery,Supplier history only,Baseline,1,precision_at_capacity,0.5891
+Late delivery,Supplier history only,Baseline,1,recall_at_capacity,0.3991
+Late delivery,"Logistic regression, order time",Model,2,pr_auc,0.6125
+Late delivery,"Logistic regression, order time",Model,2,precision_at_capacity,0.6363
+Late delivery,"Logistic regression, order time",Model,2,recall_at_capacity,0.4311
+Late delivery,"Logistic regression, 3 days before",Model,3,pr_auc,0.6512
+Late delivery,"Logistic regression, 3 days before",Model,3,precision_at_capacity,0.6675
+Late delivery,"Logistic regression, 3 days before",Model,3,recall_at_capacity,0.4522
+Late delivery,Best possible at order time,Ceiling,4,pr_auc,0.63
+Contract assistant,BM25 + thesaurus,Model,1,correct,64.0
+Contract assistant,BM25 + thesaurus,Model,1,questions,68.0
+Contract assistant,BM25 + thesaurus,Model,1,wrong_answers,0.0
+Contract assistant,BM25 + thesaurus,Model,1,refusals_correct,6.0
+Contract assistant,BM25 + thesaurus,Model,1,unanswerable,6.0
