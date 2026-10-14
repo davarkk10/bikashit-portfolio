@@ -32,6 +32,10 @@ Then open `http://127.0.0.1:8000/docs` to use FastAPI's interactive Swagger docu
 
 The generator uses seed `20260927`, creates transaction CSVs and 402 synthetic PDFs, and replaces generated outputs. Validation checks keys, relationships, arithmetic, workflows, ground truth, and document extraction. The warehouse reference builder creates conformed CSVs and seven analytical marts, then runs its own checks.
 
+## Supplier delay model rebuild (October 2026)
+
+The first-release delay model tied its supplier-history baseline. [`ml_delay_rebuild/`](ml_delay_rebuild/) shows why: on the original data the best possible PR-AUC is 0.576, and v2 reaches 0.574. With richer delivery drivers (distance and route, supplier load, lead-time promises, flood and festival calendars, dispatch notices and disruption warnings), v3 reaches 0.612 at order time and 0.651 three days before delivery. Delivery outcomes for v3 were re-simulated; the folder's README states how.
+
 ## FastAPI decision layer
 
 The API turns ProcureAI's analytical outputs into integration-ready services that can be called by an approval workflow, ERP prototype, web front end, or n8n flow.

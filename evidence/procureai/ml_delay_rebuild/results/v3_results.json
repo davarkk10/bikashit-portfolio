@@ -1,0 +1,143 @@
+{
+  "rows": {
+    "train": 32712,
+    "censored": 1291,
+    "val": 6861,
+    "test": 13484
+  },
+  "test_prevalence": 0.3690299614357757,
+  "chosen_v3": "v3 features (logistic)",
+  "chosen_v2": "v2 features (logistic)",
+  "results": {
+    "v2 features (GBM)": {
+      "val_pr_auc": 0.4964733369354576,
+      "test_pr_auc": 0.5605858656369359,
+      "test_roc_auc": 0.7019339160835196,
+      "test_ece": 0.04709146357451366,
+      "test_at_25pct": {
+        "precision": 0.5935924058142984,
+        "recall": 0.4021302250803859
+      }
+    },
+    "v2 features (logistic)": {
+      "val_pr_auc": 0.5271191085836424,
+      "test_pr_auc": 0.5634980702982166,
+      "test_roc_auc": 0.7014213003800471,
+      "test_ece": 0.024258525329399143,
+      "test_at_25pct": {
+        "precision": 0.5891426876297835,
+        "recall": 0.3991157556270096
+      }
+    },
+    "v3 features (GBM)": {
+      "val_pr_auc": 0.5530613751631314,
+      "test_pr_auc": 0.6159744266758642,
+      "test_roc_auc": 0.7345993609003518,
+      "test_ece": 0.04519964280422163,
+      "test_at_25pct": {
+        "precision": 0.6374962919015129,
+        "recall": 0.43187299035369775
+      }
+    },
+    "v3 features (logistic)": {
+      "val_pr_auc": 0.5658415065553106,
+      "test_pr_auc": 0.6124515257869843,
+      "test_roc_auc": 0.7327212226586062,
+      "test_ece": 0.019774661992042874,
+      "test_at_25pct": {
+        "precision": 0.6363097003856423,
+        "recall": 0.43106913183279744
+      }
+    },
+    "order-time ceiling": {
+      "val_pr_auc": 0.5954278569922568,
+      "test_pr_auc": 0.6300027521716476,
+      "test_roc_auc": 0.7488892854011432,
+      "test_ece": 0.016732202914428507,
+      "test_at_25pct": {
+        "precision": 0.6478789676653812,
+        "recall": 0.43890675241157556
+      }
+    },
+    "pre-arrival (GBM)": {
+      "val_pr_auc": 0.6202537009285647,
+      "test_pr_auc": 0.6508182079541297,
+      "test_roc_auc": 0.7603291875284394,
+      "test_ece": 0.06313505607862265,
+      "test_at_25pct": {
+        "precision": 0.6662711361613765,
+        "recall": 0.45136655948553056
+      }
+    },
+    "pre-arrival (logistic)": {
+      "val_pr_auc": 0.6280594589023852,
+      "test_pr_auc": 0.651177773164713,
+      "test_roc_auc": 0.7616619009610022,
+      "test_ece": 0.031795355742479506,
+      "test_at_25pct": {
+        "precision": 0.6674577276772471,
+        "recall": 0.4521704180064309
+      }
+    },
+    "pre-arrival upper bound": {
+      "val_pr_auc": 0.6733390180922154,
+      "test_pr_auc": 0.7141947923043159,
+      "test_roc_auc": 0.804229885018375,
+      "test_ece": 0.007332724658829779,
+      "test_at_25pct": {
+        "precision": 0.7291604865025215,
+        "recall": 0.49397106109324757
+      }
+    }
+  },
+  "capacity_curve_chosen": {
+    "10%": {
+      "precision": 0.7359050445103857,
+      "recall": 0.19935691318327975
+    },
+    "25%": {
+      "precision": 0.6363097003856423,
+      "recall": 0.43106913183279744
+    },
+    "40%": {
+      "precision": 0.5675876135731504,
+      "recall": 0.615152733118971
+    },
+    "50%": {
+      "precision": 0.5275882527439929,
+      "recall": 0.7148311897106109
+    }
+  },
+  "chosen_pre_arrival": "pre-arrival (logistic)",
+  "capacity_curve_pre_arrival": {
+    "10%": {
+      "precision": 0.787833827893175,
+      "recall": 0.21342443729903537
+    },
+    "25%": {
+      "precision": 0.6674577276772471,
+      "recall": 0.4521704180064309
+    },
+    "40%": {
+      "precision": 0.5939180419061747,
+      "recall": 0.6436897106109325
+    },
+    "50%": {
+      "precision": 0.5471670127558588,
+      "recall": 0.7413585209003215
+    }
+  },
+  "ablation_val_pr_auc_drop": {
+    "supplier load": 0.038283813428992675,
+    "promise vs quoted lead": 0.006990003593890903,
+    "festival calendar": 0.0032105385032227263,
+    "order size": 0.002067747579653667,
+    "distance & route": 0.0016851080733648605,
+    "flood climatology": -0.009160488758203855
+  },
+  "v3_minus_v2_test_pr_auc_95ci": [
+    0.03996939291095837,
+    0.057399430081791825
+  ],
+  "leakage_test_pass": true
+}

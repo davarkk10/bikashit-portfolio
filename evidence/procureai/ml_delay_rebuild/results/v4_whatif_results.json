@@ -1,0 +1,123 @@
+{
+  "rows": {
+    "train": 32942,
+    "censored": 1061,
+    "val": 6861,
+    "test": 13484
+  },
+  "test_prevalence": 0.3712548205280332,
+  "chosen_v3": "v3 features (GBM)",
+  "chosen_v2": "v2 features (GBM)",
+  "results": {
+    "v2 features (GBM)": {
+      "val_pr_auc": 0.8190975780312567,
+      "test_pr_auc": 0.8164718967898374,
+      "test_roc_auc": 0.8463067720481117,
+      "test_ece": 0.047949407404076154,
+      "test_at_25pct": {
+        "precision": 0.8371403144467517,
+        "recall": 0.5637235317618857
+      }
+    },
+    "v2 features (logistic)": {
+      "val_pr_auc": 0.8090839074881702,
+      "test_pr_auc": 0.8093326096911064,
+      "test_roc_auc": 0.8472743535782539,
+      "test_ece": 0.03974152056789956,
+      "test_at_25pct": {
+        "precision": 0.8300207653515277,
+        "recall": 0.5589292848581702
+      }
+    },
+    "v3 features (GBM)": {
+      "val_pr_auc": 0.86248288922674,
+      "test_pr_auc": 0.8633259653577059,
+      "test_roc_auc": 0.8861892739799762,
+      "test_ece": 0.028999536187005525,
+      "test_at_25pct": {
+        "precision": 0.8935034114506081,
+        "recall": 0.6016779864163004
+      }
+    },
+    "v3 features (logistic)": {
+      "val_pr_auc": 0.8488924943679111,
+      "test_pr_auc": 0.8529888572414541,
+      "test_roc_auc": 0.883140443781687,
+      "test_ece": 0.03511109626009226,
+      "test_at_25pct": {
+        "precision": 0.8771877781073866,
+        "recall": 0.5906911705952856
+      }
+    },
+    "pre-arrival (GBM)": {
+      "val_pr_auc": 0.9564212177957859,
+      "test_pr_auc": 0.9549522152182146,
+      "test_roc_auc": 0.9658386817159347,
+      "test_ece": 0.02290248586115612,
+      "test_at_25pct": {
+        "precision": 0.9878374369623257,
+        "recall": 0.6652017578905314
+      }
+    },
+    "pre-arrival (logistic)": {
+      "val_pr_auc": 0.9510323454183002,
+      "test_pr_auc": 0.949400147175234,
+      "test_roc_auc": 0.9619636667185977,
+      "test_ece": 0.019199973234611926,
+      "test_at_25pct": {
+        "precision": 0.9753782260456838,
+        "recall": 0.6568118258090292
+      }
+    }
+  },
+  "capacity_curve_chosen": {
+    "10%": {
+      "precision": 1.0,
+      "recall": 0.2692768677586896
+    },
+    "25%": {
+      "precision": 0.8935034114506081,
+      "recall": 0.6016779864163004
+    },
+    "40%": {
+      "precision": 0.7218616725384758,
+      "recall": 0.7776667998401918
+    },
+    "50%": {
+      "precision": 0.6348264609908039,
+      "recall": 0.8549740311626048
+    }
+  },
+  "chosen_pre_arrival": "pre-arrival (GBM)",
+  "capacity_curve_pre_arrival": {
+    "10%": {
+      "precision": 1.0,
+      "recall": 0.2692768677586896
+    },
+    "25%": {
+      "precision": 0.9878374369623257,
+      "recall": 0.6652017578905314
+    },
+    "40%": {
+      "precision": 0.838865195623957,
+      "recall": 0.9037155413503796
+    },
+    "50%": {
+      "precision": 0.7076535152773658,
+      "recall": 0.9530563324011186
+    }
+  },
+  "ablation_val_pr_auc_drop": {
+    "promise vs quoted lead": 0.02118763859178796,
+    "supplier load": 0.009533855434807559,
+    "order size": 0.0005260204753109177,
+    "distance & route": 0.000105858031462569,
+    "festival calendar": -0.0016156906365070167,
+    "flood climatology": -0.004179049300399029
+  },
+  "v3_minus_v2_test_pr_auc_95ci": [
+    0.0422892430424586,
+    0.05164014749529142
+  ],
+  "leakage_test_pass": true
+}

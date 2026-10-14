@@ -181,7 +181,7 @@
           <h3>Measured, tested and reproducible</h3>
           <ul>
             <li>Invoice model PR-AUC 1.00 vs policy rules 0.48 — refined rules also reach 1.00, so no model lift is claimed</li>
-            <li>Supplier delay model PR-AUC 0.56 vs baseline 0.56 — better calibrated (ECE 0.017 vs 0.036), no ranking lift</li>
+            <li>Supplier delay: v2 reaches PR-AUC 0.574 against a 0.576 ceiling on the original data; v3 with richer delivery drivers reaches 0.612 at order time and 0.651 three days before delivery</li>
             <li>402 PDFs indexed into 3,772 page-aware chunks</li>
             <li>151/151 RAG evaluation cases passed; first run on 25 unseen questions: 56% correct, kept as reported</li>
             <li>27 API tests and 67 n8n workflow fixtures passed</li>
@@ -295,6 +295,44 @@
         <div class="release-panel" id="releasePanel" role="tabpanel" aria-live="polite">
           <div><span>RELEASE 01 · VERIFIED</span><h3>Decision-ready warehouse</h3><p>Conformed outputs, seven decision marts and reconciliation tests protect transaction grain from source through analysis.</p></div>
           <dl><div><dt>EVIDENCE</dt><dd>PostgreSQL 16 · 24 decision analyses</dd></div><div><dt>GATE</dt><dd>68 SQL tests passed twice</dd></div><div><dt>BOUNDARY</dt><dd>Local Docker run, not a hosted server</dd></div></dl>
+        </div>
+      </div>
+      <div class="delay-lab reveal" id="delay-model" aria-labelledby="delay-lab-title">
+        <div class="delay-lab-head">
+          <span>MODEL REBUILD · SUPPLIER DELAY · OCTOBER 2026</span>
+          <h3 id="delay-lab-title">Why the first delay model tied its baseline, and what better data changes</h3>
+          <p>Same question throughout: when a PO is raised, will the goods arrive late? Same rules: chronological split, matured labels only, model chosen on validation, test read once, leakage test passing.</p>
+        </div>
+        <div class="delay-steps">
+          <article>
+            <small>STEP 1 · ORIGINAL DATA</small>
+            <strong>0.574</strong><em>PR-AUC · ceiling 0.576</em>
+            <p>Lateness in the original data depends only on supplier reliability and a seasonal bump in April, October, November and December. v2 adds the delivery month and finds those four months on its own. It sits 0.002 below the best possible score, so tuning stopped there.</p>
+          </article>
+          <article class="headline">
+            <small>STEP 2 · RICHER DRIVERS · HEADLINE</small>
+            <strong>0.612 → 0.651</strong><em>order time → 3 days before delivery</em>
+            <p>Adds road distance and the Siliguri corridor route, supplier load against capacity, promised vs quoted lead time, order size, flood-risk history, festival slowdowns, then dispatch notices and flood or bandh warnings. Lift over old features: +0.049, 95% CI [+0.040, +0.057].</p>
+          </article>
+          <article class="whatif">
+            <small>STEP 3 · WHAT-IF · NOT THE HEADLINE</small>
+            <strong>98.8%</strong><em>precision if dispatch data were exact</em>
+            <p>If delivery followed dispatch plus transit exactly, pre-arrival precision would reach about 99%. Even old features then score 0.816, which shows the data became easy, not the model smarter. The business point: accurate dispatch notices are the most valuable data a buyer can get.</p>
+          </article>
+        </div>
+        <div class="delay-table" role="region" aria-label="Delay model results" tabindex="0">
+          <table>
+            <thead><tr><th>Model (13,484 test POs, 37% late)</th><th>Scores on</th><th>PR-AUC</th><th>Precision @25%</th><th>Recall @25%</th></tr></thead>
+            <tbody>
+              <tr><td>Old features only</td><td>Order date</td><td>0.563</td><td>58.9%</td><td>39.9%</td></tr>
+              <tr><td>v3 · six order-time drivers</td><td>Order date</td><td>0.612</td><td>63.6%</td><td>43.1%</td></tr>
+              <tr><td>v3 · + dispatch notice and warnings</td><td>3 days before due</td><td>0.651</td><td>66.7%</td><td>45.2%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="delay-notes">
+          <p><b>Strongest driver.</b> Supplier load against capacity, about five times stronger than any other. It is also the one buyers control.</p>
+          <p><b>Disclosure.</b> To add the drivers, delivery outcomes were re-simulated (seed 20261014) with effect sizes I chose and kept moderate. Stronger settings would score higher, so the score is partly a design choice. <a href="https://github.com/davarkk10/bikashit-portfolio/tree/main/evidence/procureai/ml_delay_rebuild">Scripts and results</a></p>
         </div>
       </div>
       <div class="recruiter-path reveal">
