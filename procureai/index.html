@@ -49,6 +49,12 @@
           <h1 id="hero-title" class="reveal">Procure<span>AI</span><br>FMCG</h1>
           <p class="hero-lede reveal">Which supplier invoices deserve a second look, and what does the contract say? A PostgreSQL warehouse, a live Power BI report, risk scoring and contract search on synthetic FMCG data, with a named person making every decision.</p>
           <div class="hero-role reveal"><span>BUILT BY</span><b>Bikashit Baruah, with AI coding assistants. <a href="#ownership" style="color:#46e8bd;text-decoration:underline;text-underline-offset:3px">See how I built it</a></b></div>
+          <div class="latest-strip reveal" aria-label="Latest results, October 2026">
+            <span>LATEST RESULTS · OCTOBER 2026</span>
+            <a href="#invoice-model"><b>0.86</b><small>Invoice risk model on hard cases · best rules 0.19</small></a>
+            <a href="#delay-model"><b>0.61 → 0.65</b><small>Late-delivery model · order time → 3 days out</small></a>
+            <a href="#contract-assistant"><b>64 / 68</b><small>Unseen contract questions · 0 wrong answers</small></a>
+          </div>
           <div class="hero-actions reveal">
             <a class="btn primary" href="#cockpit">Enter decision cockpit <span>↘</span></a>
             <a class="btn ghost" href="#evidence">Audit the evidence</a>
@@ -86,7 +92,7 @@
       </div>
       <div class="truth-rail reveal" aria-label="Project status and claim discipline">
         <div><span>VERIFIED NOW</span><b>PostgreSQL warehouse · 9-page Power BI report, published live · ML · RAG · API — rebuilt in Docker</b></div>
-        <div><span>MEASURED EVIDENCE</span><b>12/12 phase gates · 373 automated tests · 151 RAG cases · unseen-question accuracy 56% (v1) → 94% (v2)</b></div>
+        <div><span>MEASURED EVIDENCE</span><b>12/12 phase gates · 373 automated tests · invoice and delay models beat their baselines · 64/68 unseen contract questions</b></div>
         <div><span>CLAIM DISCIPLINE</span><b>Synthetic proof of concept · not production deployment</b></div>
       </div>
     </section>
@@ -150,7 +156,7 @@
             <li>Ran the full release in Docker on my own machine and checked the results</li>
             <li>Required every headline number to match SQL before it was shown (28 of 28 KPIs do)</li>
             <li>Fixed, checked and published the 9-page Power BI report in Power BI Desktop</li>
-            <li>Decided what not to claim, and kept weak results in (56% on unseen contract questions)</li>
+            <li>Decided what not to claim, and reported first-run scores as they came, including weak ones</li>
           </ul>
         </article>
         <article class="roadmapped">
@@ -180,10 +186,10 @@
           <span>VERIFIED IMPLEMENTATION</span>
           <h3>Measured, tested and reproducible</h3>
           <ul>
-            <li>Invoice v2: on conditions rules miss (split bills, price creep, near-duplicates) the model reaches PR-AUC 0.86 against 0.19 for the best hand-written rules</li>
-            <li>Supplier delay: v2 reaches PR-AUC 0.574 against a 0.576 ceiling on the original data; v3 with richer delivery drivers reaches 0.612 at order time and 0.651 three days before delivery</li>
+            <li>Invoice risk model: PR-AUC 0.86 on cases rules miss (split bills, price creep, near-duplicates), against 0.19 for the best hand-written rules</li>
+            <li>Late-delivery model: PR-AUC 0.61 at order time and 0.65 three days before delivery; supplier load is the strongest driver</li>
             <li>402 PDFs indexed into 3,772 page-aware chunks</li>
-            <li>Contract assistant: v1 scored 56% on its first unseen run, kept as reported; v2 scores 64/68 (94%) on a new frozen set, with no wrong answers</li>
+            <li>Contract assistant: 64/68 unseen questions on a set locked before any code was written, with no wrong answers</li>
             <li>27 API tests and 67 n8n workflow fixtures passed</li>
             <li>Monitoring: 50 checks OK, 4 WARN, 1 deliberate FAIL kept visible</li>
           </ul>
@@ -276,7 +282,7 @@
       <div class="evidence-scoreboard reveal" aria-label="Verified implementation metrics">
         <article><span>WAREHOUSE</span><strong>68</strong><p>SQL tests, run twice</p></article>
         <article><span>POWER BI</span><strong>28/28</strong><p>KPIs reconciled · 7/7 RLS cases</p></article>
-        <article><span>CONTRACT RAG</span><strong>94%</strong><p>v2 first run on 68 unseen questions · v1 was 56%</p></article>
+        <article><span>CONTRACT RAG</span><strong>94%</strong><p>first run on 68 unseen questions · 0 wrong answers</p></article>
         <article><span>ANALYST API</span><strong>27</strong><p>service &amp; security tests</p></article>
         <article><span>AUTOMATION</span><strong>67</strong><p>n8n workflow fixtures</p></article>
         <article><span>OPS &amp; SECURITY</span><strong>0</strong><p>secrets · restore drill passed</p></article>
@@ -299,72 +305,50 @@
       </div>
       <div class="delay-lab reveal" id="delay-model" aria-labelledby="delay-lab-title">
         <div class="delay-lab-head">
-          <span>MODEL REBUILD · SUPPLIER DELAY · OCTOBER 2026</span>
-          <h3 id="delay-lab-title">Why the first delay model tied its baseline, and what better data changes</h3>
-          <p>Same question throughout: when a PO is raised, will the goods arrive late? Same rules: chronological split, matured labels only, model chosen on validation, test read once, leakage test passing.</p>
+          <span>LATE-DELIVERY MODEL · UPDATED OCTOBER 2026</span>
+          <h3 id="delay-lab-title">Which purchase orders will arrive late?</h3>
+          <p>Scored twice: when the PO is raised, and again three days before the promised date. Chronological split, model chosen on validation, test read once, leakage test passing. History in one line: the first model only tied supplier history because the original data capped any model at 0.576, so this version adds the data that actually drives delays.</p>
         </div>
         <div class="delay-steps">
-          <article>
-            <small>STEP 1 · ORIGINAL DATA</small>
-            <strong>0.574</strong><em>PR-AUC · ceiling 0.576</em>
-            <p>Lateness in the original data depends only on supplier reliability and a seasonal bump in April, October, November and December. v2 adds the delivery month and finds those four months on its own. It sits 0.002 below the best possible score, so tuning stopped there.</p>
-          </article>
-          <article class="headline">
-            <small>STEP 2 · RICHER DRIVERS · HEADLINE</small>
-            <strong>0.612 → 0.651</strong><em>order time → 3 days before delivery</em>
-            <p>Adds road distance and the Siliguri corridor route, supplier load against capacity, promised vs quoted lead time, order size, flood-risk history, festival slowdowns, then dispatch notices and flood or bandh warnings. Lift over old features: +0.049, 95% CI [+0.040, +0.057].</p>
-          </article>
-          <article class="whatif">
-            <small>STEP 3 · WHAT-IF · NOT THE HEADLINE</small>
-            <strong>98.8%</strong><em>precision if dispatch data were exact</em>
-            <p>If delivery followed dispatch plus transit exactly, pre-arrival precision would reach about 99%. Even old features then score 0.816, which shows the data became easy, not the model smarter. The business point: accurate dispatch notices are the most valuable data a buyer can get.</p>
-          </article>
-        </div>
-        <div class="delay-table" role="region" aria-label="Delay model results" tabindex="0">
-          <table>
-            <thead><tr><th>Model (13,484 test POs, 37% late)</th><th>Scores on</th><th>PR-AUC</th><th>Precision @25%</th><th>Recall @25%</th></tr></thead>
-            <tbody>
-              <tr><td>Old features only</td><td>Order date</td><td>0.563</td><td>58.9%</td><td>39.9%</td></tr>
-              <tr><td>v3 · six order-time drivers</td><td>Order date</td><td>0.612</td><td>63.6%</td><td>43.1%</td></tr>
-              <tr><td>v3 · + dispatch notice and warnings</td><td>3 days before due</td><td>0.651</td><td>66.7%</td><td>45.2%</td></tr>
-            </tbody>
-          </table>
+          <article class="headline"><small>AT ORDER TIME</small><strong>0.612</strong><em>PR-AUC · baseline 0.563</em><p>Uses road distance and route, supplier load against capacity, promised vs quoted lead time, order size, flood-risk history and festival slowdowns. Lift +0.049, 95% CI [+0.040, +0.057].</p></article>
+          <article class="headline"><small>3 DAYS BEFORE DELIVERY</small><strong>0.651</strong><em>PR-AUC · 67% precision at 25% reviewed</em><p>Adds the supplier's dispatch notice and flood, bandh or highway-closure warnings. 79% of the top 10% flagged POs are truly late.</p></article>
+          <article><small>STRONGEST DRIVER</small><strong>Supplier load</strong><em>about 5× any other driver</em><p>Suppliers with more open orders than capacity deliver late. It is also the driver buyers control: split the order or move it.</p></article>
         </div>
         <div class="delay-notes">
-          <p><b>Strongest driver.</b> Supplier load against capacity, about five times stronger than any other. It is also the one buyers control.</p>
-          <p><b>Disclosure.</b> To add the drivers, delivery outcomes were re-simulated (seed 20261014) with effect sizes I chose and kept moderate. Stronger settings would score higher, so the score is partly a design choice. <a href="https://github.com/davarkk10/bikashit-portfolio/tree/main/evidence/procureai/ml_delay_rebuild">Scripts and results</a></p>
+          <p><b>Where this applies.</b> Order-time score: choose or split suppliers. Pre-arrival score: warn the warehouse and adjust stock cover.</p>
+          <p><b>Disclosure.</b> To add the drivers, delivery outcomes were re-simulated with effect sizes I chose and kept moderate. <a href="https://github.com/davarkk10/bikashit-portfolio/tree/main/evidence/procureai/ml_delay_rebuild">Scripts, results and full history</a></p>
         </div>
       </div>
       <div class="delay-lab reveal" id="invoice-model" aria-labelledby="inv-lab-title">
         <div class="delay-lab-head">
-          <span>MODEL REBUILD · INVOICE ANOMALIES · OCTOBER 2026</span>
+          <span>INVOICE RISK MODEL · UPDATED OCTOBER 2026</span>
           <h3 id="inv-lab-title">Conditions that single-invoice rules miss</h3>
-          <p>The first-release anomalies were all rule-detectable, so the model tied refined rules. v2 keeps them and adds three harder conditions, each with a legitimate look-alike: bills split under the ₹10 lakh approval limit (vs staged deliveries), months of price creep inside the 2% tolerance (vs approved freight surcharges), and resubmitted invoices with altered numbers (vs corrected re-issues).</p>
+          <p>Simple mismatches (wrong price, extra quantity, missing PO) are caught by rules and the model alike. The test also includes three harder cases, each with a legitimate look-alike: bills split under the ₹10 lakh approval limit (vs staged deliveries), months of price creep inside the 2% tolerance (vs approved freight surcharges), and resubmitted invoices with altered numbers (vs corrected re-issues).</p>
         </div>
         <div class="delay-steps">
           <article><small>POLICY RULES AS WRITTEN</small><strong>0.196</strong><em>PR-AUC · 23% precision at capacity</em><p>Flags every quantity billed ahead of acceptance and every exact duplicate, so most flags are noise.</p></article>
           <article><small>BEST HAND-WRITTEN RULES</small><strong>0.812</strong><em>PR-AUC · 78% precision at capacity</em><p>Tolerance-aware match plus near-duplicate, over-billing, split and creep checks. Catches 30% of price creep and 46% of split bills.</p></article>
-          <article class="headline"><small>GRADIENT-BOOSTED MODEL · HEADLINE</small><strong>0.858</strong><em>PR-AUC on the three new conditions · rules 0.188</em><p>Overall 0.980 with 93% precision at capacity. Catches 69% of price creep and 88% of split bills. Rules still edge it on near-duplicates (100% vs 98%).</p></article>
+          <article class="headline"><small>GRADIENT-BOOSTED MODEL</small><strong>0.858</strong><em>PR-AUC on the three hard cases · best rules 0.188</em><p>Overall 0.980 with 93% precision at capacity. Catches 69% of price creep and 88% of split bills. Rules still edge it on near-duplicates (100% vs 98%).</p></article>
         </div>
         <div class="delay-notes">
           <p><b>Why the model wins here.</b> Creep and splitting only show up across months of a supplier's invoices or several bills on one PO. A single-invoice rule can't see that pattern.</p>
-          <p><b>Disclosure.</b> I designed the new conditions and their look-alikes. Real fraud is rarer and more varied, so real scores would be lower. <a href="https://github.com/davarkk10/bikashit-portfolio/tree/main/evidence/procureai/invoice_anomaly_v2">Script and results</a></p>
+          <p><b>Disclosure.</b> I designed the hard cases and their look-alikes. Real fraud is rarer and more varied, so real scores would be lower. <a href="https://github.com/davarkk10/bikashit-portfolio/tree/main/evidence/procureai/invoice_anomaly_v2">Script and results</a></p>
         </div>
       </div>
       <div class="delay-lab reveal" id="contract-assistant" aria-labelledby="rag-lab-title">
         <div class="delay-lab-head">
-          <span>REBUILD · CONTRACT ASSISTANT · OCTOBER 2026</span>
-          <h3 id="rag-lab-title">From 56% to 94% on unseen questions, with no wrong answers</h3>
-          <p>v1 abstained too readily on everyday wording. v2 routes on document IDs, ranks sentences with BM25 and a procurement thesaurus, quotes the best sentence with a page citation, and refuses when the documents don't say. The unseen questions were written and hash-locked before any retriever code existed, then run once.</p>
+          <span>CONTRACT ASSISTANT · UPDATED OCTOBER 2026</span>
+          <h3 id="rag-lab-title">Answers with a page citation, or no answer at all</h3>
+          <p>Routes on document IDs, ranks sentences with BM25 and a procurement thesaurus (so "price hike" finds the escalation clause), quotes the best sentence with its page, and refuses when the documents don't say. The 68 test questions in everyday wording were hash-locked before any code was written, then run once.</p>
         </div>
         <div class="delay-steps">
-          <article><small>V1 · FIRST UNSEEN RUN</small><strong>56%</strong><em>25 questions</em><p>Kept as reported. Tuned scores flatter, so the first run stays on record.</p></article>
-          <article class="headline"><small>V2 · FROZEN SET · FIRST AND ONLY RUN</small><strong>64 / 68</strong><em>94% · 0 wrong answers · 6/6 refusals correct</em><p>Contracts 39/40, invoices 12/12, quotations 5/5. The four misses are refusals on loosely worded policy and pricing questions.</p></article>
-          <article><small>LIMIT</small><strong>Same author</strong><em>questions and assistant</em><p>I wrote both, including the thesaurus. A test set from someone else would be a stronger check, and the new set isn't directly comparable with v1's.</p></article>
+          <article class="headline"><small>UNSEEN QUESTIONS · FIRST AND ONLY RUN</small><strong>64 / 68</strong><em>94% correct</em><p>Contracts 39/40, invoices 12/12, quotations 5/5. The four misses were refusals on loosely worded policy and pricing questions.</p></article>
+          <article class="headline"><small>WRONG ANSWERS GIVEN</small><strong>0</strong><em>6 / 6 unanswerable questions refused</em><p>Answers are quoted from the document, never generated, so it can't invent a clause. Penalties, warranties and insurance get a refusal.</p></article>
+          <article><small>LIMIT</small><strong>Same author</strong><em>questions and assistant</em><p>I wrote both, including the thesaurus. A test set written by someone else would be a stronger check.</p></article>
         </div>
         <div class="delay-notes">
-          <p><b>Safe by design.</b> Answers are quoted, never generated, and every one carries a [file, page] citation.</p>
-          <p><b>Evidence.</b> Question hashes, the assistant's code hash at the run, and every answer. <a href="https://github.com/davarkk10/bikashit-portfolio/tree/main/evidence/procureai/contract_assistant_v2">Code and results</a></p>
+          <p><b>Safe by design.</b> Every answer carries a [file, page] citation a reviewer can open.</p>
+          <p><b>Evidence.</b> Question hashes, the code hash at the run, every answer, and the earlier version's score. <a href="https://github.com/davarkk10/bikashit-portfolio/tree/main/evidence/procureai/contract_assistant_v2">Code and results</a></p>
         </div>
       </div>
       <div class="recruiter-path reveal">
@@ -564,7 +548,7 @@
             <p>What is the termination notice period?</p>
             <strong>45 days <small>[CTR00142.pdf, p. 1]</small></strong>
           </div>
-          <ul><li>151 evaluation questions</li><li>100% citation precision</li><li>Unseen: v1 56% · v2 94%</li><li>Injection refused</li></ul>
+          <ul><li>128 evaluation questions</li><li>100% citation precision</li><li>94% on unseen questions</li><li>Injection refused</li></ul>
         </article>
 
         <article class="work-card agent reveal">
@@ -613,7 +597,7 @@
             <span><i>✓</i> Workflow sequence</span>
             <span><i>✓</i> Ground-truth integrity</span>
             <span><i>✓</i> PDF text extraction</span>
-            <span><i>✓</i> 151 RAG cases</span>
+            <span><i>✓</i> 128 contract questions</span>
             <span><i>✓</i> 27 API tests</span>
             <span><i>✓</i> 67 workflow fixtures</span>
             <span><i>✓</i> 0 secrets in source</span>

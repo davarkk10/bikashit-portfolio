@@ -674,3 +674,28 @@ footer > div { display: flex; align-items: center; gap: 12px; } footer b { color
   .delay-steps article:last-child { border-bottom: 0; }
   .delay-notes p + p { border-left: 0; border-top: 1px solid var(--line); }
 }
+
+/* Latest results strip (hero) */
+.latest-strip { margin-top: 22px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--line-bright); background: rgba(70,232,189,.04); }
+.latest-strip > span { grid-column: 1 / -1; padding: 9px 14px; border-bottom: 1px solid var(--line); color: var(--teal); font: 10.5px var(--mono); letter-spacing: .08em; }
+.latest-strip a { min-width: 0; padding: 12px 14px; border-right: 1px solid var(--line); text-decoration: none; display: grid; gap: 4px; transition: background .2s ease; }
+.latest-strip a:last-child { border-right: 0; }
+.latest-strip a:hover, .latest-strip a:focus-visible { background: rgba(70,232,189,.08); }
+.latest-strip b { color: var(--paper); font-size: clamp(20px, 2.2vw, 28px); letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.latest-strip small { color: var(--muted); font-size: 11.5px; line-height: 1.35; }
+@media (max-width: 640px) {
+  .latest-strip { grid-template-columns: 1fr; }
+  .latest-strip a { border-right: 0; border-bottom: 1px solid var(--line); grid-template-columns: auto 1fr; align-items: center; gap: 12px; }
+  .latest-strip a:last-child { border-bottom: 0; }
+}
+
+/* Phone fit: grid tracks may shrink below their content's min width */
+@media (max-width: 760px) {
+  .hero-grid { grid-template-columns: minmax(0, 1fr); }
+  .hero-copy, .hero-orbit, .release-panel > *, .release-console > * { min-width: 0; }
+  .hero h1 { font-size: clamp(46px, 16vw, 76px); overflow-wrap: anywhere; }
+  .release-console { grid-template-columns: minmax(0, 1fr); }
+  .release-tabs { flex-direction: row; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--line); }
+  .release-tab { flex: none; border-bottom: 0; border-right: 1px solid var(--line); white-space: nowrap; }
+  .release-panel { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+}
