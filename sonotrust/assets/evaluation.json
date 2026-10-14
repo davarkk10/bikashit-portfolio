@@ -1,0 +1,29 @@
+{
+  "blur": {
+    "image_mean_dice": 0.6946488340128377,
+    "image_mean_iou": 0.5824965069731873,
+    "patient_mean_dice": 0.6880441715807499,
+    "patient_bootstrap_95ci_dice": [
+      0.6559282664696678,
+      0.7191052658741476
+    ]
+  },
+  "clean": {
+    "image_mean_dice": 0.8137730226191875,
+    "image_mean_iou": 0.7150264646417721,
+    "patient_mean_dice": 0.8141300898177519,
+    "patient_bootstrap_95ci_dice": [
+      0.7935400976606651,
+      0.8337953106040545
+    ]
+  },
+  "noise": {
+    "image_mean_dice": 0.6932444496133632,
+    "image_mean_iou": 0.5752921835982236,
+    "patient_mean_dice": 0.6944315778980363,
+    "patient_bootstrap_95ci_dice": [
+      0.6643802805333022,
+      0.7218773716420015
+    ]
+  }
+}

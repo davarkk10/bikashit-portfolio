@@ -1,0 +1,224 @@
+{
+  "summary": {
+    "blur": {
+      "image_mean_dice": 0.6946488340128377,
+      "image_mean_iou": 0.5824965069731873,
+      "patient_mean_dice": 0.6880441715807499,
+      "patient_bootstrap_95ci_dice": [
+        0.6559282664696678,
+        0.7191052658741476
+      ]
+    },
+    "clean": {
+      "image_mean_dice": 0.8137730226191875,
+      "image_mean_iou": 0.7150264646417721,
+      "patient_mean_dice": 0.8141300898177519,
+      "patient_bootstrap_95ci_dice": [
+        0.7935400976606651,
+        0.8337953106040545
+      ]
+    },
+    "noise": {
+      "image_mean_dice": 0.6932444496133632,
+      "image_mean_iou": 0.5752921835982236,
+      "patient_mean_dice": 0.6944315778980363,
+      "patient_bootstrap_95ci_dice": [
+        0.6643802805333022,
+        0.7218773716420015
+      ]
+    }
+  },
+  "examples": [
+    {
+      "id": "bus_0503-r",
+      "selection": "Strong overlap \u00b7 90th percentile",
+      "conditions": {
+        "clean": {
+          "image": "assets/bus_0503-r-clean.png",
+          "overlay": "assets/bus_0503-r-clean-overlay.png",
+          "dice": 0.9477351916983331,
+          "iou": 0.9006622518749178
+        },
+        "blur": {
+          "image": "assets/bus_0503-r-blur.png",
+          "overlay": "assets/bus_0503-r-blur-overlay.png",
+          "dice": 0.8589083420608565,
+          "iou": 0.752707581673813
+        },
+        "noise": {
+          "image": "assets/bus_0503-r-noise.png",
+          "overlay": "assets/bus_0503-r-noise-overlay.png",
+          "dice": 0.9044289045402927,
+          "iou": 0.8255319152648257
+        }
+      }
+    },
+    {
+      "id": "bus_0639-l",
+      "selection": "Typical overlap \u00b7 median",
+      "conditions": {
+        "clean": {
+          "image": "assets/bus_0639-l-clean.png",
+          "overlay": "assets/bus_0639-l-clean-overlay.png",
+          "dice": 0.869565217444305,
+          "iou": 0.7692307693966709
+        },
+        "blur": {
+          "image": "assets/bus_0639-l-blur.png",
+          "overlay": "assets/bus_0639-l-blur-overlay.png",
+          "dice": 0.7480371164353901,
+          "iou": 0.5974914483480664
+        },
+        "noise": {
+          "image": "assets/bus_0639-l-noise.png",
+          "overlay": "assets/bus_0639-l-noise-overlay.png",
+          "dice": 0.9088134300233447,
+          "iou": 0.832867132984009
+        }
+      }
+    },
+    {
+      "id": "bus_0535-l",
+      "selection": "Difficult case \u00b7 10th percentile",
+      "conditions": {
+        "clean": {
+          "image": "assets/bus_0535-l-clean.png",
+          "overlay": "assets/bus_0535-l-clean-overlay.png",
+          "dice": 0.5961264909075253,
+          "iou": 0.42462977405695557
+        },
+        "blur": {
+          "image": "assets/bus_0535-l-blur.png",
+          "overlay": "assets/bus_0535-l-blur-overlay.png",
+          "dice": 0.6277310029172194,
+          "iou": 0.45744019890378373
+        },
+        "noise": {
+          "image": "assets/bus_0535-l-noise.png",
+          "overlay": "assets/bus_0535-l-noise-overlay.png",
+          "dice": 0.6980423978397361,
+          "iou": 0.5361483328862342
+        }
+      }
+    },
+    {
+      "id": "bus_0219-l",
+      "selection": "Lowest overlap \u00b7 minimum",
+      "conditions": {
+        "clean": {
+          "image": "assets/bus_0219-l-clean.png",
+          "overlay": "assets/bus_0219-l-clean-overlay.png",
+          "dice": 4.985044862918721e-10,
+          "iou": 4.985044862918721e-10
+        },
+        "blur": {
+          "image": "assets/bus_0219-l-blur.png",
+          "overlay": "assets/bus_0219-l-blur-overlay.png",
+          "dice": 0.5207423582094044,
+          "iou": 0.3520295205343065
+        },
+        "noise": {
+          "image": "assets/bus_0219-l-noise.png",
+          "overlay": "assets/bus_0219-l-noise-overlay.png",
+          "dice": 0.7171692001701547,
+          "iou": 0.5590520592233675
+        }
+      }
+    }
+  ],
+  "histogram": [
+    5,
+    1,
+    6,
+    5,
+    6,
+    15,
+    23,
+    47,
+    125,
+    142
+  ],
+  "subgroups": [
+    {
+      "name": "benign",
+      "images": 254,
+      "image_mean_dice": 0.8326430370077992
+    },
+    {
+      "name": "malignant",
+      "images": 121,
+      "image_mean_dice": 0.7741615874563166
+    }
+  ],
+  "training": [
+    {
+      "epoch": 1,
+      "train_loss": 0.6180671442907752,
+      "val_dice": 0.5645354495537052,
+      "val_iou": 0.4412792335864671
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.4501549090054018,
+      "val_dice": 0.6906988718049718,
+      "val_iou": 0.5654526112762087
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.3321850774347359,
+      "val_dice": 0.731390991011777,
+      "val_iou": 0.6060213972474321
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.2535625169885919,
+      "val_dice": 0.7860571213800768,
+      "val_iou": 0.6778102482000052
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.2093203773206852,
+      "val_dice": 0.723244156919193,
+      "val_iou": 0.6162808357661185
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.1856532632670504,
+      "val_dice": 0.7834369166552824,
+      "val_iou": 0.6809846103784744
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.170636920747182,
+      "val_dice": 0.8086932436797531,
+      "val_iou": 0.713462209802594
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.1601340256050123,
+      "val_dice": 0.8230539166874852,
+      "val_iou": 0.7304632970712748
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.1465222593529004,
+      "val_dice": 0.8227225801673412,
+      "val_iou": 0.7240733732955535
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.146039216230947,
+      "val_dice": 0.8250393564355601,
+      "val_iou": 0.7320647892656157
+    }
+  ],
+  "test_images": 375,
+  "test_cases": 212,
+  "fraction_below_05": 0.06133333333333333,
+  "n_below_05": 23,
+  "paired_case_delta": {
+    "blur": -0.12608591823700188,
+    "noise": -0.11969851191971553
+  },
+  "selection_protocol": "Four archived test examples selected by clean Dice at approximately the 90th, 50th, 10th and 0th percentiles. Same images and perturbation realizations as the scored evaluation."
+}

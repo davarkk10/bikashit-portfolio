@@ -1,0 +1,16 @@
+{
+  "metadata_source": "official BUS-BRA bus_data.csv, Case column",
+  "rows": 1875,
+  "publisher_case_count": 1064,
+  "one_to_one_match_to_filename_groups": true,
+  "case_disjoint_splits": true,
+  "split_case_counts": {
+    "train": 639,
+    "val": 213,
+    "test": 212
+  },
+  "checkpoint_sha256": "feae0c55c811378cb0afa44a463e4753dc5eaf0cc2911ed212ee046172263cd8",
+  "split_manifest_sha256": "3f4ad2a35421c0d7b03a5cf9d5954c2aa1a352c257e9394409d97f0bedec407c",
+  "protocol": "10 epochs, raw preprocessing, threshold 0.5, best validation checkpoint; frozen before test scoring",
+  "patient_caveat": "Case metadata is the grouping unit; 1064 cases matches published patient count. No patient identity data used."
+}
