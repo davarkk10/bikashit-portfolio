@@ -51,9 +51,10 @@
           <div class="hero-role reveal"><span>BUILT BY</span><b>Bikashit Baruah, with AI coding assistants. <a href="#ownership" style="color:#46e8bd;text-decoration:underline;text-underline-offset:3px">See how I built it</a></b></div>
           <div class="latest-strip reveal" aria-label="Latest results, October 2026">
             <span>LATEST RESULTS · OCTOBER 2026</span>
-            <a href="#invoice-model"><b>0.86</b><small>Invoice risk model on hard cases · best rules 0.19</small></a>
-            <a href="#delay-model"><b>0.61 → 0.65</b><small>Late-delivery model · order time → 3 days out</small></a>
-            <a href="#contract-assistant"><b>64 / 68</b><small>Unseen contract questions · 0 wrong answers</small></a>
+            <a href="#invoice-model"><b>0.86</b><small>Invoice risk · gradient boosting · PR-AUC on hard cases (best rules 0.19)</small></a>
+            <a href="#delay-model"><b>0.61 → 0.65</b><small>Late delivery · logistic regression · PR-AUC, order time → 3 days out</small></a>
+            <a href="#contract-assistant"><b>64 / 68</b><small>Contract assistant · BM25 search · unseen questions, 0 wrong</small></a>
+            <p class="latest-note"><b>Reading PR-AUC:</b> a 0-to-1 score for how well a model puts real problems at the top of the review list. Guessing scores the problem rate (about 0.04 for hard invoice cases, 0.37 for late deliveries); 1.0 is perfect.</p>
           </div>
           <div class="hero-actions reveal">
             <a class="btn primary" href="#cockpit">Enter decision cockpit <span>↘</span></a>
@@ -308,6 +309,7 @@
           <span>LATE-DELIVERY MODEL · UPDATED OCTOBER 2026</span>
           <h3 id="delay-lab-title">Which purchase orders will arrive late?</h3>
           <p>Scored twice: when the PO is raised, and again three days before the promised date. Chronological split, model chosen on validation, test read once, leakage test passing. History in one line: the first model only tied supplier history because the original data capped any model at 0.576, so this version adds the data that actually drives delays.</p>
+          <p class="delay-built"><span>BUILT WITH</span>Logistic regression in Python (scikit-learn) · gradient boosting also tried; it tied on test and lost on validation, so the simpler model was kept · compared with each supplier's past late-delivery rate · PR-AUC, where guessing scores 0.37 and 1.0 is perfect</p>
         </div>
         <div class="delay-steps">
           <article class="headline"><small>AT ORDER TIME</small><strong>0.612</strong><em>PR-AUC · baseline 0.563</em><p>Uses road distance and route, supplier load against capacity, promised vs quoted lead time, order size, flood-risk history and festival slowdowns. Lift +0.049, 95% CI [+0.040, +0.057].</p></article>
@@ -324,6 +326,7 @@
           <span>INVOICE RISK MODEL · UPDATED OCTOBER 2026</span>
           <h3 id="inv-lab-title">Conditions that single-invoice rules miss</h3>
           <p>Simple mismatches (wrong price, extra quantity, missing PO) are caught by rules and the model alike. The test also includes three harder cases, each with a legitimate look-alike: bills split under the ₹10 lakh approval limit (vs staged deliveries), months of price creep inside the 2% tolerance (vs approved freight surcharges), and resubmitted invoices with altered numbers (vs corrected re-issues).</p>
+          <p class="delay-built"><span>BUILT WITH</span>Gradient-boosted decision trees in Python (scikit-learn) · features include a supplier's price drift over 120 days and invoices on the same PO near the approval limit · compared with hand-written audit rules · PR-AUC, where guessing scores about 0.04 on the hard cases and 1.0 is perfect</p>
         </div>
         <div class="delay-steps">
           <article><small>POLICY RULES AS WRITTEN</small><strong>0.196</strong><em>PR-AUC · 23% precision at capacity</em><p>Flags every quantity billed ahead of acceptance and every exact duplicate, so most flags are noise.</p></article>
@@ -340,6 +343,7 @@
           <span>CONTRACT ASSISTANT · UPDATED OCTOBER 2026</span>
           <h3 id="rag-lab-title">Answers with a page citation, or no answer at all</h3>
           <p>Routes on document IDs, ranks sentences with BM25 and a procurement thesaurus (so "price hike" finds the escalation clause), quotes the best sentence with its page, and refuses when the documents don't say. The 68 test questions in everyday wording were hash-locked before any code was written, then run once.</p>
+          <p class="delay-built"><span>BUILT WITH</span>BM25 search ranking in Python with a procurement thesaurus · answers are quoted sentences, no AI text generation · scored as correct answers plus correct refusals on unseen questions</p>
         </div>
         <div class="delay-steps">
           <article class="headline"><small>UNSEEN QUESTIONS · FIRST AND ONLY RUN</small><strong>64 / 68</strong><em>94% correct</em><p>Contracts 39/40, invoices 12/12, quotations 5/5. The four misses were refusals on loosely worded policy and pricing questions.</p></article>

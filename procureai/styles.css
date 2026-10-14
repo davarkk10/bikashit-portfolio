@@ -699,3 +699,10 @@ footer > div { display: flex; align-items: center; gap: 12px; } footer b { color
   .release-tab { flex: none; border-bottom: 0; border-right: 1px solid var(--line); white-space: nowrap; }
   .release-panel { grid-template-columns: minmax(0, 1fr); gap: 24px; }
 }
+
+/* Algorithm and metric explainers */
+.latest-strip .latest-note { grid-column: 1 / -1; margin: 0; padding: 10px 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; line-height: 1.5; }
+.latest-strip .latest-note b { color: var(--paper); font-weight: 600; }
+.delay-built { margin: 16px 0 0 !important; padding: 12px 14px; border: 1px solid var(--line); background: rgba(70,232,189,.04); color: #b9cbc4 !important; font-size: 13px !important; line-height: 1.55; }
+.delay-built span { display: block; margin-bottom: 4px; color: var(--teal); font: 10.5px var(--mono); letter-spacing: .08em; }
+.latest-strip .latest-note b { font-size: inherit; letter-spacing: 0; }
