@@ -1,0 +1,48 @@
+table 'Payment Term'
+	lineageTag: bd7c6f21-ebc1-596e-84a6-a3a5eefaaffc
+
+	column payment_term_id
+		dataType: string
+		isHidden
+		lineageTag: b1529ea4-bc16-57a4-9323-c493d21f92d1
+		summarizeBy: none
+		sourceColumn: payment_term_id
+
+	column payment_term_name
+		dataType: string
+		lineageTag: 71708186-0e2c-58e3-aa42-490ed3c31244
+		summarizeBy: none
+		sourceColumn: payment_term_name
+
+	column net_days
+		dataType: int64
+		lineageTag: b390e101-71de-584f-ae99-1e7b8a50686b
+		summarizeBy: none
+		sourceColumn: net_days
+
+	column discount_pct
+		dataType: double
+		lineageTag: 5119dc93-11ba-5c02-934d-852b921f278d
+		summarizeBy: none
+		sourceColumn: discount_pct
+
+	column discount_days
+		dataType: int64
+		lineageTag: a536347f-0f0b-507e-a329-df1700602d0f
+		summarizeBy: none
+		sourceColumn: discount_days
+
+	partition 'Payment Term' = m
+		mode: import
+		source =
+				// Power Query M — table 'Payment Term'. Parameters: pServer, pDatabase, pSourceMode ("PostgreSQL" | "CsvFolder"), pCsvFolder
+				let
+				    Source = if pSourceMode = "PostgreSQL" then
+				        PostgreSQL.Database(pServer, pDatabase, [Query = "SELECT payment_term_id, payment_term_name, net_days, discount_pct, discount_days FROM mart.dim_payment_term", CreateNavigationProperties = false])
+				    else
+				        Csv.Document(Binary.Decompress(File.Contents(pCsvFolder & "\payment_term.csv.gz"), Compression.GZip), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = if pSourceMode = "PostgreSQL" then Source else Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"payment_term_id", type text}, {"payment_term_name", type text}, {"net_days", Int64.Type}, {"discount_pct", type number}, {"discount_days", Int64.Type}}, "en-IN")
+				in
+				    Typed
+

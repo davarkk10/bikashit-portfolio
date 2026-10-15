@@ -1,0 +1,7 @@
+role 'Procurement Manager'
+	modelPermission: read
+
+	tablePermission 'Business Unit' = [business_unit_id] IN CALCULATETABLE ( VALUES ( 'Security Scope'[business_unit_id] ), 'Security Scope'[principal] = USERPRINCIPALNAME () )
+
+	annotation PBI_Id = a4e76b0b80884beea89a3d9fa2c33688
+

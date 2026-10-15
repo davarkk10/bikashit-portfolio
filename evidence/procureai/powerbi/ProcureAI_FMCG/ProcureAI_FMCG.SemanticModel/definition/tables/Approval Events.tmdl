@@ -1,0 +1,58 @@
+table 'Approval Events'
+	lineageTag: 8958bcd3-5125-5581-8ab8-ab496d22b8c0
+
+	column approval_event_id
+		dataType: string
+		isHidden
+		lineageTag: 5d3f3869-9c98-5a0f-8c0d-ee81aa7877c9
+		summarizeBy: none
+		sourceColumn: approval_event_id
+
+	column invoice_id
+		dataType: string
+		isHidden
+		lineageTag: 527c75de-73f6-5a98-b3a3-39993cef6786
+		summarizeBy: none
+		sourceColumn: invoice_id
+
+	column date_key
+		dataType: int64
+		isHidden
+		lineageTag: d28562e8-63a0-58ee-982e-914f7ba618cf
+		summarizeBy: none
+		sourceColumn: date_key
+
+	column approval_status
+		dataType: string
+		lineageTag: ef07db19-a210-5bf1-9317-922812900a11
+		sourceColumn: approval_status
+
+	column actor_role
+		dataType: string
+		lineageTag: f47babec-905c-5412-aeb6-28860fba5827
+		sourceColumn: actor_role
+
+	column step_no
+		dataType: int64
+		lineageTag: 084db941-5b8d-5d0d-81d3-b001e453a6f0
+		sourceColumn: step_no
+
+	column hours_since_prev_step
+		dataType: double
+		lineageTag: 9194e50d-285b-54a1-8523-4581f903c8c8
+		sourceColumn: hours_since_prev_step
+
+	partition 'Approval Events' = m
+		mode: import
+		source =
+				// Power Query M — table 'Approval Events'. Parameters: pServer, pDatabase, pSourceMode ("PostgreSQL" | "CsvFolder"), pCsvFolder
+				let
+				    Source = if pSourceMode = "PostgreSQL" then
+				        PostgreSQL.Database(pServer, pDatabase, [Query = "SELECT approval_event_id, invoice_id, date_key, approval_status, actor_role, step_no, hours_since_prev_step FROM mart.fct_approval_event", CreateNavigationProperties = false])
+				    else
+				        Csv.Document(Binary.Decompress(File.Contents(pCsvFolder & "\approval_events.csv.gz"), Compression.GZip), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = if pSourceMode = "PostgreSQL" then Source else Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"approval_event_id", type text}, {"invoice_id", type text}, {"date_key", Int64.Type}, {"approval_status", type text}, {"actor_role", type text}, {"step_no", Int64.Type}, {"hours_since_prev_step", type number}}, "en-IN")
+				in
+				    Typed
+

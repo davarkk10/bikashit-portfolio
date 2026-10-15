@@ -1,0 +1,141 @@
+table 'Contract Expiry'
+	lineageTag: b1e3785e-9600-53eb-9c92-2cc1bb3d1ad1
+
+	/// Spend at risk from expiry in ₹ crore.
+	measure 'Spend at Risk Cr' = DIVIDE ( [Spend at Risk from Expiry], 10000000 )
+		formatString: ₹#,0.0 Cr
+		displayFolder: Presentation
+		lineageTag: a9eb6fb2-19d2-5050-b5ba-be44596cac68
+
+	/// Contracts ending within 0–30 days after the reporting date.
+	measure 'Contracts Expiring 30 Days' = CALCULATE ( COUNTROWS ( 'Contract Expiry' ), 'Contract Expiry'[expiry_bucket] = "0-30" )
+		formatString: #,##0
+		displayFolder: Contracts
+		lineageTag: b5b682c9-e8b2-5894-a1b3-1d30ae39d132
+
+	/// Contracts ending within 60 days (cumulative).
+	measure 'Contracts Expiring 60 Days' = CALCULATE ( COUNTROWS ( 'Contract Expiry' ), 'Contract Expiry'[expiry_bucket] IN { "0-30", "31-60" } )
+		formatString: #,##0
+		displayFolder: Contracts
+		lineageTag: 3517772a-8087-5ad0-bd8e-a7884a301a08
+
+	/// Contracts ending within 90 days (cumulative).
+	measure 'Contracts Expiring 90 Days' = CALCULATE ( COUNTROWS ( 'Contract Expiry' ), 'Contract Expiry'[expiry_bucket] IN { "0-30", "31-60", "61-90" } )
+		formatString: #,##0
+		displayFolder: Contracts
+		lineageTag: eedf2af3-a3b6-56dd-b831-f6876b1881c6
+
+	/// Trailing-12-month realized spend on contracts expiring within 90 days.
+	measure 'Spend at Risk from Expiry' = SUM ( 'Contract Expiry'[spend_at_risk_90d] )
+		formatString: ₹ #,##0
+		displayFolder: Contracts
+		lineageTag: 5399a5db-2135-5024-ac15-0f355cfa3161
+
+	column contract_id
+		dataType: string
+		isHidden
+		lineageTag: 6079a2c1-9c8f-5aae-9b5a-579bcec4819b
+		summarizeBy: none
+		sourceColumn: contract_id
+
+	column supplier_id
+		dataType: string
+		isHidden
+		lineageTag: c771da68-8283-5d1a-9c25-412b85237967
+		summarizeBy: none
+		sourceColumn: supplier_id
+
+	column days_to_expiry
+		dataType: int64
+		lineageTag: 95f7f605-8dc0-53b1-86b1-596517cf79c6
+		summarizeBy: sum
+		sourceColumn: days_to_expiry
+
+		annotation SummarizationSetBy = Automatic
+
+	column expiry_bucket
+		dataType: string
+		lineageTag: 9f4df92b-cbe7-5205-a1c8-949dc77cb7e6
+		summarizeBy: none
+		sourceColumn: expiry_bucket
+
+		annotation SummarizationSetBy = Automatic
+
+	column auto_renewal_flag
+		dataType: boolean
+		lineageTag: 05844e84-2602-5937-ad0b-22c79a64f04c
+		summarizeBy: none
+		sourceColumn: auto_renewal_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column notice_deadline_date
+		dataType: dateTime
+		formatString: dd-mmm-yyyy
+		lineageTag: 5acaec6e-7d2d-59db-b40e-51d67b370668
+		summarizeBy: none
+		sourceColumn: notice_deadline_date
+
+		variation Variation
+			isDefault
+			relationship: 7c1b0662-7c69-4433-ac20-9a7c2534dba7
+			defaultHierarchy: LocalDateTable_fb5baac3-8e4d-4174-8042-86b7eef5bd27.'Date Hierarchy'
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column notice_window_passed
+		dataType: boolean
+		lineageTag: 539c7726-dc4c-5eee-810c-0ae4894a2788
+		summarizeBy: none
+		sourceColumn: notice_window_passed
+
+		annotation SummarizationSetBy = Automatic
+
+	column trailing_12m_spend
+		dataType: double
+		lineageTag: 04fe458f-a1c3-5e2a-bcd2-bf51b9e245ab
+		summarizeBy: sum
+		sourceColumn: trailing_12m_spend
+
+		annotation SummarizationSetBy = Automatic
+
+	column spend_at_risk_90d
+		dataType: double
+		lineageTag: 5161de59-4123-5511-a70c-0a52d6a11182
+		summarizeBy: sum
+		sourceColumn: spend_at_risk_90d
+
+		annotation SummarizationSetBy = Automatic
+
+	column review_obligation
+		dataType: string
+		lineageTag: eebc9596-9a1d-5dc8-bd61-a23c1f93d7a2
+		summarizeBy: none
+		sourceColumn: review_obligation
+
+		annotation SummarizationSetBy = Automatic
+
+	column document_path
+		dataType: string
+		lineageTag: b66c7be4-1b28-5465-a4e0-de4e344436ed
+		summarizeBy: none
+		sourceColumn: document_path
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Contract Expiry' = m
+		mode: import
+		source =
+				// Power Query M — table 'Contract Expiry'. Parameters: pServer, pDatabase, pSourceMode ("PostgreSQL" | "CsvFolder"), pCsvFolder
+				let
+				    Source = if pSourceMode = "PostgreSQL" then
+				        PostgreSQL.Database(pServer, pDatabase, [Query = "SELECT contract_id, supplier_id, days_to_expiry, expiry_bucket, auto_renewal_flag, notice_deadline_date, notice_window_passed, trailing_12m_spend, spend_at_risk_90d, review_obligation, document_path FROM mart.agg_contract_expiry", CreateNavigationProperties = false])
+				    else
+				        Csv.Document(Binary.Decompress(File.Contents(pCsvFolder & "\contract_expiry.csv.gz"), Compression.GZip), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = if pSourceMode = "PostgreSQL" then Source else Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"contract_id", type text}, {"supplier_id", type text}, {"days_to_expiry", Int64.Type}, {"expiry_bucket", type text}, {"auto_renewal_flag", type logical}, {"notice_deadline_date", type date}, {"notice_window_passed", type logical}, {"trailing_12m_spend", type number}, {"spend_at_risk_90d", type number}, {"review_obligation", type text}, {"document_path", type text}}, "en-IN")
+				in
+				    Typed
+

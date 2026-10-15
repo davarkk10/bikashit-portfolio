@@ -1,0 +1,74 @@
+table 'Supplier Risk'
+	lineageTag: 7edee4e1-04b2-539e-97d8-1672d207c928
+
+	column supplier_id
+		dataType: string
+		isHidden
+		lineageTag: b74dd5ae-b8e8-5dbe-bfd3-94017c3882bf
+		summarizeBy: none
+		sourceColumn: supplier_id
+
+	column composite_score
+		dataType: double
+		lineageTag: 78c59c2c-9c5d-5fb5-8d5f-6ae851345985
+		sourceColumn: composite_score
+
+	column supplier_risk_band
+		dataType: string
+		lineageTag: f6dee1cf-b6c5-5891-8f69-f674fde0970f
+		sourceColumn: supplier_risk_band
+
+	column confidence
+		dataType: double
+		lineageTag: a3a377bd-d93e-5182-900b-11936dc6daad
+		sourceColumn: confidence
+
+	column small_sample_flag
+		dataType: boolean
+		lineageTag: 196b9d02-ed80-5e69-9149-3ce77cd74e14
+		sourceColumn: small_sample_flag
+
+	column c_delivery
+		dataType: double
+		lineageTag: e559d312-247d-515a-b289-90f958d19dc2
+		sourceColumn: c_delivery
+
+	column c_quality
+		dataType: double
+		lineageTag: 1d63af81-5ac6-5cf2-8e13-1347481b271b
+		sourceColumn: c_quality
+
+	column c_commercial
+		dataType: double
+		lineageTag: 2b7079e2-f844-588c-99d1-702dafb8ca22
+		sourceColumn: c_commercial
+
+	column c_incident
+		dataType: double
+		lineageTag: 7e4ce5ce-759c-5bcf-a164-8cb2cfb392be
+		sourceColumn: c_incident
+
+	column c_concentration
+		dataType: double
+		lineageTag: c97b6f7d-aebd-559a-94ab-baf1e8ad3a83
+		sourceColumn: c_concentration
+
+	column c_contract
+		dataType: double
+		lineageTag: b618c93f-76d6-5d83-a84b-7ca02b75cf6b
+		sourceColumn: c_contract
+
+	partition 'Supplier Risk' = m
+		mode: import
+		source =
+				// Power Query M — table 'Supplier Risk'. Parameters: pServer, pDatabase, pSourceMode ("PostgreSQL" | "CsvFolder"), pCsvFolder
+				let
+				    Source = if pSourceMode = "PostgreSQL" then
+				        PostgreSQL.Database(pServer, pDatabase, [Query = "SELECT supplier_id, composite_score, risk_band AS supplier_risk_band, confidence, small_sample_flag, c_delivery, c_quality, c_commercial, c_incident, c_concentration, c_contract FROM mart.v_supplier_risk_latest", CreateNavigationProperties = false])
+				    else
+				        Csv.Document(Binary.Decompress(File.Contents(pCsvFolder & "\supplier_risk.csv.gz"), Compression.GZip), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = if pSourceMode = "PostgreSQL" then Source else Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"supplier_id", type text}, {"composite_score", type number}, {"supplier_risk_band", type text}, {"confidence", type number}, {"small_sample_flag", type logical}, {"c_delivery", type number}, {"c_quality", type number}, {"c_commercial", type number}, {"c_incident", type number}, {"c_concentration", type number}, {"c_contract", type number}}, "en-IN")
+				in
+				    Typed
+

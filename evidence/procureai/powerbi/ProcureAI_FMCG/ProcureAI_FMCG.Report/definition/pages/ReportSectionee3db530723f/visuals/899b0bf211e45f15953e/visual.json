@@ -1,0 +1,293 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "899b0bf211e45f15953e",
+  "position": {
+    "x": 220,
+    "y": 262,
+    "z": 5000,
+    "height": 434,
+    "width": 684,
+    "tabOrder": 5000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Contract Expiry"
+                    }
+                  },
+                  "Property": "contract_id"
+                }
+              },
+              "queryRef": "Contract Expiry.contract_id",
+              "nativeQueryRef": "contract_id",
+              "displayName": "Contract"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Contract Expiry"
+                    }
+                  },
+                  "Property": "expiry_bucket"
+                }
+              },
+              "queryRef": "Contract Expiry.expiry_bucket",
+              "nativeQueryRef": "expiry_bucket",
+              "displayName": "Expires in"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Contract Expiry"
+                    }
+                  },
+                  "Property": "days_to_expiry"
+                }
+              },
+              "queryRef": "Contract Expiry.days_to_expiry",
+              "nativeQueryRef": "days_to_expiry",
+              "displayName": "Days left"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Contract Expiry"
+                    }
+                  },
+                  "Property": "auto_renewal_flag"
+                }
+              },
+              "queryRef": "Contract Expiry.auto_renewal_flag",
+              "nativeQueryRef": "auto_renewal_flag",
+              "displayName": "Auto-renews"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Contract Expiry"
+                    }
+                  },
+                  "Property": "notice_window_passed"
+                }
+              },
+              "queryRef": "Contract Expiry.notice_window_passed",
+              "nativeQueryRef": "notice_window_passed",
+              "displayName": "Notice passed"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Contract Expiry"
+                    }
+                  },
+                  "Property": "trailing_12m_spend"
+                }
+              },
+              "queryRef": "Contract Expiry.trailing_12m_spend",
+              "nativeQueryRef": "trailing_12m_spend",
+              "displayName": "Trailing 12m spend (₹)"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Contract Expiry"
+                    }
+                  },
+                  "Property": "document_path"
+                }
+              },
+              "queryRef": "Contract Expiry.document_path",
+              "nativeQueryRef": "document_path",
+              "displayName": "Source PDF"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#7f8ba0'"
+                    }
+                  }
+                }
+              }
+            },
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#0c1524'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "fontColorPrimary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#e6ebf3'"
+                    }
+                  }
+                }
+              }
+            },
+            "backColorPrimary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#101a2b'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontColorSecondary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#e6ebf3'"
+                    }
+                  }
+                }
+              }
+            },
+            "backColorSecondary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#0e1828'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "grid": [
+        {
+          "properties": {
+            "gridVertical": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "gridHorizontalColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1d2940'"
+                    }
+                  }
+                }
+              }
+            },
+            "outlineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1d2940'"
+                    }
+                  }
+                }
+              }
+            },
+            "rowPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "3D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Contracts by days to expiry'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

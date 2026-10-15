@@ -1,0 +1,118 @@
+table Payments
+	lineageTag: 024bbbfa-2fbb-58f5-b34c-19f3b88564f4
+
+	/// On-time payment rate, blank for the partial last month.
+	measure 'On-Time Payment % (complete months)' = IF ( MAX ( 'Date'[month_start] ) < DATE ( 2026, 2, 1 ), [On-Time Payment %] )
+		formatString: 0.0%
+		displayFolder: Presentation
+		lineageTag: d18384c5-d984-5bbf-a366-6449664a3e10
+
+	/// Early-payment discount captured, in ₹ lakh.
+	measure 'Discount Captured Lakh' = DIVIDE ( [Discount Captured], 100000 )
+		formatString: ₹#,0.0 L
+		displayFolder: Presentation
+		lineageTag: 332baa0b-915e-55bf-aa05-d81403325ceb
+
+	/// Early-payment discount missed, in ₹ lakh.
+	measure 'Discount Opportunity Lakh' = DIVIDE ( [Early-Payment Discount Opportunity], 100000 )
+		formatString: ₹#,0.0 L
+		displayFolder: Presentation
+		lineageTag: dd23ee39-a0dc-5305-867f-6671d7f8753b
+
+	/// Payments made on/before due date ÷ payments.
+	measure 'On-Time Payment %' = DIVIDE ( CALCULATE ( COUNTROWS ( 'Payments' ), 'Payments'[paid_on_time_flag] = TRUE () ), COUNTROWS ( 'Payments' ) )
+		formatString: 0.0%
+		displayFolder: Cash
+		lineageTag: 94b0a539-0b90-5b8a-a947-3976a7bbd310
+
+	/// Discount value on paid discount-term invoices whose payment missed the discount window.
+	measure 'Early-Payment Discount Opportunity' = CALCULATE ( SUM ( 'Payments'[discount_value] ), 'Payments'[discount_eligible_term] = TRUE (), 'Payments'[discount_captured_flag] = FALSE () )
+		formatString: ₹ #,##0
+		displayFolder: Cash
+		lineageTag: 17a48d3d-73f7-5e02-9084-282d680a44d7
+
+	/// Discount captured.
+	measure 'Discount Captured' = CALCULATE ( SUM ( 'Payments'[discount_value] ), 'Payments'[discount_eligible_term] = TRUE (), 'Payments'[discount_captured_flag] = TRUE () )
+		formatString: ₹ #,##0
+		displayFolder: Cash
+		lineageTag: e80d78cc-8641-503f-a46f-80a84755f038
+
+	column payment_id
+		dataType: string
+		isHidden
+		lineageTag: 66f7064b-77aa-51ec-bc10-39dab70cef82
+		summarizeBy: none
+		sourceColumn: payment_id
+
+	column invoice_id
+		dataType: string
+		isHidden
+		lineageTag: 8f59b42e-0518-5c27-ada6-82a6d75a8e9a
+		summarizeBy: none
+		sourceColumn: invoice_id
+
+	column supplier_id
+		dataType: string
+		isHidden
+		lineageTag: 2afb1716-57f8-5265-be01-4ffc66802b18
+		summarizeBy: none
+		sourceColumn: supplier_id
+
+	column payment_term_id
+		dataType: string
+		isHidden
+		lineageTag: 16778c96-0b2d-50ed-9749-c8404933a536
+		summarizeBy: none
+		sourceColumn: payment_term_id
+
+	column payment_date_key
+		dataType: int64
+		isHidden
+		lineageTag: 190d6b04-5d05-5cf9-a73e-b5a98bb277ac
+		summarizeBy: none
+		sourceColumn: payment_date_key
+
+	column payment_amount
+		dataType: double
+		lineageTag: b1c6f5fc-2cea-5adf-a2c7-1273b3f2e2e8
+		sourceColumn: payment_amount
+
+	column paid_on_time_flag
+		dataType: boolean
+		lineageTag: 16c345f8-ad3a-53c5-aa1d-377db5348b16
+		sourceColumn: paid_on_time_flag
+
+	column days_after_due
+		dataType: int64
+		lineageTag: 25c5263f-9681-5d80-ab39-e915bac28f2d
+		sourceColumn: days_after_due
+
+	column discount_eligible_term
+		dataType: boolean
+		lineageTag: 5d8e1b08-c109-505b-b753-ab0197c495f3
+		sourceColumn: discount_eligible_term
+
+	column discount_value
+		dataType: double
+		lineageTag: 397db5a4-9e6d-549a-9959-6ce3ce2068bc
+		sourceColumn: discount_value
+
+	column discount_captured_flag
+		dataType: boolean
+		lineageTag: b6cca9ec-0e27-5f2b-a628-397437157f61
+		sourceColumn: discount_captured_flag
+
+	partition Payments = m
+		mode: import
+		source =
+				// Power Query M — table 'Payments'. Parameters: pServer, pDatabase, pSourceMode ("PostgreSQL" | "CsvFolder"), pCsvFolder
+				let
+				    Source = if pSourceMode = "PostgreSQL" then
+				        PostgreSQL.Database(pServer, pDatabase, [Query = "SELECT payment_id, invoice_id, supplier_id, payment_term_id, payment_date_key, payment_amount, paid_on_time_flag, days_after_due, discount_eligible_term, discount_value, discount_captured_flag FROM mart.fct_payment", CreateNavigationProperties = false])
+				    else
+				        Csv.Document(Binary.Decompress(File.Contents(pCsvFolder & "\payments.csv.gz"), Compression.GZip), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = if pSourceMode = "PostgreSQL" then Source else Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"payment_id", type text}, {"invoice_id", type text}, {"supplier_id", type text}, {"payment_term_id", type text}, {"payment_date_key", Int64.Type}, {"payment_amount", type number}, {"paid_on_time_flag", type logical}, {"days_after_due", Int64.Type}, {"discount_eligible_term", type logical}, {"discount_value", type number}, {"discount_captured_flag", type logical}}, "en-IN")
+				in
+				    Typed
+

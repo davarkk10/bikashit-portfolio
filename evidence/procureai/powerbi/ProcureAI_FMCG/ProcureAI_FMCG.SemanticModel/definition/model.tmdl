@@ -1,0 +1,59 @@
+model Model
+	culture: en-IN
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: en-IN
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["pServer", "pDatabase", "pSourceMode", "pCsvFolder", "pModelFolder", "Date", "Supplier", "Material", "Category", "Warehouse", "Buyer", "Business Unit", "Contract", "Payment Term", "Risk Band", "Anomaly Type", "Realized Spend", "PO Lines", "Supplier Delivery", "Invoice Exceptions", "Invoice Reasons", "Payments", "Receipt Quality", "Approval Events", "Contract Expiry", "Supplier Risk", "Data Quality", "Security Scope", "Invoice Risk Scores", "PO Delay Scores", "Model Results", "Invoice Condition Catch", "Delay Drivers", "Contract QA"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Date
+ref table Supplier
+ref table Material
+ref table Category
+ref table Warehouse
+ref table Buyer
+ref table 'Business Unit'
+ref table Contract
+ref table 'Payment Term'
+ref table 'Risk Band'
+ref table 'Anomaly Type'
+ref table 'Realized Spend'
+ref table 'PO Lines'
+ref table 'Supplier Delivery'
+ref table 'Invoice Exceptions'
+ref table 'Invoice Reasons'
+ref table Payments
+ref table 'Receipt Quality'
+ref table 'Approval Events'
+ref table 'Contract Expiry'
+ref table 'Supplier Risk'
+ref table 'Data Quality'
+ref table 'Security Scope'
+ref table DateTableTemplate_528e7aba-9892-4c1c-a85e-856738281289
+ref table LocalDateTable_e1f0b830-1f17-47f2-8fe8-324e8db94f5d
+ref table LocalDateTable_2270463c-7d2d-4d60-9a3b-2fbfd6da1665
+ref table LocalDateTable_0c1d444c-77b7-4f9f-878c-071fbf3ae13a
+ref table LocalDateTable_fb5baac3-8e4d-4174-8042-86b7eef5bd27
+ref table LocalDateTable_41decd2b-80bc-42fc-a703-a50520626b93
+ref table 'Invoice Risk Scores'
+ref table 'PO Delay Scores'
+ref table 'Model Results'
+ref table 'Invoice Condition Catch'
+ref table 'Delay Drivers'
+ref table 'Contract QA'
+
+ref role Executive
+ref role 'Procurement Manager'
+ref role 'Category Manager'
+ref role 'AP Investigator'
+ref role Auditor
+
+ref cultureInfo en-IN
+

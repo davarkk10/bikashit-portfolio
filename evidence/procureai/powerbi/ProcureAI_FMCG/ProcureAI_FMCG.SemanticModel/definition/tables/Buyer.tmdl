@@ -1,0 +1,48 @@
+table Buyer
+	lineageTag: c2e723c2-b4b8-5603-9029-721a288ea8fd
+
+	column buyer_id
+		dataType: string
+		isHidden
+		lineageTag: a3892ead-c321-5477-8719-7361189b56ae
+		summarizeBy: none
+		sourceColumn: buyer_id
+
+	column buyer_name
+		dataType: string
+		lineageTag: 9a05515e-f158-5dcf-a7f3-74b88fd18ee0
+		summarizeBy: none
+		sourceColumn: buyer_name
+
+	column primary_category_name
+		dataType: string
+		lineageTag: 5c590d4b-5198-5ddb-b9bb-7b8d383caa98
+		summarizeBy: none
+		sourceColumn: primary_category_name
+
+	column business_unit_name
+		dataType: string
+		lineageTag: 3f62e603-ab0e-5376-8b0a-58b0466acf7d
+		summarizeBy: none
+		sourceColumn: business_unit_name
+
+	column buyer_status
+		dataType: string
+		lineageTag: 29b7af07-2bcb-5e14-bb54-7e4acc69bdb4
+		summarizeBy: none
+		sourceColumn: buyer_status
+
+	partition Buyer = m
+		mode: import
+		source =
+				// Power Query M — table 'Buyer'. Parameters: pServer, pDatabase, pSourceMode ("PostgreSQL" | "CsvFolder"), pCsvFolder
+				let
+				    Source = if pSourceMode = "PostgreSQL" then
+				        PostgreSQL.Database(pServer, pDatabase, [Query = "SELECT buyer_id, buyer_name, primary_category_name, business_unit_name, buyer_status FROM mart.dim_buyer", CreateNavigationProperties = false])
+				    else
+				        Csv.Document(Binary.Decompress(File.Contents(pCsvFolder & "\buyer.csv.gz"), Compression.GZip), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = if pSourceMode = "PostgreSQL" then Source else Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"buyer_id", type text}, {"buyer_name", type text}, {"primary_category_name", type text}, {"business_unit_name", type text}, {"buyer_status", type text}}, "en-IN")
+				in
+				    Typed
+

@@ -1,0 +1,97 @@
+table 'Data Quality'
+	lineageTag: bd2fe450-d60a-5a3e-9d64-6fb7856485c5
+
+	/// Time of the latest monitoring snapshot.
+	measure 'Snapshot Time' = FORMAT ( MAX ( 'Data Quality'[captured_at] ), "dd mmm yyyy, hh:nn" )
+		formatString: General
+		displayFolder: Presentation
+		lineageTag: cf6fc789-1a25-5d56-9a2a-7d43564d69d5
+
+	/// Last successful warehouse build (from audit.build_run) for the refresh banner.
+	measure 'Last Refresh' = "Data refreshed: " & FORMAT ( MAX ( 'Data Quality'[captured_at] ), "yyyy-mm-dd hh:nn" ) & " IST · SYNTHETIC DATA"
+		formatString: General
+		displayFolder: Governance
+		lineageTag: 21d7758f-ff63-5d91-9420-91b8de6496f4
+
+	/// Share of monitoring checks in FAIL status.
+	measure 'Failed Check %' = DIVIDE ( CALCULATE ( COUNTROWS ( 'Data Quality' ), 'Data Quality'[status] = "FAIL" ), COUNTROWS ( 'Data Quality' ) )
+		formatString: 0.0%
+		displayFolder: Governance
+		lineageTag: 4e5891b4-c59e-5344-9cac-c88edfc03423
+
+	column metric_group
+		dataType: string
+		lineageTag: 091f0301-1fb8-5cdf-89de-4bf2927d87af
+		summarizeBy: none
+		sourceColumn: metric_group
+
+		annotation SummarizationSetBy = Automatic
+
+	column metric_name
+		dataType: string
+		lineageTag: 574cca79-70bc-5422-80a5-901b0aab6533
+		summarizeBy: none
+		sourceColumn: metric_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column metric_value
+		dataType: double
+		lineageTag: 7d3a1bfc-0987-5ad6-a33b-f9b52810b0f9
+		summarizeBy: sum
+		sourceColumn: metric_value
+
+		annotation SummarizationSetBy = Automatic
+
+	column threshold_warn
+		dataType: double
+		lineageTag: 5aceccf4-4cdd-54c3-be09-fdac6b7afebc
+		summarizeBy: sum
+		sourceColumn: threshold_warn
+
+		annotation SummarizationSetBy = Automatic
+
+	column threshold_fail
+		dataType: double
+		lineageTag: 5a4c102b-9203-5f32-b7c8-b0cb927bf275
+		summarizeBy: sum
+		sourceColumn: threshold_fail
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: 14303b10-ab35-52a4-8f50-b1644955b65c
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column captured_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 35798683-95a1-534f-a3e4-af839a6ff22d
+		summarizeBy: none
+		sourceColumn: captured_at
+
+		variation Variation
+			isDefault
+			relationship: 125b9767-2d32-458d-8aaa-46274abe905d
+			defaultHierarchy: LocalDateTable_41decd2b-80bc-42fc-a703-a50520626b93.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Data Quality' = m
+		mode: import
+		source =
+				// Power Query M — table 'Data Quality'. Parameters: pServer, pDatabase, pSourceMode ("PostgreSQL" | "CsvFolder"), pCsvFolder
+				let
+				    Source = if pSourceMode = "PostgreSQL" then
+				        PostgreSQL.Database(pServer, pDatabase, [Query = "SELECT metric_group, metric_name, metric_value, threshold_warn, threshold_fail, status, captured_at FROM ops.metric_snapshot WHERE run_id = (SELECT run_id FROM ops.metric_snapshot ORDER BY captured_at DESC LIMIT 1)", CreateNavigationProperties = false])
+				    else
+				        Csv.Document(Binary.Decompress(File.Contents(pCsvFolder & "\data_quality.csv.gz"), Compression.GZip), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = if pSourceMode = "PostgreSQL" then Source else Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"metric_group", type text}, {"metric_name", type text}, {"metric_value", type number}, {"threshold_warn", type number}, {"threshold_fail", type number}, {"status", type text}, {"captured_at", type datetime}}, "en-IN")
+				in
+				    Typed
+

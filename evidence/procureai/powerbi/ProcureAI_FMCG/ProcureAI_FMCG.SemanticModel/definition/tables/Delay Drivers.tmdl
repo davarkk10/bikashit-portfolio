@@ -1,0 +1,32 @@
+table 'Delay Drivers'
+	lineageTag: 143d3317-2be6-5c97-8a86-a9ef7a5703a0
+
+	column driver
+		dataType: string
+		lineageTag: 2e407c66-e506-5dea-987a-9c5e83730df1
+		summarizeBy: none
+		sourceColumn: driver
+
+		annotation SummarizationSetBy = Automatic
+
+	column pr_auc_lost_when_removed
+		dataType: double
+		formatString: 0.000
+		lineageTag: 8b8f6169-1299-530d-b0e2-ec5e8e9e3472
+		summarizeBy: none
+		sourceColumn: pr_auc_lost_when_removed
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Delay Drivers' = m
+		mode: import
+		source =
+				// Power Query M — table 'Delay Drivers'. Model results, October 2026 rebuild. Parameter: pModelFolder
+				let
+				    Source = Csv.Document(File.Contents(pModelFolder & "\delay_drivers.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Nulls = Promoted,
+				    Typed = Table.TransformColumnTypes(Nulls, {{"driver", type text}, {"pr_auc_lost_when_removed", type number}}, "en-US")
+				in
+				    Typed
+

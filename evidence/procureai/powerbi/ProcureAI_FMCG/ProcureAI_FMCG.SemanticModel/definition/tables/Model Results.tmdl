@@ -1,0 +1,66 @@
+table 'Model Results'
+	lineageTag: 58eb7a5a-1baf-57a7-9fdd-292d78c4cbc1
+
+	column area
+		dataType: string
+		lineageTag: 72743122-dd88-5443-86e6-05e88a1069fc
+		summarizeBy: none
+		sourceColumn: area
+
+		annotation SummarizationSetBy = Automatic
+
+	column method
+		dataType: string
+		lineageTag: 2f4e1958-f927-5253-aba8-f28cf9475b71
+		summarizeBy: none
+		sourceColumn: method
+
+		annotation SummarizationSetBy = Automatic
+
+	column role
+		dataType: string
+		lineageTag: 0a571faf-be64-5716-b95c-c4efd1f96ea3
+		summarizeBy: none
+		sourceColumn: role
+
+		annotation SummarizationSetBy = Automatic
+
+	column method_order
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b5344cc5-fdb3-583b-a681-377c3192aad5
+		summarizeBy: none
+		sourceColumn: method_order
+
+		annotation SummarizationSetBy = Automatic
+
+	column metric
+		dataType: string
+		lineageTag: 32b7ff08-84bb-5ef2-8302-7ccda26af9f7
+		summarizeBy: none
+		sourceColumn: metric
+
+		annotation SummarizationSetBy = Automatic
+
+	column value
+		dataType: double
+		formatString: 0.000
+		lineageTag: 6c8d7fe7-eeff-51b7-a3c6-3169513825b3
+		summarizeBy: none
+		sourceColumn: value
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Model Results' = m
+		mode: import
+		source =
+				// Power Query M — table 'Model Results'. Model results, October 2026 rebuild. Parameter: pModelFolder
+				let
+				    Source = Csv.Document(File.Contents(pModelFolder & "\model_results.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Nulls = Promoted,
+				    Typed = Table.TransformColumnTypes(Nulls, {{"area", type text}, {"method", type text}, {"role", type text}, {"method_order", Int64.Type}, {"metric", type text}, {"value", type number}}, "en-US")
+				in
+				    Typed
+

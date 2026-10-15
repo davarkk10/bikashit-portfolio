@@ -1,0 +1,36 @@
+table 'Business Unit'
+	lineageTag: aff73480-18c4-57c2-a65f-73e8f3fe121f
+
+	column business_unit_id
+		dataType: string
+		isHidden
+		lineageTag: c45699d4-0512-5b73-b727-0867cf8c7bc8
+		summarizeBy: none
+		sourceColumn: business_unit_id
+
+	column business_unit_name
+		dataType: string
+		lineageTag: 6e4e3474-e1ed-5d49-a4b1-ea025d9043ed
+		summarizeBy: none
+		sourceColumn: business_unit_name
+
+	column spend_scope
+		dataType: string
+		lineageTag: b0aa25ec-59cb-5292-9a12-00c6ae361e11
+		summarizeBy: none
+		sourceColumn: spend_scope
+
+	partition 'Business Unit' = m
+		mode: import
+		source =
+				// Power Query M — table 'Business Unit'. Parameters: pServer, pDatabase, pSourceMode ("PostgreSQL" | "CsvFolder"), pCsvFolder
+				let
+				    Source = if pSourceMode = "PostgreSQL" then
+				        PostgreSQL.Database(pServer, pDatabase, [Query = "SELECT business_unit_id, business_unit_name, spend_scope FROM mart.dim_business_unit", CreateNavigationProperties = false])
+				    else
+				        Csv.Document(Binary.Decompress(File.Contents(pCsvFolder & "\business_unit.csv.gz"), Compression.GZip), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = if pSourceMode = "PostgreSQL" then Source else Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"business_unit_id", type text}, {"business_unit_name", type text}, {"spend_scope", type text}}, "en-IN")
+				in
+				    Typed
+

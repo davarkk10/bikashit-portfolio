@@ -1,0 +1,41 @@
+table 'Risk Band'
+	lineageTag: 67a11c38-98fe-591a-8e45-648c31295bcb
+
+	column risk_band
+		dataType: string
+		lineageTag: a3c7d7a9-94ea-5ff7-a140-4011a0b22b75
+		summarizeBy: none
+		sourceColumn: risk_band
+
+	column band_order
+		dataType: int64
+		lineageTag: 3b326bf1-aeae-5e45-aed5-553f3cbd9d6c
+		summarizeBy: none
+		sourceColumn: band_order
+
+	column review_sla_days
+		dataType: int64
+		lineageTag: e506f823-3e18-51d6-be9c-ea16d50eced4
+		summarizeBy: none
+		sourceColumn: review_sla_days
+
+	column description
+		dataType: string
+		lineageTag: f8b9a9c5-3b56-5c1e-be32-baa4746cbdf0
+		summarizeBy: none
+		sourceColumn: description
+
+	partition 'Risk Band' = m
+		mode: import
+		source =
+				// Power Query M — table 'Risk Band'. Parameters: pServer, pDatabase, pSourceMode ("PostgreSQL" | "CsvFolder"), pCsvFolder
+				let
+				    Source = if pSourceMode = "PostgreSQL" then
+				        PostgreSQL.Database(pServer, pDatabase, [Query = "SELECT risk_band, band_order, review_sla_days, description FROM mart.dim_risk_band", CreateNavigationProperties = false])
+				    else
+				        Csv.Document(Binary.Decompress(File.Contents(pCsvFolder & "\risk_band.csv.gz"), Compression.GZip), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = if pSourceMode = "PostgreSQL" then Source else Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"risk_band", type text}, {"band_order", Int64.Type}, {"review_sla_days", Int64.Type}, {"description", type text}}, "en-IN")
+				in
+				    Typed
+

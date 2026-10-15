@@ -1,0 +1,54 @@
+table Warehouse
+	lineageTag: 982305c7-0b80-5748-84cc-7bbc6f7aa25f
+
+	column warehouse_id
+		dataType: string
+		isHidden
+		lineageTag: a450e30c-83ce-5e4e-ad36-957a4b020df0
+		summarizeBy: none
+		sourceColumn: warehouse_id
+
+	column warehouse_name
+		dataType: string
+		lineageTag: be2f7e43-522e-59af-a1e0-04add3455b96
+		summarizeBy: none
+		sourceColumn: warehouse_name
+
+	column city
+		dataType: string
+		lineageTag: 60e9097e-229f-52c2-8c54-8106852667ed
+		summarizeBy: none
+		sourceColumn: city
+
+	column latitude
+		dataType: double
+		lineageTag: 34f15fbb-cb2a-51c9-a1b3-b4815077e186
+		summarizeBy: none
+		sourceColumn: latitude
+
+	column longitude
+		dataType: double
+		lineageTag: f9bcaeed-094f-5734-9c63-e1baa263afb8
+		summarizeBy: none
+		sourceColumn: longitude
+
+	column capacity_pallets
+		dataType: double
+		lineageTag: 65c50c69-17d6-5b30-b302-7cde8a62aaa9
+		summarizeBy: none
+		sourceColumn: capacity_pallets
+
+	partition Warehouse = m
+		mode: import
+		source =
+				// Power Query M — table 'Warehouse'. Parameters: pServer, pDatabase, pSourceMode ("PostgreSQL" | "CsvFolder"), pCsvFolder
+				let
+				    Source = if pSourceMode = "PostgreSQL" then
+				        PostgreSQL.Database(pServer, pDatabase, [Query = "SELECT warehouse_id, warehouse_name, city, latitude, longitude, capacity_pallets FROM mart.dim_warehouse", CreateNavigationProperties = false])
+				    else
+				        Csv.Document(Binary.Decompress(File.Contents(pCsvFolder & "\warehouse.csv.gz"), Compression.GZip), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = if pSourceMode = "PostgreSQL" then Source else Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"warehouse_id", type text}, {"warehouse_name", type text}, {"city", type text}, {"latitude", type number}, {"longitude", type number}, {"capacity_pallets", type number}}, "en-IN")
+				in
+				    Typed
+

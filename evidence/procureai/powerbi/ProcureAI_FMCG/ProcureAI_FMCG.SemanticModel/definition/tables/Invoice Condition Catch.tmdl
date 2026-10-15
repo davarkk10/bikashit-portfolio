@@ -1,0 +1,58 @@
+table 'Invoice Condition Catch'
+	lineageTag: 3c550a28-d4dc-587e-ae5a-e87792dd4a37
+
+	column condition
+		dataType: string
+		lineageTag: dc332fcc-0175-5acf-9861-dc7569d55f9b
+		summarizeBy: none
+		sourceColumn: condition
+
+		annotation SummarizationSetBy = Automatic
+
+	column condition_group
+		dataType: string
+		lineageTag: 51f842ad-382b-510d-ac30-c21236149964
+		summarizeBy: none
+		sourceColumn: condition_group
+
+		annotation SummarizationSetBy = Automatic
+
+	column test_cases
+		dataType: int64
+		formatString: #,##0
+		lineageTag: f7599d23-48be-53db-b26a-1da7c2e9f919
+		summarizeBy: none
+		sourceColumn: test_cases
+
+		annotation SummarizationSetBy = Automatic
+
+	column rules_caught
+		dataType: double
+		formatString: 0.0%
+		lineageTag: 922c513c-b0e9-5e64-b370-a4577a534e1a
+		summarizeBy: none
+		sourceColumn: rules_caught
+
+		annotation SummarizationSetBy = Automatic
+
+	column model_caught
+		dataType: double
+		formatString: 0.0%
+		lineageTag: d2e5f40c-7de5-5ae4-9f39-b0122e2c6cad
+		summarizeBy: none
+		sourceColumn: model_caught
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Invoice Condition Catch' = m
+		mode: import
+		source =
+				// Power Query M — table 'Invoice Condition Catch'. Model results, October 2026 rebuild. Parameter: pModelFolder
+				let
+				    Source = Csv.Document(File.Contents(pModelFolder & "\invoice_condition_catch.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Nulls = Promoted,
+				    Typed = Table.TransformColumnTypes(Nulls, {{"condition", type text}, {"condition_group", type text}, {"test_cases", Int64.Type}, {"rules_caught", type number}, {"model_caught", type number}}, "en-US")
+				in
+				    Typed
+

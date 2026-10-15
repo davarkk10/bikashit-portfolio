@@ -1,0 +1,9 @@
+condition,condition_group,test_cases,rules_caught,model_caught
+Bank change,Simple mismatch,170,1.0,1.0
+Missing PO,Simple mismatch,134,1.0,1.0
+Near-duplicate,Hard case,111,1.0,0.982
+Price creep,Hard case,341,0.3021,0.6921
+Price > tolerance,Simple mismatch,326,1.0,1.0
+Exact duplicate,Simple mismatch,141,1.0,1.0
+Qty > order,Simple mismatch,258,1.0,1.0
+Split bills,Hard case,65,0.4615,0.8769

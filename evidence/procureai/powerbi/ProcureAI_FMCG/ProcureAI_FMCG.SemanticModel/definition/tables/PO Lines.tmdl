@@ -1,0 +1,151 @@
+table 'PO Lines'
+	lineageTag: d0079a1c-9370-50cb-a8ab-099189adc7e4
+
+	/// Purchase price variance in ₹ lakh.
+	measure 'PPV Lakh' = DIVIDE ( [Purchase Price Variance], 100000 )
+		formatString: ₹#,0.0 L
+		displayFolder: Presentation
+		lineageTag: ba11cd67-b6b8-5acd-8b93-398d65d16438
+
+	/// Committed PO spend in ₹ crore.
+	measure 'Committed Spend Cr' = DIVIDE ( [Committed Spend], 10000000 )
+		formatString: ₹#,0.0 Cr
+		displayFolder: Presentation
+		lineageTag: cdb1aaa5-93a1-5ee2-8bd2-5933b2400943
+
+	/// PO-line net for non-cancelled POs (commitment, not realized spend).
+	measure 'Committed Spend' = CALCULATE ( SUM ( 'PO Lines'[line_net_amount] ), 'PO Lines'[is_committed] = TRUE () )
+		formatString: ₹ #,##0
+		displayFolder: Spend
+		lineageTag: 51ef4c2c-7328-5148-9010-76e35ddc046f
+
+	/// Σ (PO unit price − baseline price) × ordered qty on committed PO lines.
+	measure 'Purchase Price Variance' = SUM ( 'PO Lines'[ppv_amount] )
+		formatString: ₹ #,##0
+		displayFolder: Price
+		lineageTag: 109000dc-f360-58cd-963c-52fc9a88ba83
+
+	/// PPV ÷ baseline value of committed PO lines.
+	measure 'PPV %' = DIVIDE ( [Purchase Price Variance], SUM ( 'PO Lines'[baseline_value] ) )
+		formatString: 0.00%
+		displayFolder: Price
+		lineageTag: 494060fe-78eb-5090-95ce-9a5012bae82f
+
+	column po_line_id
+		dataType: string
+		isHidden
+		lineageTag: ef66ca06-dae6-5ec3-9d3e-cda6e340ee98
+		summarizeBy: none
+		sourceColumn: po_line_id
+
+	column po_id
+		dataType: string
+		lineageTag: e7018989-7cae-5fc6-9bb9-f5c13fb2ff4d
+		summarizeBy: none
+		sourceColumn: po_id
+
+	column order_date_key
+		dataType: int64
+		isHidden
+		lineageTag: 9cc32b4f-59cf-549c-9163-61757e9f02ee
+		summarizeBy: none
+		sourceColumn: order_date_key
+
+	column supplier_id
+		dataType: string
+		isHidden
+		lineageTag: 82e2d0bf-6f3e-54c5-a171-18bfb62e7fb7
+		summarizeBy: none
+		sourceColumn: supplier_id
+
+	column material_id
+		dataType: string
+		isHidden
+		lineageTag: 4239bd80-ef3a-59c4-a810-d2e6327cfdf6
+		summarizeBy: none
+		sourceColumn: material_id
+
+	column category_id
+		dataType: string
+		isHidden
+		lineageTag: eca6a43c-c189-5ca2-8bff-e5545ec35f1a
+		summarizeBy: none
+		sourceColumn: category_id
+
+	column business_unit_id
+		dataType: string
+		isHidden
+		lineageTag: fe665ea0-8bc9-5d61-98f4-15f64e13d663
+		summarizeBy: none
+		sourceColumn: business_unit_id
+
+	column warehouse_id
+		dataType: string
+		isHidden
+		lineageTag: baf6619d-5153-592a-9cc5-27b1d7950da0
+		summarizeBy: none
+		sourceColumn: warehouse_id
+
+	column buyer_id
+		dataType: string
+		isHidden
+		lineageTag: af513036-5009-528e-917e-be47e392526d
+		summarizeBy: none
+		sourceColumn: buyer_id
+
+	column contract_id
+		dataType: string
+		isHidden
+		lineageTag: 976d61a1-c129-5426-ac1b-0fcb80df5153
+		summarizeBy: none
+		sourceColumn: contract_id
+
+	column is_committed
+		dataType: boolean
+		lineageTag: cb036ccc-25cc-5289-8243-3628c9f33c68
+		sourceColumn: is_committed
+
+	column line_net_amount
+		dataType: double
+		lineageTag: d5929487-f71f-5cbe-ab16-8fd8de652050
+		sourceColumn: line_net_amount
+
+	column ppv_amount
+		dataType: double
+		lineageTag: bcea63eb-fa14-5494-ad29-0f258a846801
+		sourceColumn: ppv_amount
+
+	column baseline_value
+		dataType: double
+		lineageTag: b77a9e38-bd2e-5048-8e97-9eabcc7b35c3
+		sourceColumn: baseline_value
+
+	column contract_valid_at_order_source
+		dataType: boolean
+		lineageTag: 6c851807-d951-565a-b351-48d95605fd8f
+		sourceColumn: contract_valid_at_order_source
+
+	column contract_flag_conflict
+		dataType: boolean
+		lineageTag: f953d78a-be07-5342-99dc-7b35b8a5e74c
+		sourceColumn: contract_flag_conflict
+
+	column promise_revised_flag
+		dataType: boolean
+		lineageTag: 78cbcde0-cf91-5dd4-8618-3b6f2f4d3565
+		sourceColumn: promise_revised_flag
+
+	partition 'PO Lines' = m
+		mode: import
+		source =
+				// Power Query M — table 'PO Lines'. Parameters: pServer, pDatabase, pSourceMode ("PostgreSQL" | "CsvFolder"), pCsvFolder
+				let
+				    Source = if pSourceMode = "PostgreSQL" then
+				        PostgreSQL.Database(pServer, pDatabase, [Query = "SELECT po_line_id, po_id, order_date_key, supplier_id, material_id, category_id, business_unit_id, warehouse_id, buyer_id, contract_id, is_committed, line_net_amount, ppv_amount, baseline_value, contract_valid_at_order_source, contract_flag_conflict, promise_revised_flag FROM mart.fct_purchase_order_line", CreateNavigationProperties = false])
+				    else
+				        Csv.Document(Binary.Decompress(File.Contents(pCsvFolder & "\po_lines.csv.gz"), Compression.GZip), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = if pSourceMode = "PostgreSQL" then Source else Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"po_line_id", type text}, {"po_id", type text}, {"order_date_key", Int64.Type}, {"supplier_id", type text}, {"material_id", type text}, {"category_id", type text}, {"business_unit_id", type text}, {"warehouse_id", type text}, {"buyer_id", type text}, {"contract_id", type text}, {"is_committed", type logical}, {"line_net_amount", type number}, {"ppv_amount", type number}, {"baseline_value", type number}, {"contract_valid_at_order_source", type logical}, {"contract_flag_conflict", type logical}, {"promise_revised_flag", type logical}}, "en-IN")
+				in
+				    Typed
+

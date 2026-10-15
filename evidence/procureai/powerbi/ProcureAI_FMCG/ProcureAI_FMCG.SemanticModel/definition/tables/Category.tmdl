@@ -1,0 +1,36 @@
+table Category
+	lineageTag: 6bcfa316-42c3-5ba6-92dd-248d32b31032
+
+	column category_id
+		dataType: string
+		isHidden
+		lineageTag: acf8da2c-8b5c-5127-b11a-4311898d2a0a
+		summarizeBy: none
+		sourceColumn: category_id
+
+	column category_name
+		dataType: string
+		lineageTag: 7a6a478d-8cba-5339-aed8-267a61161b07
+		summarizeBy: none
+		sourceColumn: category_name
+
+	column category_group
+		dataType: string
+		lineageTag: 9aa94b51-18b7-590a-a805-a3ec93d22430
+		summarizeBy: none
+		sourceColumn: category_group
+
+	partition Category = m
+		mode: import
+		source =
+				// Power Query M — table 'Category'. Parameters: pServer, pDatabase, pSourceMode ("PostgreSQL" | "CsvFolder"), pCsvFolder
+				let
+				    Source = if pSourceMode = "PostgreSQL" then
+				        PostgreSQL.Database(pServer, pDatabase, [Query = "SELECT category_id, category_name, category_group FROM mart.dim_category", CreateNavigationProperties = false])
+				    else
+				        Csv.Document(Binary.Decompress(File.Contents(pCsvFolder & "\category.csv.gz"), Compression.GZip), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = if pSourceMode = "PostgreSQL" then Source else Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"category_id", type text}, {"category_name", type text}, {"category_group", type text}}, "en-IN")
+				in
+				    Typed
+

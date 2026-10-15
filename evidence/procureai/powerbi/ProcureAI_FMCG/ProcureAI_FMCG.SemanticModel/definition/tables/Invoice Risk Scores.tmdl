@@ -1,0 +1,267 @@
+table 'Invoice Risk Scores'
+	lineageTag: ab5333a6-1930-56d1-bac7-b0b52f2f8c94
+
+	/// Gradient-boosted model PR-AUC on the three hard conditions (test window, Python evaluation).
+	measure 'Invoice Model PR-AUC (hard cases)' = CALCULATE ( MAX ( 'Model Results'[value] ), 'Model Results'[area] = "Invoice risk", 'Model Results'[metric] = "pr_auc_hard", 'Model Results'[role] = "Model" )
+		formatString: 0.00
+		displayFolder: Model results
+		lineageTag: f7834826-3ace-5628-88a7-03a8f95eda33
+
+	/// Best hand-written rules PR-AUC on the hard conditions.
+	measure 'Invoice Rules PR-AUC (hard cases)' = CALCULATE ( MAX ( 'Model Results'[value] ), 'Model Results'[area] = "Invoice risk", 'Model Results'[metric] = "pr_auc_hard", 'Model Results'[method] = "Best hand-written rules" )
+		formatString: 0.00
+		displayFolder: Model results
+		lineageTag: 6a221148-1f1f-57e6-b817-3a6c33df3a4a
+
+	/// Invoices in the test window that carry an injected condition.
+	measure 'Invoice Test Conditions' = CALCULATE ( COUNTROWS ( 'Invoice Risk Scores' ), 'Invoice Risk Scores'[split] = "Test", 'Invoice Risk Scores'[is_condition] = 1 )
+		formatString: #,##0
+		displayFolder: Model results
+		lineageTag: b85c93ed-7e91-5d1f-85ff-2bb7ad6201c4
+
+	/// Test invoices the model sends for review (review capacity).
+	measure 'Model Flagged Invoices' = CALCULATE ( COUNTROWS ( 'Invoice Risk Scores' ), 'Invoice Risk Scores'[model_flag] = 1 )
+		formatString: #,##0
+		displayFolder: Model results
+		lineageTag: 677db58e-eaba-5ecb-98b1-2fc42398cb55
+
+	/// Flagged invoices that carry a real condition.
+	measure 'Model Hits' = CALCULATE ( COUNTROWS ( 'Invoice Risk Scores' ), 'Invoice Risk Scores'[model_flag] = 1, 'Invoice Risk Scores'[is_condition] = 1 )
+		formatString: #,##0
+		displayFolder: Model results
+		lineageTag: 51ddd7c7-ff69-543c-88c0-5bab6811470b
+
+	/// Share of model flags that are real.
+	measure 'Model Precision' = DIVIDE ( [Model Hits], [Model Flagged Invoices] )
+		formatString: 0.0%
+		displayFolder: Model results
+		lineageTag: 6fa9d65a-fa5f-5b39-ad9a-f71d544636e0
+
+	/// Share of real conditions the model flags.
+	measure 'Model Recall' = DIVIDE ( [Model Hits], [Invoice Test Conditions] )
+		formatString: 0.0%
+		displayFolder: Model results
+		lineageTag: c4fc8c5e-725e-5746-a47b-bc244c6b8dcb
+
+	/// Test invoices the best hand-written rules flag.
+	measure 'Rules Flagged Invoices' = CALCULATE ( COUNTROWS ( 'Invoice Risk Scores' ), 'Invoice Risk Scores'[split] = "Test", 'Invoice Risk Scores'[rules_refined] = 1 )
+		formatString: #,##0
+		displayFolder: Model results
+		lineageTag: 0441dd45-cb14-5d57-8e28-60fb178b8fdf
+
+	/// Rule flags that carry a real condition.
+	measure 'Rules Hits' = CALCULATE ( COUNTROWS ( 'Invoice Risk Scores' ), 'Invoice Risk Scores'[split] = "Test", 'Invoice Risk Scores'[rules_refined] = 1, 'Invoice Risk Scores'[is_condition] = 1 )
+		formatString: #,##0
+		displayFolder: Model results
+		lineageTag: c9827e75-cebd-5aab-b25e-62f1fd41cc33
+
+	/// Share of rule flags that are real.
+	measure 'Rules Precision' = DIVIDE ( [Rules Hits], [Rules Flagged Invoices] )
+		formatString: 0.0%
+		displayFolder: Model results
+		lineageTag: 8f17e5d4-8fdb-5880-90e2-26c45090a0a0
+
+	/// Share of real conditions the rules flag.
+	measure 'Rules Recall' = DIVIDE ( [Rules Hits], [Invoice Test Conditions] )
+		formatString: 0.0%
+		displayFolder: Model results
+		lineageTag: 28aa317f-f674-57e3-adc5-a5ce3193127e
+
+	/// Share of each condition the best rules catch.
+	measure 'Rules Caught %' = AVERAGE ( 'Invoice Condition Catch'[rules_caught] )
+		formatString: 0.0%
+		displayFolder: Model results
+		lineageTag: 5ec284b1-24b0-531f-967d-2fbc1f757d4f
+
+	/// Share of each condition the model catches at review capacity.
+	measure 'Model Caught %' = AVERAGE ( 'Invoice Condition Catch'[model_caught] )
+		formatString: 0.0%
+		displayFolder: Model results
+		lineageTag: 2c716cfe-c16c-5365-a2c4-1829ccb03338
+
+	column invoice_id
+		dataType: string
+		lineageTag: 2a932a06-11b7-5545-967d-abc505f61063
+		summarizeBy: none
+		sourceColumn: invoice_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column invoice_date
+		dataType: dateTime
+		formatString: dd mmm yyyy
+		lineageTag: b83c81f4-a680-5e27-85a0-516c8f453696
+		summarizeBy: none
+		sourceColumn: invoice_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 3953fa97-26c9-5f84-b979-894219696b66
+		summarizeBy: none
+		sourceColumn: date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column supplier_id
+		dataType: string
+		isHidden
+		lineageTag: 1f742aca-85e2-570a-ad76-c058fac4d87e
+		summarizeBy: none
+		sourceColumn: supplier_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column po_id
+		dataType: string
+		lineageTag: 56570b53-dafa-5db9-94cd-3ffb3b8df39e
+		summarizeBy: none
+		sourceColumn: po_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column gross_amount
+		dataType: double
+		formatString: ₹ #,##0
+		lineageTag: cb7d7a32-7cef-5271-b6de-f2f1806f987d
+		summarizeBy: none
+		sourceColumn: gross_amount
+
+		annotation SummarizationSetBy = Automatic
+
+	column rules_policy
+		dataType: int64
+		formatString: 0
+		lineageTag: 5f4ffadc-e99d-5d12-9744-6ec24b16652f
+		summarizeBy: none
+		sourceColumn: rules_policy
+
+		annotation SummarizationSetBy = Automatic
+
+	column rules_refined
+		dataType: int64
+		formatString: 0
+		lineageTag: e8304115-14c2-543f-a995-d088f3d8c231
+		summarizeBy: none
+		sourceColumn: rules_refined
+
+		annotation SummarizationSetBy = Automatic
+
+	column max_price_var
+		dataType: double
+		formatString: 0.0%
+		lineageTag: b5da3a53-31b8-5e6e-8a0f-52c0891e8168
+		summarizeBy: none
+		sourceColumn: max_price_var
+
+		annotation SummarizationSetBy = Automatic
+
+	column supplier_price_drift_120d
+		dataType: double
+		formatString: 0.00%
+		lineageTag: dc3e20d2-ec32-56c3-885f-62673757f01a
+		summarizeBy: none
+		sourceColumn: supplier_price_drift_120d
+
+		annotation SummarizationSetBy = Automatic
+
+	column prior_inv_same_po
+		dataType: int64
+		formatString: 0
+		lineageTag: 8b96cd09-32bd-575a-a775-567d1ebeb8a2
+		summarizeBy: none
+		sourceColumn: prior_inv_same_po
+
+		annotation SummarizationSetBy = Automatic
+
+	column similar_number_seen
+		dataType: int64
+		formatString: 0
+		lineageTag: 050fe88b-4aa4-5ced-8708-55a401cf2e6c
+		summarizeBy: none
+		sourceColumn: similar_number_seen
+
+		annotation SummarizationSetBy = Automatic
+
+	column split
+		dataType: string
+		lineageTag: 802c1dd7-2cda-5de4-ac85-623ee75a7be6
+		summarizeBy: none
+		sourceColumn: split
+
+		annotation SummarizationSetBy = Automatic
+
+	column model_score
+		dataType: double
+		formatString: 0.000
+		lineageTag: fed0dd57-7fd3-540f-a523-2328b53096d4
+		summarizeBy: none
+		sourceColumn: model_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column model_flag
+		dataType: int64
+		formatString: 0
+		lineageTag: 2a91dc73-5fd4-5912-b245-cfa50eefbf69
+		summarizeBy: none
+		sourceColumn: model_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column condition
+		dataType: string
+		lineageTag: df78f3c3-ba39-53dd-919e-1dff2603e378
+		summarizeBy: none
+		sourceColumn: condition
+
+		annotation SummarizationSetBy = Automatic
+
+	column condition_group
+		dataType: string
+		lineageTag: 3f1fdd94-48f4-5843-be78-3c5131507ae3
+		summarizeBy: none
+		sourceColumn: condition_group
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_condition
+		dataType: int64
+		formatString: 0
+		lineageTag: 74257b47-a733-5087-8818-400088c1b854
+		summarizeBy: none
+		sourceColumn: is_condition
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Model Says' = IF ( 'Invoice Risk Scores'[model_flag] = 1, "Review", "Pass" )
+		dataType: string
+		lineageTag: f593a9ff-4546-5bd9-b966-cbac47907b05
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Rules Say' = IF ( 'Invoice Risk Scores'[rules_refined] = 1, "Flag", "Pass" )
+		dataType: string
+		lineageTag: bc689d7a-2757-5f45-8a14-ee4ff5054911
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Invoice Risk Scores' = m
+		mode: import
+		source =
+				// Power Query M — table 'Invoice Risk Scores'. Model results, October 2026 rebuild. Parameter: pModelFolder
+				let
+				    Source = Csv.Document(File.Contents(pModelFolder & "\invoice_risk_scores.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Nulls = Table.ReplaceValue(Promoted, "", null, Replacer.ReplaceValue, {"po_id", "model_score", "max_price_var"}),
+				    Typed = Table.TransformColumnTypes(Nulls, {{"invoice_id", type text}, {"invoice_date", type date}, {"date_key", Int64.Type}, {"supplier_id", type text}, {"po_id", type text}, {"gross_amount", type number}, {"rules_policy", Int64.Type}, {"rules_refined", Int64.Type}, {"max_price_var", type number}, {"supplier_price_drift_120d", type number}, {"prior_inv_same_po", Int64.Type}, {"similar_number_seen", Int64.Type}, {"split", type text}, {"model_score", type number}, {"model_flag", Int64.Type}, {"condition", type text}, {"condition_group", type text}, {"is_condition", Int64.Type}}, "en-US")
+				in
+				    Typed
+

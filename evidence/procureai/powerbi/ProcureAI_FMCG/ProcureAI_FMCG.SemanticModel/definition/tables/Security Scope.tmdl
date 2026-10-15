@@ -1,0 +1,44 @@
+table 'Security Scope'
+	isHidden
+	lineageTag: 34b5eeb7-c241-5711-ba2e-bbe91e567677
+
+	column principal
+		dataType: string
+		isHidden
+		lineageTag: 10bbd1d8-c0d0-5a74-bc01-4091571c0c2c
+		summarizeBy: none
+		sourceColumn: principal
+
+	column rls_role
+		dataType: string
+		isHidden
+		lineageTag: ef1fc46c-21a4-5ede-ba8b-b00ef4cccc52
+		summarizeBy: none
+		sourceColumn: rls_role
+
+	column business_unit_id
+		dataType: string
+		isHidden
+		lineageTag: d28b0ad6-f134-5247-84df-249a61bb3e08
+		summarizeBy: none
+		sourceColumn: business_unit_id
+
+	column category_id
+		dataType: string
+		isHidden
+		lineageTag: 9fa3cf01-c4ae-5933-894b-94afa5ff025c
+		summarizeBy: none
+		sourceColumn: category_id
+
+	partition 'Security Scope' = m
+		mode: import
+		source =
+				let
+				    Source = if pSourceMode = "PostgreSQL" then
+				        PostgreSQL.Database(pServer, pDatabase, [Query = "SELECT principal, rls_role, business_unit_id, category_id FROM mart.security_scope", CreateNavigationProperties = false])
+				    else
+				        Table.PromoteHeaders(Csv.Document(Binary.Decompress(File.Contents(pCsvFolder & "\security_scope.csv.gz"), Compression.GZip), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]), [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Source, {{"principal", type text}, {"rls_role", type text}, {"business_unit_id", type text}, {"category_id", type text}})
+				in
+				    Typed
+

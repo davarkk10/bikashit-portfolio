@@ -1,0 +1,66 @@
+table Supplier
+	lineageTag: de6d39ed-77c5-5fa2-bb3b-993e37697757
+
+	column supplier_id
+		dataType: string
+		isHidden
+		lineageTag: c6eeb19c-9009-5d60-80cd-668d7f8b3473
+		summarizeBy: none
+		sourceColumn: supplier_id
+
+	column supplier_name
+		dataType: string
+		lineageTag: d1f95073-336b-579c-9361-e7d5068b32bd
+		summarizeBy: none
+		sourceColumn: supplier_name
+
+	column city
+		dataType: string
+		lineageTag: 01d61da6-3bca-5211-9a71-e2f2b6e153a2
+		summarizeBy: none
+		sourceColumn: city
+
+	column site_state
+		dataType: string
+		lineageTag: ada591e9-6b0d-583b-a178-595a40c0361e
+		summarizeBy: none
+		sourceColumn: site_state
+
+	column primary_category_name
+		dataType: string
+		lineageTag: c1c51e12-a9cd-5233-93b8-a106d36bb828
+		summarizeBy: none
+		sourceColumn: primary_category_name
+
+	column payment_term_name
+		dataType: string
+		lineageTag: 6e3f2f37-8343-5e9f-b929-2a3c962e8c0f
+		summarizeBy: none
+		sourceColumn: payment_term_name
+
+	column risk_tier
+		dataType: string
+		lineageTag: a8bac388-ef3d-5ded-bb1d-93200aa4d084
+		summarizeBy: none
+		sourceColumn: risk_tier
+
+	column supplier_status
+		dataType: string
+		lineageTag: d9a338e7-d059-5f8c-bad1-2262f343fa2d
+		summarizeBy: none
+		sourceColumn: supplier_status
+
+	partition Supplier = m
+		mode: import
+		source =
+				// Power Query M — table 'Supplier'. Parameters: pServer, pDatabase, pSourceMode ("PostgreSQL" | "CsvFolder"), pCsvFolder
+				let
+				    Source = if pSourceMode = "PostgreSQL" then
+				        PostgreSQL.Database(pServer, pDatabase, [Query = "SELECT supplier_id, supplier_name, city, site_state, primary_category_name, payment_term_name, risk_tier, supplier_status FROM mart.dim_supplier", CreateNavigationProperties = false])
+				    else
+				        Csv.Document(Binary.Decompress(File.Contents(pCsvFolder & "\supplier.csv.gz"), Compression.GZip), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = if pSourceMode = "PostgreSQL" then Source else Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"supplier_id", type text}, {"supplier_name", type text}, {"city", type text}, {"site_state", type text}, {"primary_category_name", type text}, {"payment_term_name", type text}, {"risk_tier", type text}, {"supplier_status", type text}}, "en-IN")
+				in
+				    Typed
+

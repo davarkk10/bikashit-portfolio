@@ -1,0 +1,116 @@
+table 'Contract QA'
+	lineageTag: 06aea417-c3db-517c-85eb-b21207b34f18
+
+	/// Questions in the locked unseen set.
+	measure 'Contract Questions' = COUNTROWS ( 'Contract QA' )
+		formatString: #,##0
+		displayFolder: Model results
+		lineageTag: 1964e1c8-d968-51e5-b7b4-ad9133cc62d7
+
+	/// Correct answers plus correct refusals.
+	measure 'Contract Correct' = SUM ( 'Contract QA'[is_correct] )
+		formatString: #,##0
+		displayFolder: Model results
+		lineageTag: be22758c-3482-5833-80b8-063725e70c8a
+
+	/// Share answered correctly.
+	measure 'Contract Accuracy' = DIVIDE ( [Contract Correct], [Contract Questions] )
+		formatString: 0.0%
+		displayFolder: Model results
+		lineageTag: af7856df-fe81-5f71-b7c3-206d65f963a7
+
+	/// Correct out of total, as text.
+	measure 'Contract Score' = FORMAT ( [Contract Correct], "0" ) & " / " & FORMAT ( [Contract Questions], "0" )
+		displayFolder: Model results
+		lineageTag: 88f263f5-1a47-550f-ae8d-0286d81bc1f9
+
+	/// Answers given that were wrong.
+	measure 'Contract Wrong Answers' = CALCULATE ( COUNTROWS ( 'Contract QA' ), 'Contract QA'[result] = "Wrong answer" ) + 0
+		formatString: 0
+		displayFolder: Model results
+		lineageTag: 014359be-10ba-594a-be72-12e9e2a1d028
+
+	/// Unanswerable questions correctly refused.
+	measure 'Contract Refusals Correct' = FORMAT ( CALCULATE ( SUM ( 'Contract QA'[is_correct] ), 'Contract QA'[answerable] = 0 ), "0" ) & " / " & FORMAT ( CALCULATE ( COUNTROWS ( 'Contract QA' ), 'Contract QA'[answerable] = 0 ), "0" )
+		displayFolder: Model results
+		lineageTag: 938134a6-508e-5fef-a24d-71a4805c695d
+
+	column question_no
+		dataType: int64
+		formatString: 0
+		lineageTag: e7fd4817-a2fc-5401-b1ac-a519b3ba9ab9
+		summarizeBy: none
+		sourceColumn: question_no
+
+		annotation SummarizationSetBy = Automatic
+
+	column question
+		dataType: string
+		lineageTag: 8f4132ff-7e87-5bb8-aed0-3e22168201e2
+		summarizeBy: none
+		sourceColumn: question
+
+		annotation SummarizationSetBy = Automatic
+
+	column question_type
+		dataType: string
+		lineageTag: 90b98186-fc0f-5071-a84b-2f5dea250b88
+		summarizeBy: none
+		sourceColumn: question_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column answerable
+		dataType: int64
+		formatString: 0
+		lineageTag: c4783fff-198f-58b8-88e2-3135887c4054
+		summarizeBy: none
+		sourceColumn: answerable
+
+		annotation SummarizationSetBy = Automatic
+
+	column result
+		dataType: string
+		lineageTag: f7cac666-9a86-5469-b977-1714cfaa5c14
+		summarizeBy: none
+		sourceColumn: result
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_correct
+		dataType: int64
+		formatString: 0
+		lineageTag: 831abd23-8e6d-5f05-937c-e7a80042ec65
+		summarizeBy: none
+		sourceColumn: is_correct
+
+		annotation SummarizationSetBy = Automatic
+
+	column answer
+		dataType: string
+		lineageTag: b3ab658b-4819-5f2f-8d50-63ca6621df5a
+		summarizeBy: none
+		sourceColumn: answer
+
+		annotation SummarizationSetBy = Automatic
+
+	column citation
+		dataType: string
+		lineageTag: 9039d5c8-5d7d-5543-867c-9fd914857e8c
+		summarizeBy: none
+		sourceColumn: citation
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Contract QA' = m
+		mode: import
+		source =
+				// Power Query M — table 'Contract QA'. Model results, October 2026 rebuild. Parameter: pModelFolder
+				let
+				    Source = Csv.Document(File.Contents(pModelFolder & "\contract_qa.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Nulls = Table.ReplaceValue(Promoted, "", null, Replacer.ReplaceValue, {"citation"}),
+				    Typed = Table.TransformColumnTypes(Nulls, {{"question_no", Int64.Type}, {"question", type text}, {"question_type", type text}, {"answerable", Int64.Type}, {"result", type text}, {"is_correct", Int64.Type}, {"answer", type text}, {"citation", type text}}, "en-US")
+				in
+				    Typed
+

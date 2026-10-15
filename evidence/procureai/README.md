@@ -12,7 +12,7 @@ This is an independent portfolio proof of concept built on a deterministic **syn
 
 1. Read [`docs/claims_register.md`](docs/claims_register.md) for the distinction between measured local outputs and native-system work still pending.
 2. Read [`database/09_decision_queries.sql`](database/09_decision_queries.sql) for the intended analytical questions. The PostgreSQL scripts are part of the larger build pack; these queries are shown for review, **not** represented as server-run results.
-3. Open [`powerbi/measures.dax`](powerbi/measures.dax) for the semantic KPI definitions. A Power BI project for the October 2026 model results is in [`powerbi/ProcureAI_Model_Results`](powerbi/ProcureAI_Model_Results) (build notes in [`powerbi/build`](powerbi/build)).
+3. Open [`powerbi/measures.dax`](powerbi/measures.dax) for the semantic KPI definitions. The full 12-page report, including the October 2026 model results on pages 09–11, is a Power BI project in [`powerbi/ProcureAI_FMCG`](powerbi/ProcureAI_FMCG) (build scripts in [`powerbi/build`](powerbi/build)).
 4. Read [`reports/final_acceptance.md`](reports/final_acceptance.md) and the [machine-readable gate result](artifacts/final_regression/final_regression.json). These are retained evidence from the source release, not evidence of a native cloud deployment.
 5. Open [`src/api.py`](src/api.py) to inspect the FastAPI decision-support layer that exposes validated marts to workflow and application clients.
 

@@ -1,0 +1,153 @@
+table Contract
+	lineageTag: 84e7946d-8139-50cd-b73b-249c7889546d
+
+	column contract_id
+		dataType: string
+		isHidden
+		lineageTag: 9b3ed8dc-4beb-5343-818c-45b5ab3e371d
+		summarizeBy: none
+		sourceColumn: contract_id
+
+	column supplier_id
+		dataType: string
+		isHidden
+		lineageTag: 3f271ef7-4236-59cb-9bb5-ec8f8c822d48
+		summarizeBy: none
+		sourceColumn: supplier_id
+
+	column contract_title
+		dataType: string
+		lineageTag: 4a76b52f-5f8b-5c9a-8fb4-6174927dec06
+		summarizeBy: none
+		sourceColumn: contract_title
+
+	column contract_type
+		dataType: string
+		lineageTag: 7d0db780-68e2-531c-a9bf-d40ca167e2b6
+		summarizeBy: none
+		sourceColumn: contract_type
+
+	column start_date
+		dataType: dateTime
+		formatString: dd-mmm-yyyy
+		lineageTag: 109ce195-4c67-5d4d-86f3-0aa2845b9bb2
+		summarizeBy: none
+		sourceColumn: start_date
+
+		variation Variation
+			isDefault
+			relationship: 22389649-0bb7-4a17-9685-4b1fb0ce3fc4
+			defaultHierarchy: LocalDateTable_e1f0b830-1f17-47f2-8fe8-324e8db94f5d.'Date Hierarchy'
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column end_date
+		dataType: dateTime
+		formatString: dd-mmm-yyyy
+		lineageTag: dd30610b-f728-55ee-96c2-2d76ee265f3f
+		summarizeBy: none
+		sourceColumn: end_date
+
+		variation Variation
+			isDefault
+			relationship: 66f0ff6d-214d-43a9-88a5-dc52b81a2ad8
+			defaultHierarchy: LocalDateTable_2270463c-7d2d-4d60-9a3b-2fbfd6da1665.'Date Hierarchy'
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column contract_status_current
+		dataType: string
+		lineageTag: fdca152c-3c17-54f9-8b7e-be745828e542
+		summarizeBy: none
+		sourceColumn: contract_status_current
+
+	column contract_value
+		dataType: double
+		lineageTag: 57262d47-35f6-5b59-92f6-14bfc2503f5f
+		summarizeBy: sum
+		sourceColumn: contract_value
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_term_name
+		dataType: string
+		lineageTag: d8e8b6d7-4c67-5d72-b1a3-254bdd7e8b35
+		summarizeBy: none
+		sourceColumn: payment_term_name
+
+	column price_escalation_cap_pct
+		dataType: double
+		lineageTag: d584db47-72d1-59ec-bc3d-ff1be2b38ca3
+		summarizeBy: sum
+		sourceColumn: price_escalation_cap_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column termination_notice_days
+		dataType: double
+		lineageTag: 851451de-3183-5a6d-af07-1f06796b221c
+		summarizeBy: sum
+		sourceColumn: termination_notice_days
+
+		annotation SummarizationSetBy = Automatic
+
+	column auto_renewal_flag
+		dataType: boolean
+		lineageTag: 7585e8cc-02f6-567b-8605-579a3b4013c1
+		summarizeBy: none
+		sourceColumn: auto_renewal_flag
+
+	column governing_law_state
+		dataType: string
+		lineageTag: 2b6183de-0ca0-5c3a-8df4-177ff96e8588
+		summarizeBy: none
+		sourceColumn: governing_law_state
+
+	column document_path
+		dataType: string
+		lineageTag: 32da5432-1d9b-5287-b5c9-912567849ad2
+		summarizeBy: none
+		sourceColumn: document_path
+
+	column amendment_count
+		dataType: int64
+		lineageTag: e0958d65-7c56-5d05-8fa0-4a2029f47e76
+		summarizeBy: sum
+		sourceColumn: amendment_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column expiry_bucket
+		dataType: string
+		lineageTag: a9f79b28-1593-54f8-901e-2b8d27ac441e
+		summarizeBy: none
+		sourceColumn: expiry_bucket
+
+	column notice_deadline_date
+		dataType: dateTime
+		formatString: dd-mmm-yyyy
+		lineageTag: 8c022251-e215-5d92-a842-8698f75feeda
+		summarizeBy: none
+		sourceColumn: notice_deadline_date
+
+		variation Variation
+			isDefault
+			relationship: 49047c4f-38da-46a2-ab90-8515c9ee8cfd
+			defaultHierarchy: LocalDateTable_0c1d444c-77b7-4f9f-878c-071fbf3ae13a.'Date Hierarchy'
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition Contract = m
+		mode: import
+		source =
+				// Power Query M — table 'Contract'. Parameters: pServer, pDatabase, pSourceMode ("PostgreSQL" | "CsvFolder"), pCsvFolder
+				let
+				    Source = if pSourceMode = "PostgreSQL" then
+				        PostgreSQL.Database(pServer, pDatabase, [Query = "SELECT contract_id, supplier_id, contract_title, contract_type, start_date, end_date, contract_status_current, contract_value, payment_term_name, price_escalation_cap_pct, termination_notice_days, auto_renewal_flag, governing_law_state, document_path, amendment_count, expiry_bucket, notice_deadline_date FROM mart.dim_contract", CreateNavigationProperties = false])
+				    else
+				        Csv.Document(Binary.Decompress(File.Contents(pCsvFolder & "\contract.csv.gz"), Compression.GZip), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = if pSourceMode = "PostgreSQL" then Source else Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"contract_id", type text}, {"supplier_id", type text}, {"contract_title", type text}, {"contract_type", type text}, {"start_date", type date}, {"end_date", type date}, {"contract_status_current", type text}, {"contract_value", type number}, {"payment_term_name", type text}, {"price_escalation_cap_pct", type number}, {"termination_notice_days", type number}, {"auto_renewal_flag", type logical}, {"governing_law_state", type text}, {"document_path", type text}, {"amendment_count", Int64.Type}, {"expiry_bucket", type text}, {"notice_deadline_date", type date}}, "en-IN")
+				in
+				    Typed
+

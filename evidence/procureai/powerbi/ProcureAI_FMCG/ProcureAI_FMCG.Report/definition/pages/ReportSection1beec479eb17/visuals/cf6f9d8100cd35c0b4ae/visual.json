@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "cf6f9d8100cd35c0b4ae",
+  "position": {
+    "x": 595.54230389118754,
+    "y": 39.794301412083954,
+    "z": 19000,
+    "height": 52.1442570227307,
+    "width": 375.98753747968982,
+    "tabOrder": 19000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Jan 2024 and Jan 2026 are lower because invoices arrive after orders: start and end of the data, not a drop in spending",
+                    "textStyle": {
+                      "fontStyle": "italic",
+                      "fontSize": "9pt",
+                      "color": "#e6e6e6"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

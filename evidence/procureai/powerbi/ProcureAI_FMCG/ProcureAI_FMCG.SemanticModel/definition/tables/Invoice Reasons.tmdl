@@ -1,0 +1,35 @@
+table 'Invoice Reasons'
+	lineageTag: 5bd7b925-a79e-5e73-a9df-ab9a275af1a2
+
+	column invoice_id
+		dataType: string
+		isHidden
+		lineageTag: 89f84a11-225b-5838-a87f-a48ecf74ff51
+		summarizeBy: none
+		sourceColumn: invoice_id
+
+	column reason_code
+		dataType: string
+		isHidden
+		lineageTag: 71127cb8-1fd3-578e-8b48-f5f342a60fcd
+		sourceColumn: reason_code
+
+	column evidence_text
+		dataType: string
+		lineageTag: a2a34532-55fc-506d-8c04-0b2d567d51d6
+		sourceColumn: evidence_text
+
+	partition 'Invoice Reasons' = m
+		mode: import
+		source =
+				// Power Query M — table 'Invoice Reasons'. Parameters: pServer, pDatabase, pSourceMode ("PostgreSQL" | "CsvFolder"), pCsvFolder
+				let
+				    Source = if pSourceMode = "PostgreSQL" then
+				        PostgreSQL.Database(pServer, pDatabase, [Query = "SELECT invoice_id, reason_code, evidence_text FROM mart.bridge_invoice_reason", CreateNavigationProperties = false])
+				    else
+				        Csv.Document(Binary.Decompress(File.Contents(pCsvFolder & "\invoice_reasons.csv.gz"), Compression.GZip), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = if pSourceMode = "PostgreSQL" then Source else Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"invoice_id", type text}, {"reason_code", type text}, {"evidence_text", type text}}, "en-IN")
+				in
+				    Typed
+

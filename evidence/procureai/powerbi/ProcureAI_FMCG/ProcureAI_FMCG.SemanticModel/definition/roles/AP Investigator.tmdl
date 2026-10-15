@@ -1,0 +1,11 @@
+role 'AP Investigator'
+	modelPermission: read
+
+	tablePermission 'Realized Spend' = FALSE()
+
+	tablePermission 'PO Lines' = FALSE()
+
+	tablePermission 'Contract Expiry' = FALSE()
+
+	annotation PBI_Id = 6d991a45da2c4c5ab941d89580b19bb0
+

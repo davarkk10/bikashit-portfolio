@@ -1,0 +1,25 @@
+expression pServer = "localhost:5432" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]
+	lineageTag: 274bff77-c273-54c4-91d9-ee5845b935d2
+
+	annotation PBI_ResultType = Text
+
+expression pDatabase = "procureai" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]
+	lineageTag: dda9a080-6604-5a66-b223-bc618f7e8beb
+
+	annotation PBI_ResultType = Text
+
+expression pSourceMode = "CsvFolder" meta [IsParameterQuery = true, Type = "Text", List = {"PostgreSQL", "CsvFolder"}, IsParameterQueryRequired = true]
+	lineageTag: e2b4e8f1-2eeb-5ebb-a073-edf2f35b3794
+
+	annotation PBI_ResultType = Text
+
+expression pCsvFolder = "C:\Users\bbaru\Downloads\ProcureAI_FMCG_local\bi\data" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = false]
+	lineageTag: 908dc561-57ce-5061-9666-55ea29432194
+
+	annotation PBI_ResultType = Text
+
+expression pModelFolder = "D:\power bi\Power Bi 2026\ProcureAI_FMCG_v2_pbip\model_results" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]
+	lineageTag: 41312fa9-ad94-539f-b92a-3beeeb2d7b2c
+
+	annotation PBI_ResultType = Text
+

@@ -1,0 +1,330 @@
+table 'PO Delay Scores'
+	lineageTag: 53b05d1d-db1d-51c8-b740-b96c1378c5dc
+
+	/// Each supplier's past late rate used as the score.
+	measure 'Delay Baseline PR-AUC' = CALCULATE ( MAX ( 'Model Results'[value] ), 'Model Results'[area] = "Late delivery", 'Model Results'[metric] = "pr_auc", 'Model Results'[role] = "Baseline" )
+		formatString: 0.00
+		displayFolder: Model results
+		lineageTag: 4c503c1c-05c8-584b-b654-9ce22ffa7bfe
+
+	/// Logistic regression scored when the PO is raised.
+	measure 'Delay PR-AUC (order time)' = CALCULATE ( MAX ( 'Model Results'[value] ), 'Model Results'[area] = "Late delivery", 'Model Results'[metric] = "pr_auc", 'Model Results'[method] = "Logistic regression, order time" )
+		formatString: 0.00
+		displayFolder: Model results
+		lineageTag: 21e4fce1-6617-579e-957b-e9712e8166af
+
+	/// Logistic regression re-scored 3 days before the promised date.
+	measure 'Delay PR-AUC (3 days out)' = CALCULATE ( MAX ( 'Model Results'[value] ), 'Model Results'[area] = "Late delivery", 'Model Results'[metric] = "pr_auc", 'Model Results'[method] = "Logistic regression, 3 days before" )
+		formatString: 0.00
+		displayFolder: Model results
+		lineageTag: 1c115716-2bb1-51c3-8a8b-f717195934a3
+
+	/// Share of POs received after the promised date.
+	measure 'PO Late %' = DIVIDE ( SUM ( 'PO Delay Scores'[late] ), COUNTROWS ( 'PO Delay Scores' ) )
+		formatString: 0.0%
+		displayFolder: Model results
+		lineageTag: cf851782-c2ed-5b6c-89d9-95c2e0efaa99
+
+	/// Late rate in the test window (Jul–Dec 2025).
+	measure 'Test PO Late %' = CALCULATE ( [PO Late %], 'PO Delay Scores'[split] = "Test" )
+		formatString: 0.0%
+		displayFolder: Model results
+		lineageTag: b5eb6b8f-5710-5290-bb68-a2be6d319ded
+
+	/// Average order-time predicted probability of a late delivery.
+	measure 'Avg Predicted Late Risk' = AVERAGE ( 'PO Delay Scores'[p_order] )
+		formatString: 0.0%
+		displayFolder: Model results
+		lineageTag: 1f287c0f-080b-54ce-9222-40863817d1b2
+
+	/// Of the top 25% flagged 3 days out, the share that arrive late.
+	measure 'Flagged PO Late % (3 days out)' = CALCULATE ( [PO Late %], 'PO Delay Scores'[flag_pre] = 1 )
+		formatString: 0.0%
+		displayFolder: Model results
+		lineageTag: 606a4cd6-ff21-5602-b52a-612b0fa984d5
+
+	/// Share of late test POs inside the flagged top 25%.
+	measure 'Late POs Caught (3 days out)' = DIVIDE ( CALCULATE ( SUM ( 'PO Delay Scores'[late] ), 'PO Delay Scores'[flag_pre] = 1 ), CALCULATE ( SUM ( 'PO Delay Scores'[late] ), 'PO Delay Scores'[split] = "Test" ) )
+		formatString: 0.0%
+		displayFolder: Model results
+		lineageTag: 5081ec3f-20b2-5835-a0bc-62893389d385
+
+	/// Validation PR-AUC lost when the driver is removed.
+	measure 'Delay Driver Importance' = SUM ( 'Delay Drivers'[pr_auc_lost_when_removed] )
+		formatString: 0.000
+		displayFolder: Model results
+		lineageTag: 0fe28125-78e8-5e91-8c0f-42344d0dd454
+
+	column po_id
+		dataType: string
+		lineageTag: 05e4fcf3-f0a9-5e70-ab85-18592ae6fe5c
+		summarizeBy: none
+		sourceColumn: po_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 071fd99a-10fa-5c8d-84b4-aadc81b442b8
+		summarizeBy: none
+		sourceColumn: order_date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_date
+		dataType: dateTime
+		formatString: dd mmm yyyy
+		lineageTag: 16f8d085-e7a4-5cd3-aede-6858b5c80547
+		summarizeBy: none
+		sourceColumn: order_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column promised_date
+		dataType: dateTime
+		formatString: dd mmm yyyy
+		lineageTag: 336413f9-2800-531c-89b4-615f817fc1e3
+		summarizeBy: none
+		sourceColumn: promised_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column receipt_date
+		dataType: dateTime
+		formatString: dd mmm yyyy
+		lineageTag: 80a41a15-65ae-569e-8a03-04dd0492f472
+		summarizeBy: none
+		sourceColumn: receipt_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column supplier_id
+		dataType: string
+		isHidden
+		lineageTag: f1f36ac5-eabf-513e-b243-e6bc8c885314
+		summarizeBy: none
+		sourceColumn: supplier_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column warehouse_id
+		dataType: string
+		isHidden
+		lineageTag: a47afecb-8e53-50d8-a57e-e22f972e75f0
+		summarizeBy: none
+		sourceColumn: warehouse_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column po_value
+		dataType: double
+		formatString: ₹ #,##0
+		lineageTag: d91a11e9-70e3-55bd-b92a-e06ff8f5f3cb
+		summarizeBy: none
+		sourceColumn: po_value
+
+		annotation SummarizationSetBy = Automatic
+
+	column late
+		dataType: int64
+		formatString: 0
+		lineageTag: d8935617-978e-5646-b9e7-f60c8636cda2
+		summarizeBy: none
+		sourceColumn: late
+
+		annotation SummarizationSetBy = Automatic
+
+	column lead_days
+		dataType: int64
+		formatString: 0
+		lineageTag: 525eb727-8f8b-57f8-866f-489951627dca
+		summarizeBy: none
+		sourceColumn: lead_days
+
+		annotation SummarizationSetBy = Automatic
+
+	column quoted_lead_time_days
+		dataType: int64
+		formatString: 0
+		lineageTag: 080378e5-6e9a-5653-986b-c55e60a3e934
+		summarizeBy: none
+		sourceColumn: quoted_lead_time_days
+
+		annotation SummarizationSetBy = Automatic
+
+	column promise_slack_days
+		dataType: int64
+		formatString: 0
+		lineageTag: e2c191f9-314d-5288-8978-9be6a85bce0f
+		summarizeBy: none
+		sourceColumn: promise_slack_days
+
+		annotation SummarizationSetBy = Automatic
+
+	column road_distance_km
+		dataType: double
+		formatString: #,##0
+		lineageTag: 5637eee2-90cd-5b41-a8ab-edc118a3dfcc
+		summarizeBy: none
+		sourceColumn: road_distance_km
+
+		annotation SummarizationSetBy = Automatic
+
+	column route_type
+		dataType: string
+		lineageTag: b732045e-762b-54f4-abe6-b3d39cce500c
+		summarizeBy: none
+		sourceColumn: route_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column utilisation
+		dataType: double
+		formatString: 0.00
+		lineageTag: 3c9fdcab-efb7-5ef9-a364-d80edfa4f8fb
+		summarizeBy: none
+		sourceColumn: utilisation
+
+		annotation SummarizationSetBy = Automatic
+
+	column festival_window
+		dataType: int64
+		formatString: 0
+		lineageTag: 6ae43765-354a-5a54-be57-cfddad419515
+		summarizeBy: none
+		sourceColumn: festival_window
+
+		annotation SummarizationSetBy = Automatic
+
+	column dest_flood_risk
+		dataType: double
+		formatString: 0.00
+		lineageTag: e5978a74-3f47-55e7-8f1f-31b238e39eda
+		summarizeBy: none
+		sourceColumn: dest_flood_risk
+
+		annotation SummarizationSetBy = Automatic
+
+	column dispatched_by_rescore
+		dataType: int64
+		formatString: 0
+		lineageTag: 1d4eda09-457f-5f9a-b3fa-25a727967b94
+		summarizeBy: none
+		sourceColumn: dispatched_by_rescore
+
+		annotation SummarizationSetBy = Automatic
+
+	column dispatch_slip_seen
+		dataType: int64
+		formatString: 0
+		lineageTag: 69c6f9e3-ffd9-57aa-ba4b-ac43a5dba8ed
+		summarizeBy: none
+		sourceColumn: dispatch_slip_seen
+
+		annotation SummarizationSetBy = Automatic
+
+	column advisory
+		dataType: int64
+		formatString: 0
+		lineageTag: fb3e70d1-7d99-5996-b3e8-6abd84b1063c
+		summarizeBy: none
+		sourceColumn: advisory
+
+		annotation SummarizationSetBy = Automatic
+
+	column supplier_past_late_rate
+		dataType: double
+		formatString: 0.0%
+		lineageTag: 76949089-02b3-5c11-a292-42dca077eb83
+		summarizeBy: none
+		sourceColumn: supplier_past_late_rate
+
+		annotation SummarizationSetBy = Automatic
+
+	column split
+		dataType: string
+		lineageTag: 4af6b587-88a1-506b-bde5-64a8e930a360
+		summarizeBy: none
+		sourceColumn: split
+
+		annotation SummarizationSetBy = Automatic
+
+	column p_order
+		dataType: double
+		formatString: 0.000
+		lineageTag: bb500333-dde8-5540-9c08-a6d520d4e82b
+		summarizeBy: none
+		sourceColumn: p_order
+
+		annotation SummarizationSetBy = Automatic
+
+	column p_pre
+		dataType: double
+		formatString: 0.000
+		lineageTag: 415f8c4f-a394-5156-b598-b6d2aa7a5738
+		summarizeBy: none
+		sourceColumn: p_pre
+
+		annotation SummarizationSetBy = Automatic
+
+	column flag_order
+		dataType: int64
+		formatString: 0
+		lineageTag: ce5fa004-61a0-5ca3-bb18-570d4238d36c
+		summarizeBy: none
+		sourceColumn: flag_order
+
+		annotation SummarizationSetBy = Automatic
+
+	column flag_pre
+		dataType: int64
+		formatString: 0
+		lineageTag: bd8b2711-b649-5f10-99f7-2048eaa2458d
+		summarizeBy: none
+		sourceColumn: flag_pre
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Delivery Outcome' = IF ( 'PO Delay Scores'[late] = 1, "Late", "On time" )
+		dataType: string
+		lineageTag: d764a5db-b55f-5f17-a02c-50b9d9b9783d
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Supplier Load Band' = SWITCH ( TRUE (), 'PO Delay Scores'[utilisation] < 0.8, "Under 80%", 'PO Delay Scores'[utilisation] < 1.0, "80–100%", 'PO Delay Scores'[utilisation] < 1.2, "100–120%", "Over 120%" )
+		dataType: string
+		lineageTag: 4ac224e8-1e62-53d6-80f0-55c92f9833c1
+		summarizeBy: none
+		sortByColumn: 'Supplier Load Order'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Supplier Load Order' = SWITCH ( TRUE (), 'PO Delay Scores'[utilisation] < 0.8, 1, 'PO Delay Scores'[utilisation] < 1.0, 2, 'PO Delay Scores'[utilisation] < 1.2, 3, 4 )
+		dataType: int64
+		formatString: 0
+		lineageTag: 1bcb4bf3-0815-5f74-9c79-7a27ceb87fc1
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PO Delay Scores' = m
+		mode: import
+		source =
+				// Power Query M — table 'PO Delay Scores'. Model results, October 2026 rebuild. Parameter: pModelFolder
+				let
+				    Source = Csv.Document(File.Contents(pModelFolder & "\po_delay_scores.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Nulls = Table.ReplaceValue(Promoted, "", null, Replacer.ReplaceValue, {"p_order", "p_pre"}),
+				    Typed = Table.TransformColumnTypes(Nulls, {{"po_id", type text}, {"order_date_key", Int64.Type}, {"order_date", type date}, {"promised_date", type date}, {"receipt_date", type date}, {"supplier_id", type text}, {"warehouse_id", type text}, {"po_value", type number}, {"late", Int64.Type}, {"lead_days", Int64.Type}, {"quoted_lead_time_days", Int64.Type}, {"promise_slack_days", Int64.Type}, {"road_distance_km", type number}, {"route_type", type text}, {"utilisation", type number}, {"festival_window", Int64.Type}, {"dest_flood_risk", type number}, {"dispatched_by_rescore", Int64.Type}, {"dispatch_slip_seen", Int64.Type}, {"advisory", Int64.Type}, {"supplier_past_late_rate", type number}, {"split", type text}, {"p_order", type number}, {"p_pre", type number}, {"flag_order", Int64.Type}, {"flag_pre", Int64.Type}}, "en-US")
+				in
+				    Typed
+

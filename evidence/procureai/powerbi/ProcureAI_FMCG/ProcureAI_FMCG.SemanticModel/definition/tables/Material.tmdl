@@ -1,0 +1,67 @@
+table Material
+	lineageTag: ed7b1537-6e4b-5f41-9088-e214161aa70f
+
+	column material_id
+		dataType: string
+		isHidden
+		lineageTag: 35024cf9-3445-5c5b-995c-130cb3bdc1aa
+		summarizeBy: none
+		sourceColumn: material_id
+
+	column material_name
+		dataType: string
+		lineageTag: 91b21bb7-92d0-52c8-b172-be4f92fdf20e
+		summarizeBy: none
+		sourceColumn: material_name
+
+	column category_id
+		dataType: string
+		isHidden
+		lineageTag: ab464d6d-2af1-50b2-a672-617bacf79b4c
+		summarizeBy: none
+		sourceColumn: category_id
+
+	column category_name
+		dataType: string
+		lineageTag: d6d697d5-fe28-5291-b3be-b5c4367914b4
+		summarizeBy: none
+		sourceColumn: category_name
+
+	column category_group
+		dataType: string
+		lineageTag: eaef87f7-6980-5131-acba-92c25e126372
+		summarizeBy: none
+		sourceColumn: category_group
+
+	column uom
+		dataType: string
+		lineageTag: 8dfcd00d-2d68-542b-a302-249e528e3cb1
+		summarizeBy: none
+		sourceColumn: uom
+
+	column baseline_unit_price
+		dataType: double
+		lineageTag: 5f7356ac-7270-51c5-89ec-62b4a45b2d8b
+		summarizeBy: none
+		sourceColumn: baseline_unit_price
+
+	column is_finished_product
+		dataType: boolean
+		lineageTag: f00540b2-29b9-5c06-a88b-a6a72b523814
+		summarizeBy: none
+		sourceColumn: is_finished_product
+
+	partition Material = m
+		mode: import
+		source =
+				// Power Query M — table 'Material'. Parameters: pServer, pDatabase, pSourceMode ("PostgreSQL" | "CsvFolder"), pCsvFolder
+				let
+				    Source = if pSourceMode = "PostgreSQL" then
+				        PostgreSQL.Database(pServer, pDatabase, [Query = "SELECT material_id, material_name, category_id, category_name, category_group, uom, baseline_unit_price, is_finished_product FROM mart.dim_material", CreateNavigationProperties = false])
+				    else
+				        Csv.Document(Binary.Decompress(File.Contents(pCsvFolder & "\material.csv.gz"), Compression.GZip), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = if pSourceMode = "PostgreSQL" then Source else Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"material_id", type text}, {"material_name", type text}, {"category_id", type text}, {"category_name", type text}, {"category_group", type text}, {"uom", type text}, {"baseline_unit_price", type number}, {"is_finished_product", type logical}}, "en-IN")
+				in
+				    Typed
+

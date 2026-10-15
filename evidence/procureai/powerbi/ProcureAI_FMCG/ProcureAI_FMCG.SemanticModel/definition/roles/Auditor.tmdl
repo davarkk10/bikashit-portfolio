@@ -1,0 +1,7 @@
+role Auditor
+	modelPermission: read
+
+	tablePermission 'Business Unit' = TRUE()
+
+	annotation PBI_Id = f524ec13e8d84ba58fa0552874ab6a1b
+

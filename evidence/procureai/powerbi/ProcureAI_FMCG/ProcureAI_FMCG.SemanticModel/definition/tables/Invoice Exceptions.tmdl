@@ -1,0 +1,215 @@
+table 'Invoice Exceptions'
+	lineageTag: a5a26fd0-70dd-5fb5-b46b-6f62a5450adc
+
+	/// Average approval cycle hours, blank for the partial last month.
+	measure 'Approval Hours (complete months)' = IF ( MAX ( 'Date'[month_start] ) < DATE ( 2026, 2, 1 ), [Average Approval Cycle Hours] )
+		formatString: #,0.0
+		displayFolder: Presentation
+		lineageTag: 53520266-e0f2-57fc-8c52-f35a044b9458
+
+	/// Probable duplicate value in ₹ crore.
+	measure 'Probable Duplicate Cr' = DIVIDE ( [Probable Duplicate Value], 10000000 )
+		formatString: ₹#,0.0 Cr
+		displayFolder: Presentation
+		lineageTag: 00045b2c-2650-5910-9eb5-d84c90385b36
+
+	/// Exception invoice value in ₹ crore.
+	measure 'Exception Value Cr' = DIVIDE ( [Exception Invoice Value], 10000000 )
+		formatString: ₹#,0.0 Cr
+		displayFolder: Presentation
+		lineageTag: 63d90ec1-0a1e-500b-936d-8c91524a5e2e
+
+	/// Mean hours from Submitted to final approval event.
+	measure 'Average Approval Cycle Hours' = AVERAGE ( 'Invoice Exceptions'[approval_cycle_hours] )
+		formatString: #,##0.0
+		displayFolder: Invoices
+		lineageTag: 7482f9e8-b52d-5581-874b-45310016a6e4
+
+	/// Invoices with ≥1 exception reason (missing PO, price, quantity, duplicate, bank change).
+	measure 'Exception Invoice Count' = CALCULATE ( COUNTROWS ( 'Invoice Exceptions' ), 'Invoice Exceptions'[has_exception] = TRUE () )
+		formatString: #,##0
+		displayFolder: Invoices
+		lineageTag: 256392ff-99af-5f19-a549-caf59ffcde88
+
+	/// Gross value of exception invoices.
+	measure 'Exception Invoice Value' = SUM ( 'Invoice Exceptions'[exception_value] )
+		formatString: ₹ #,##0
+		displayFolder: Invoices
+		lineageTag: a53e0e33-53a7-5b48-866f-3855d7bd58e7
+
+	/// Unresolved exceptions (final approval status = Request information).
+	measure 'Open Exception Count' = CALCULATE ( COUNTROWS ( 'Invoice Exceptions' ), 'Invoice Exceptions'[exception_status] = "OPEN" )
+		formatString: #,##0
+		displayFolder: Invoices
+		lineageTag: c8be37d7-99a1-557b-aca0-925351dc33c8
+
+	/// Invoices whose calibrated model band is HIGH or CRITICAL (investigation priority, not fraud).
+	measure 'High-Risk Invoice Count' = CALCULATE ( COUNTROWS ( 'Invoice Exceptions' ), 'Invoice Exceptions'[risk_band] IN { "HIGH", "CRITICAL" } )
+		formatString: #,##0
+		displayFolder: Invoices
+		lineageTag: 100c9901-10f7-58ab-81a5-f4766bc8d3ff
+
+	/// Gross of invoices matching an EARLIER invoice (same supplier; same number or amount in 30 days).
+	measure 'Probable Duplicate Value' = CALCULATE ( SUM ( 'Invoice Exceptions'[invoice_gross_amount] ), 'Invoice Exceptions'[flag_probable_duplicate] = 1 )
+		formatString: ₹ #,##0
+		displayFolder: Invoices
+		lineageTag: 8199bf14-2370-502f-a217-930f1bbc5eee
+
+	/// Exception invoices filtered by Anomaly Type through the reason bridge WITHOUT a bidirectional relationship.
+	measure 'Exception Invoices by Reason' = CALCULATE ( [Exception Invoice Count], TREATAS ( VALUES ( 'Invoice Reasons'[invoice_id] ), 'Invoice Exceptions'[invoice_id] ) )
+		formatString: #,##0
+		displayFolder: Invoices
+		lineageTag: 1a3861a1-0901-521e-8fce-cdcc83661a6b
+
+	column invoice_id
+		dataType: string
+		lineageTag: 8f36dfea-604b-544a-a493-4526be8e3db6
+		summarizeBy: none
+		sourceColumn: invoice_id
+
+	column supplier_id
+		dataType: string
+		isHidden
+		lineageTag: ebc19a8d-4b3d-548e-b443-74bdf337a5fa
+		summarizeBy: none
+		sourceColumn: supplier_id
+
+	column business_unit_id
+		dataType: string
+		isHidden
+		lineageTag: c25dd34b-3d4d-59e6-9364-05a1fcbedb42
+		summarizeBy: none
+		sourceColumn: business_unit_id
+
+	column warehouse_id
+		dataType: string
+		isHidden
+		lineageTag: b4a3ee7b-0921-5f70-8523-99eb2d86dc69
+		summarizeBy: none
+		sourceColumn: warehouse_id
+
+	column buyer_id
+		dataType: string
+		isHidden
+		lineageTag: 233a0a07-e2ba-50bc-9b16-e01fb8f7f73b
+		summarizeBy: none
+		sourceColumn: buyer_id
+
+	column contract_id
+		dataType: string
+		isHidden
+		lineageTag: d23754ea-a135-55de-8469-52e831c6aa9e
+		summarizeBy: none
+		sourceColumn: contract_id
+
+	column date_key
+		dataType: int64
+		isHidden
+		lineageTag: bad23a5c-7535-55ed-a72a-241de8e95af4
+		summarizeBy: none
+		sourceColumn: date_key
+
+	column invoice_gross_amount
+		dataType: double
+		lineageTag: 138ff0c2-0589-5db2-b620-348ce6027960
+		sourceColumn: invoice_gross_amount
+
+	column has_exception
+		dataType: boolean
+		lineageTag: b608139b-aa33-54d2-b876-a7accaeee278
+		sourceColumn: has_exception
+
+	column exception_status
+		dataType: string
+		lineageTag: 0b65f1fb-59d2-5f81-9ec1-8ac729b632c6
+		sourceColumn: exception_status
+
+	column exception_age_days
+		dataType: double
+		lineageTag: bb127c34-3d4c-5cd0-aef3-c271cefefaf2
+		sourceColumn: exception_age_days
+
+	column exception_value
+		dataType: double
+		lineageTag: 9430e58c-5ae6-5176-a0ca-60b72869a372
+		sourceColumn: exception_value
+
+	column flag_missing_po
+		dataType: int64
+		lineageTag: 381f476c-4646-56f0-b49b-3846da161db7
+		sourceColumn: flag_missing_po
+
+	column flag_price_over_tolerance
+		dataType: int64
+		lineageTag: 43d82b4a-9dcb-59a1-b4af-6543f3efb82d
+		sourceColumn: flag_price_over_tolerance
+
+	column flag_qty_over_receipt
+		dataType: int64
+		lineageTag: d7b0fbe2-03fb-5381-8b2d-db2f7752f981
+		sourceColumn: flag_qty_over_receipt
+
+	column flag_probable_duplicate
+		dataType: int64
+		lineageTag: 16eabc56-2df1-5f10-8bab-2403ffd02cf0
+		sourceColumn: flag_probable_duplicate
+
+	column flag_bank_detail_change
+		dataType: int64
+		lineageTag: ef7b6e79-fb3d-570e-ab55-8456dd6a1504
+		sourceColumn: flag_bank_detail_change
+
+	column approval_cycle_hours
+		dataType: double
+		lineageTag: 41c1dd35-7345-5d1a-b03d-e2edff424864
+		sourceColumn: approval_cycle_hours
+
+	column final_approval_status
+		dataType: string
+		lineageTag: bc2b6834-76a5-5ad6-8f66-484cfe3a95b3
+		sourceColumn: final_approval_status
+
+	column is_paid
+		dataType: boolean
+		lineageTag: eca3a620-ed86-51bd-bcc1-805a76b0ac10
+		sourceColumn: is_paid
+
+	column risk_score
+		dataType: double
+		lineageTag: 75a97302-a593-54c4-b141-f2293147221c
+		sourceColumn: risk_score
+
+	column risk_band
+		dataType: string
+		lineageTag: e6032264-6f32-5508-93f5-c7476d4f54f8
+		sourceColumn: risk_band
+
+	column flag_for_review
+		dataType: boolean
+		lineageTag: 996f96ca-a791-57f1-a22b-1af1d97317cc
+		sourceColumn: flag_for_review
+
+	column model_version
+		dataType: string
+		lineageTag: 33c273d3-0e73-526b-93cd-4abe7dc13a26
+		sourceColumn: model_version
+
+	column document_path
+		dataType: string
+		lineageTag: 76322809-4d76-5a04-b40e-e353ca82ee1f
+		sourceColumn: document_path
+
+	partition 'Invoice Exceptions' = m
+		mode: import
+		source =
+				// Power Query M — table 'Invoice Exceptions'. Parameters: pServer, pDatabase, pSourceMode ("PostgreSQL" | "CsvFolder"), pCsvFolder
+				let
+				    Source = if pSourceMode = "PostgreSQL" then
+				        PostgreSQL.Database(pServer, pDatabase, [Query = "SELECT invoice_id, supplier_id, business_unit_id, warehouse_id, buyer_id, contract_id, date_key, invoice_gross_amount, has_exception, exception_status, exception_age_days, exception_value, flag_missing_po, flag_price_over_tolerance, flag_qty_over_receipt, flag_probable_duplicate, flag_bank_detail_change, approval_cycle_hours, final_approval_status, is_paid, risk_score, risk_band, flag_for_review, model_version, document_path FROM mart.pbi_invoice_exceptions", CreateNavigationProperties = false])
+				    else
+				        Csv.Document(Binary.Decompress(File.Contents(pCsvFolder & "\invoice_exceptions.csv.gz"), Compression.GZip), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = if pSourceMode = "PostgreSQL" then Source else Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"invoice_id", type text}, {"supplier_id", type text}, {"business_unit_id", type text}, {"warehouse_id", type text}, {"buyer_id", type text}, {"contract_id", type text}, {"date_key", Int64.Type}, {"invoice_gross_amount", type number}, {"has_exception", type logical}, {"exception_status", type text}, {"exception_age_days", type number}, {"exception_value", type number}, {"flag_missing_po", Int64.Type}, {"flag_price_over_tolerance", Int64.Type}, {"flag_qty_over_receipt", Int64.Type}, {"flag_probable_duplicate", Int64.Type}, {"flag_bank_detail_change", Int64.Type}, {"approval_cycle_hours", type number}, {"final_approval_status", type text}, {"is_paid", type logical}, {"risk_score", type number}, {"risk_band", type text}, {"flag_for_review", type logical}, {"model_version", type text}, {"document_path", type text}}, "en-IN")
+				in
+				    Typed
+

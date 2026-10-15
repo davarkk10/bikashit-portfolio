@@ -1,0 +1,223 @@
+relationship r00_realizedspend_date_key
+	fromColumn: 'Realized Spend'.date_key
+	toColumn: Date.date_key
+
+relationship r01_realizedspend_supplier_id
+	fromColumn: 'Realized Spend'.supplier_id
+	toColumn: Supplier.supplier_id
+
+relationship r02_realizedspend_material_id
+	fromColumn: 'Realized Spend'.material_id
+	toColumn: Material.material_id
+
+relationship r03_realizedspend_category_id
+	fromColumn: 'Realized Spend'.category_id
+	toColumn: Category.category_id
+
+relationship r04_realizedspend_business_unit_id
+	fromColumn: 'Realized Spend'.business_unit_id
+	toColumn: 'Business Unit'.business_unit_id
+
+relationship r05_realizedspend_warehouse_id
+	fromColumn: 'Realized Spend'.warehouse_id
+	toColumn: Warehouse.warehouse_id
+
+relationship r06_realizedspend_buyer_id
+	fromColumn: 'Realized Spend'.buyer_id
+	toColumn: Buyer.buyer_id
+
+relationship r07_realizedspend_contract_id
+	fromColumn: 'Realized Spend'.contract_id
+	toColumn: Contract.contract_id
+
+relationship r08_realizedspend_payment_term_id
+	fromColumn: 'Realized Spend'.payment_term_id
+	toColumn: 'Payment Term'.payment_term_id
+
+relationship r09_polines_order_date_key
+	fromColumn: 'PO Lines'.order_date_key
+	toColumn: Date.date_key
+
+relationship r10_polines_supplier_id
+	fromColumn: 'PO Lines'.supplier_id
+	toColumn: Supplier.supplier_id
+
+relationship r11_polines_material_id
+	fromColumn: 'PO Lines'.material_id
+	toColumn: Material.material_id
+
+relationship r12_polines_category_id
+	fromColumn: 'PO Lines'.category_id
+	toColumn: Category.category_id
+
+relationship r13_polines_business_unit_id
+	fromColumn: 'PO Lines'.business_unit_id
+	toColumn: 'Business Unit'.business_unit_id
+
+relationship r14_polines_warehouse_id
+	fromColumn: 'PO Lines'.warehouse_id
+	toColumn: Warehouse.warehouse_id
+
+relationship r15_polines_buyer_id
+	fromColumn: 'PO Lines'.buyer_id
+	toColumn: Buyer.buyer_id
+
+relationship r16_polines_contract_id
+	fromColumn: 'PO Lines'.contract_id
+	toColumn: Contract.contract_id
+
+relationship r17_supplierdelivery_promised_date_key
+	fromColumn: 'Supplier Delivery'.promised_date_key
+	toColumn: Date.date_key
+
+relationship r18_supplierdelivery_order_date_key
+	isActive: false
+	fromColumn: 'Supplier Delivery'.order_date_key
+	toColumn: Date.date_key
+
+relationship r19_supplierdelivery_receipt_date_key
+	isActive: false
+	fromColumn: 'Supplier Delivery'.receipt_date_key
+	toColumn: Date.date_key
+
+relationship r20_supplierdelivery_supplier_id
+	fromColumn: 'Supplier Delivery'.supplier_id
+	toColumn: Supplier.supplier_id
+
+relationship r21_supplierdelivery_warehouse_id
+	fromColumn: 'Supplier Delivery'.warehouse_id
+	toColumn: Warehouse.warehouse_id
+
+relationship r22_supplierdelivery_category_id
+	fromColumn: 'Supplier Delivery'.category_id
+	toColumn: Category.category_id
+
+relationship r23_supplierdelivery_material_id
+	fromColumn: 'Supplier Delivery'.material_id
+	toColumn: Material.material_id
+
+relationship r24_supplierdelivery_business_unit_id
+	fromColumn: 'Supplier Delivery'.business_unit_id
+	toColumn: 'Business Unit'.business_unit_id
+
+relationship r25_invoiceexceptions_date_key
+	fromColumn: 'Invoice Exceptions'.date_key
+	toColumn: Date.date_key
+
+relationship r26_invoiceexceptions_supplier_id
+	fromColumn: 'Invoice Exceptions'.supplier_id
+	toColumn: Supplier.supplier_id
+
+relationship r27_invoiceexceptions_business_unit_id
+	fromColumn: 'Invoice Exceptions'.business_unit_id
+	toColumn: 'Business Unit'.business_unit_id
+
+relationship r28_invoiceexceptions_warehouse_id
+	fromColumn: 'Invoice Exceptions'.warehouse_id
+	toColumn: Warehouse.warehouse_id
+
+relationship r29_invoiceexceptions_buyer_id
+	fromColumn: 'Invoice Exceptions'.buyer_id
+	toColumn: Buyer.buyer_id
+
+relationship r30_invoiceexceptions_contract_id
+	fromColumn: 'Invoice Exceptions'.contract_id
+	toColumn: Contract.contract_id
+
+relationship r31_invoiceexceptions_risk_band
+	fromColumn: 'Invoice Exceptions'.risk_band
+	toColumn: 'Risk Band'.risk_band
+
+relationship r32_invoicereasons_reason_code
+	fromColumn: 'Invoice Reasons'.reason_code
+	toColumn: 'Anomaly Type'.reason_code
+
+relationship r33_payments_payment_date_key
+	fromColumn: Payments.payment_date_key
+	toColumn: Date.date_key
+
+relationship r34_payments_supplier_id
+	fromColumn: Payments.supplier_id
+	toColumn: Supplier.supplier_id
+
+relationship r35_payments_payment_term_id
+	fromColumn: Payments.payment_term_id
+	toColumn: 'Payment Term'.payment_term_id
+
+relationship r36_receiptquality_receipt_date_key
+	fromColumn: 'Receipt Quality'.receipt_date_key
+	toColumn: Date.date_key
+
+relationship r37_receiptquality_supplier_id
+	fromColumn: 'Receipt Quality'.supplier_id
+	toColumn: Supplier.supplier_id
+
+relationship r38_receiptquality_category_id
+	fromColumn: 'Receipt Quality'.category_id
+	toColumn: Category.category_id
+
+relationship r39_receiptquality_warehouse_id
+	fromColumn: 'Receipt Quality'.warehouse_id
+	toColumn: Warehouse.warehouse_id
+
+relationship r40_receiptquality_material_id
+	fromColumn: 'Receipt Quality'.material_id
+	toColumn: Material.material_id
+
+relationship r41_approvalevents_date_key
+	fromColumn: 'Approval Events'.date_key
+	toColumn: Date.date_key
+
+relationship r42_contractexpiry_contract_id
+	fromColumn: 'Contract Expiry'.contract_id
+	toColumn: Contract.contract_id
+
+relationship r43_supplierrisk_supplier_id
+	fromColumn: 'Supplier Risk'.supplier_id
+	toColumn: Supplier.supplier_id
+
+relationship 22389649-0bb7-4a17-9685-4b1fb0ce3fc4
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Contract.start_date
+	toColumn: LocalDateTable_e1f0b830-1f17-47f2-8fe8-324e8db94f5d.Date
+
+relationship 66f0ff6d-214d-43a9-88a5-dc52b81a2ad8
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Contract.end_date
+	toColumn: LocalDateTable_2270463c-7d2d-4d60-9a3b-2fbfd6da1665.Date
+
+relationship 49047c4f-38da-46a2-ab90-8515c9ee8cfd
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Contract.notice_deadline_date
+	toColumn: LocalDateTable_0c1d444c-77b7-4f9f-878c-071fbf3ae13a.Date
+
+relationship 7c1b0662-7c69-4433-ac20-9a7c2534dba7
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Contract Expiry'.notice_deadline_date
+	toColumn: LocalDateTable_fb5baac3-8e4d-4174-8042-86b7eef5bd27.Date
+
+relationship 125b9767-2d32-458d-8aaa-46274abe905d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Data Quality'.captured_at
+	toColumn: LocalDateTable_41decd2b-80bc-42fc-a703-a50520626b93.Date
+
+relationship r90_invoicerisk_date_key
+	fromColumn: 'Invoice Risk Scores'.date_key
+	toColumn: Date.date_key
+
+relationship r91_invoicerisk_supplier_id
+	fromColumn: 'Invoice Risk Scores'.supplier_id
+	toColumn: Supplier.supplier_id
+
+relationship r92_podelay_order_date_key
+	fromColumn: 'PO Delay Scores'.order_date_key
+	toColumn: Date.date_key
+
+relationship r93_podelay_supplier_id
+	fromColumn: 'PO Delay Scores'.supplier_id
+	toColumn: Supplier.supplier_id
+
+relationship r94_podelay_warehouse_id
+	fromColumn: 'PO Delay Scores'.warehouse_id
+	toColumn: Warehouse.warehouse_id
+

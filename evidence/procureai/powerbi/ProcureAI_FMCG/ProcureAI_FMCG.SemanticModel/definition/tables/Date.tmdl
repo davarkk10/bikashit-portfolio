@@ -1,0 +1,110 @@
+table Date
+	lineageTag: 5fd1b864-b8a0-5ba4-9251-0327aaa02914
+	dataCategory: Time
+
+	column date_key
+		dataType: int64
+		isHidden
+		lineageTag: b7cd358c-39a1-5e17-9a8a-88ff395550e2
+		summarizeBy: none
+		sourceColumn: date_key
+
+	column date
+		dataType: dateTime
+		isKey
+		formatString: dd-mmm-yyyy
+		lineageTag: d0807e6f-5816-5fc2-a87d-2a2a1d89a737
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column year
+		dataType: int64
+		lineageTag: 2314188c-0988-5c9c-94d2-06072a1fc678
+		summarizeBy: none
+		sourceColumn: year
+
+	column quarter_label
+		dataType: string
+		lineageTag: 560de611-723a-535b-ba06-b6fff4f8b953
+		summarizeBy: none
+		sourceColumn: quarter_label
+
+	column month
+		dataType: int64
+		lineageTag: 25daebff-fc8f-57a0-833d-1c609240fa75
+		summarizeBy: none
+		sourceColumn: month
+
+	column month_short
+		dataType: string
+		lineageTag: d5e14710-2a7a-5c05-81e7-ecc6d67b7035
+		summarizeBy: none
+		sourceColumn: month_short
+
+	column year_month
+		dataType: string
+		lineageTag: dddd7673-2b79-5c07-b5c9-d856c06e79c9
+		summarizeBy: none
+		sourceColumn: year_month
+
+	column month_start
+		dataType: dateTime
+		formatString: dd-mmm-yyyy
+		lineageTag: f5b273e4-8824-58f3-8646-b030d2fdbfbd
+		summarizeBy: none
+		sourceColumn: month_start
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column fiscal_year
+		dataType: string
+		lineageTag: 1f802d91-9d25-5301-8336-687b10fd3a74
+		summarizeBy: none
+		sourceColumn: fiscal_year
+
+	column fiscal_quarter
+		dataType: int64
+		lineageTag: c578b7f3-fbe3-5d25-afc5-584190dbd40e
+		summarizeBy: none
+		sourceColumn: fiscal_quarter
+
+	column season
+		dataType: string
+		lineageTag: fe8a60c6-9fae-5075-ae5c-f30b0f0c92fb
+		summarizeBy: none
+		sourceColumn: season
+
+	column is_weekend
+		dataType: boolean
+		lineageTag: 92abe6ba-a4f3-5942-8b71-708327eae88b
+		summarizeBy: none
+		sourceColumn: is_weekend
+
+	column is_holiday
+		dataType: boolean
+		lineageTag: 007c2c4e-1923-5205-921a-8b340db36b57
+		summarizeBy: none
+		sourceColumn: is_holiday
+
+	column holiday_name
+		dataType: string
+		lineageTag: 9ae46e20-6a5d-592a-b7ae-43de98ff4d33
+		summarizeBy: none
+		sourceColumn: holiday_name
+
+	partition Date = m
+		mode: import
+		source =
+				// Power Query M — table 'Date'. Parameters: pServer, pDatabase, pSourceMode ("PostgreSQL" | "CsvFolder"), pCsvFolder
+				let
+				    Source = if pSourceMode = "PostgreSQL" then
+				        PostgreSQL.Database(pServer, pDatabase, [Query = "SELECT date_key, date, year, quarter_label, month, month_short, year_month, month_start, fiscal_year, fiscal_quarter, season, is_weekend, is_holiday, holiday_name FROM mart.dim_date", CreateNavigationProperties = false])
+				    else
+				        Csv.Document(Binary.Decompress(File.Contents(pCsvFolder & "\date.csv.gz"), Compression.GZip), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = if pSourceMode = "PostgreSQL" then Source else Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"date_key", Int64.Type}, {"date", type date}, {"year", Int64.Type}, {"quarter_label", type text}, {"month", Int64.Type}, {"month_short", type text}, {"year_month", type text}, {"month_start", type date}, {"fiscal_year", type text}, {"fiscal_quarter", Int64.Type}, {"season", type text}, {"is_weekend", type logical}, {"is_holiday", type logical}, {"holiday_name", type text}}, "en-IN")
+				in
+				    Typed
+

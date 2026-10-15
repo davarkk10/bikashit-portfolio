@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "ProcureAI_FMCG"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "e744d68d-804f-4d21-84dd-5e409e8e5c84"
+  }
+}

@@ -1,0 +1,337 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "6f6ef64c0926521eaad5",
+  "position": {
+    "x": 652,
+    "y": 262,
+    "z": 6000,
+    "height": 228,
+    "width": 600,
+    "tabOrder": 6000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Invoice Exceptions"
+                    }
+                  },
+                  "Property": "invoice_id"
+                }
+              },
+              "queryRef": "Invoice Exceptions.invoice_id",
+              "nativeQueryRef": "invoice_id",
+              "displayName": "Invoice"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Invoice Exceptions"
+                    }
+                  },
+                  "Property": "exception_status"
+                }
+              },
+              "queryRef": "Invoice Exceptions.exception_status",
+              "nativeQueryRef": "exception_status",
+              "displayName": "Status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Invoice Exceptions"
+                    }
+                  },
+                  "Property": "risk_band"
+                }
+              },
+              "queryRef": "Invoice Exceptions.risk_band",
+              "nativeQueryRef": "risk_band",
+              "displayName": "Risk band"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Invoice Exceptions"
+                    }
+                  },
+                  "Property": "exception_age_days"
+                }
+              },
+              "queryRef": "Invoice Exceptions.exception_age_days",
+              "nativeQueryRef": "exception_age_days",
+              "displayName": "Age (days)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Invoice Exceptions"
+                    }
+                  },
+                  "Property": "Exception Value Cr"
+                }
+              },
+              "queryRef": "Invoice Exceptions.Exception Value Cr",
+              "nativeQueryRef": "Exception Value Cr",
+              "displayName": "Exception value"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#7f8ba0'"
+                    }
+                  }
+                }
+              }
+            },
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#0c1524'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "fontColorPrimary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#e6ebf3'"
+                    }
+                  }
+                }
+              }
+            },
+            "backColorPrimary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#101a2b'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontColorSecondary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#e6ebf3'"
+                    }
+                  }
+                }
+              }
+            },
+            "backColorSecondary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#0e1828'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "grid": [
+        {
+          "properties": {
+            "gridVertical": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "gridHorizontalColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1d2940'"
+                    }
+                  }
+                }
+              }
+            },
+            "outlineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1d2940'"
+                    }
+                  }
+                }
+              }
+            },
+            "rowPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "3D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Review queue'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "ad56d858a460aa1932d0",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Invoice Exceptions"
+              }
+            },
+            "Property": "invoice_id"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "4c3787700378d35068a1",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Invoice Exceptions"
+              }
+            },
+            "Property": "exception_status"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "4dbc18f8e398399c4bcb",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Invoice Exceptions"
+              }
+            },
+            "Property": "risk_band"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "8aaaa9990c225d5008c4",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Invoice Exceptions"
+              }
+            },
+            "Property": "exception_age_days"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "1be852dcc1938c33010a",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Invoice Exceptions"
+              }
+            },
+            "Property": "Exception Value Cr"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

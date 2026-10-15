@@ -1,0 +1,9 @@
+role 'Category Manager'
+	modelPermission: read
+
+	tablePermission Category = [category_id] IN CALCULATETABLE ( VALUES ( 'Security Scope'[category_id] ), 'Security Scope'[principal] = USERPRINCIPALNAME () )
+
+	tablePermission 'Invoice Exceptions' = FALSE()
+
+	annotation PBI_Id = 91385b7d9f3e495b9ddf1cf3f841c465
+

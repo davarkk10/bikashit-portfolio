@@ -1,0 +1,185 @@
+table 'Realized Spend'
+	lineageTag: 67042162-77f4-5b93-b4f5-5503cc90c478
+
+	/// Net spend in ₹ crore, blank for the partial last month so trend lines do not dip.
+	measure 'Net Spend Cr (complete months)' = IF ( MAX ( 'Date'[month_start] ) < DATE ( 2026, 2, 1 ), DIVIDE ( [Realized Net Spend], 10000000 ) )
+		formatString: ₹#,0.0 Cr
+		displayFolder: Presentation
+		lineageTag: a7e91bc2-36c7-588b-baeb-72791bb20e31
+
+	/// Off-contract spend in ₹ crore.
+	measure 'Off-Contract Spend Cr' = DIVIDE ( [Off-Contract Spend], 10000000 )
+		formatString: ₹#,0.0 Cr
+		displayFolder: Presentation
+		lineageTag: d2308f46-b40f-5063-86ff-763cef2e8d0e
+
+	/// Realized net spend in ₹ crore.
+	measure 'Net Spend Cr' = DIVIDE ( [Realized Net Spend], 10000000 )
+		formatString: ₹#,0.0 Cr
+		displayFolder: Presentation
+		lineageTag: 6362cef6-2f5e-55fc-a3a6-179fea2d7f66
+
+	/// Sum of posted invoice-line net amount (invoice-line grain).
+	measure 'Realized Net Spend' = SUM ( 'Realized Spend'[net_amount] )
+		formatString: ₹ #,##0
+		displayFolder: Spend
+		lineageTag: f37f421c-d26c-521f-8cbe-74788695b6a1
+
+	/// Posted invoice-line gross (net + tax); equals header gross to INR 0.01.
+	measure 'Realized Gross Spend' = SUM ( 'Realized Spend'[gross_amount] )
+		formatString: ₹ #,##0
+		displayFolder: Spend
+		lineageTag: c286e0ef-07bd-5106-a4d5-f7cad9b17f30
+
+	/// Realized net spend with PO valid-at-order flag AND line on a contract item.
+	measure 'Contracted Spend' = CALCULATE ( [Realized Net Spend], 'Realized Spend'[is_contracted] = TRUE () )
+		formatString: ₹ #,##0
+		displayFolder: Compliance
+		lineageTag: 85666579-6fb8-507c-af20-05609d7fd090
+
+	/// Realized net spend with no PO, no contract, contract not valid at order, or item not on contract.
+	measure 'Off-Contract Spend' = CALCULATE ( [Realized Net Spend], 'Realized Spend'[is_off_contract] = TRUE () )
+		formatString: ₹ #,##0
+		displayFolder: Compliance
+		lineageTag: 2c573d74-c0a9-5cae-b2c2-4935aaa86660
+
+	/// Off-contract share of realized net spend; BLANK when no spend.
+	measure 'Off-Contract Spend %' = DIVIDE ( [Off-Contract Spend], [Realized Net Spend] )
+		formatString: 0.0%
+		displayFolder: Compliance
+		lineageTag: 45ec4b58-a744-5276-bba7-85bce49d0eea
+
+	/// Distinct suppliers with realized spend in context.
+	measure 'Active Suppliers' = DISTINCTCOUNT ( 'Realized Spend'[supplier_id] )
+		formatString: #,##0
+		displayFolder: Suppliers
+		lineageTag: a9dc91e2-cdf4-5791-b495-1c0ed4f8a3e7
+
+	/// Spend of the 10 largest suppliers in context ÷ realized net spend.
+	measure 'Supplier Concentration Top 10 %' =
+			VAR _top10 = TOPN ( 10, VALUES ( 'Supplier'[supplier_id] ), [Realized Net Spend], DESC )
+			RETURN DIVIDE ( CALCULATE ( [Realized Net Spend], KEEPFILTERS ( _top10 ) ), [Realized Net Spend] )
+		formatString: 0.0%
+		displayFolder: Suppliers
+		lineageTag: 26ae45e0-e416-5ca8-a92f-8de05c5fa539
+
+	column invoice_line_id
+		dataType: string
+		isHidden
+		lineageTag: 57623570-9eea-501d-9258-08dd3d614350
+		summarizeBy: none
+		sourceColumn: invoice_line_id
+
+	column invoice_id
+		dataType: string
+		lineageTag: e227cf6f-1d64-52ca-8c8f-75e1cf5303c1
+		summarizeBy: none
+		sourceColumn: invoice_id
+
+	column date_key
+		dataType: int64
+		isHidden
+		lineageTag: 3d4ed42f-3ce3-52d9-9b9d-4a34bad33b50
+		summarizeBy: none
+		sourceColumn: date_key
+
+	column supplier_id
+		dataType: string
+		isHidden
+		lineageTag: 074531e5-ae8f-55ee-ab4c-ceeac57131c9
+		summarizeBy: none
+		sourceColumn: supplier_id
+
+	column material_id
+		dataType: string
+		isHidden
+		lineageTag: ef576a9b-7184-59b6-9537-d6e927d1ee44
+		summarizeBy: none
+		sourceColumn: material_id
+
+	column category_id
+		dataType: string
+		isHidden
+		lineageTag: fd7cd205-13e0-5b48-80a2-3e0061cf4fa6
+		summarizeBy: none
+		sourceColumn: category_id
+
+	column business_unit_id
+		dataType: string
+		isHidden
+		lineageTag: f7e5be58-12dc-5a3d-8e1a-c2cda4ce35e3
+		summarizeBy: none
+		sourceColumn: business_unit_id
+
+	column warehouse_id
+		dataType: string
+		isHidden
+		lineageTag: 775493fc-e11e-5b91-b955-73fe9471b95a
+		summarizeBy: none
+		sourceColumn: warehouse_id
+
+	column buyer_id
+		dataType: string
+		isHidden
+		lineageTag: 13c62891-7bba-5cf6-8f3a-1b16e1d75922
+		summarizeBy: none
+		sourceColumn: buyer_id
+
+	column contract_id
+		dataType: string
+		isHidden
+		lineageTag: 8fe29382-892f-5d9f-94af-ade56ff4ae8b
+		summarizeBy: none
+		sourceColumn: contract_id
+
+	column payment_term_id
+		dataType: string
+		isHidden
+		lineageTag: 1b0f92f3-5631-5715-88c2-4b80bd5cb1d8
+		summarizeBy: none
+		sourceColumn: payment_term_id
+
+	column net_amount
+		dataType: double
+		lineageTag: c4829603-48fe-5edc-b8e5-67c3d856e894
+		sourceColumn: net_amount
+
+	column gross_amount
+		dataType: double
+		lineageTag: fbce1b2a-48fe-566c-85b9-056784ea5114
+		sourceColumn: gross_amount
+
+	column ppv_vs_baseline_amount
+		dataType: double
+		lineageTag: 2b35f660-e7b8-5e4e-ab6a-4c652fa143c8
+		sourceColumn: ppv_vs_baseline_amount
+
+	column spend_contract_class
+		dataType: string
+		lineageTag: cc6309c8-0cbd-57de-867a-9e166de3b76e
+		sourceColumn: spend_contract_class
+
+	column is_contracted
+		dataType: boolean
+		lineageTag: 2030d31e-3946-57c2-ae4b-3aa0185731ff
+		sourceColumn: is_contracted
+
+	column is_off_contract
+		dataType: boolean
+		lineageTag: 245efa09-f9ef-5732-a856-42164cb4bc0b
+		sourceColumn: is_off_contract
+
+	partition 'Realized Spend' = m
+		mode: import
+		source =
+				// Power Query M — table 'Realized Spend'. Parameters: pServer, pDatabase, pSourceMode ("PostgreSQL" | "CsvFolder"), pCsvFolder
+				let
+				    Source = if pSourceMode = "PostgreSQL" then
+				        PostgreSQL.Database(pServer, pDatabase, [Query = "SELECT invoice_line_id, invoice_id, date_key, supplier_id, material_id, category_id, business_unit_id, warehouse_id, buyer_id, contract_id, payment_term_id, net_amount, gross_amount, ppv_vs_baseline_amount, spend_contract_class, is_contracted, is_off_contract FROM mart.fct_realized_spend", CreateNavigationProperties = false])
+				    else
+				        Csv.Document(Binary.Decompress(File.Contents(pCsvFolder & "\realized_spend.csv.gz"), Compression.GZip), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = if pSourceMode = "PostgreSQL" then Source else Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"invoice_line_id", type text}, {"invoice_id", type text}, {"date_key", Int64.Type}, {"supplier_id", type text}, {"material_id", type text}, {"category_id", type text}, {"business_unit_id", type text}, {"warehouse_id", type text}, {"buyer_id", type text}, {"contract_id", type text}, {"payment_term_id", type text}, {"net_amount", type number}, {"gross_amount", type number}, {"ppv_vs_baseline_amount", type number}, {"spend_contract_class", type text}, {"is_contracted", type logical}, {"is_off_contract", type logical}}, "en-IN")
+				in
+				    Typed
+

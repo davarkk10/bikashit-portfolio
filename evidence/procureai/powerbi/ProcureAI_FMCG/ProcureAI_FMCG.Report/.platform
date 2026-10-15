@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "ProcureAI_FMCG"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "065b2248-c318-4dcc-a6cb-096af93f6e32"
+  }
+}

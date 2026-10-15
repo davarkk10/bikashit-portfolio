@@ -1,0 +1,53 @@
+table 'Anomaly Type'
+	lineageTag: f762b3db-6d59-5a42-85c0-e7fdb904fd7f
+
+	column reason_code
+		dataType: string
+		lineageTag: 6973080c-84a0-5b4a-bf25-9bd1a99017d4
+		summarizeBy: none
+		sourceColumn: reason_code
+
+	column reason_label
+		dataType: string
+		lineageTag: 2ff18196-1938-5314-98c5-fb2b70fa04ea
+		summarizeBy: none
+		sourceColumn: reason_label
+
+	column reason_group
+		dataType: string
+		lineageTag: 542162c7-1158-59ca-aca0-dae679c798d7
+		summarizeBy: none
+		sourceColumn: reason_group
+
+	column is_exception
+		dataType: boolean
+		lineageTag: 7c0cc150-e5a0-5da5-920f-e94f0781abff
+		summarizeBy: none
+		sourceColumn: is_exception
+
+	column routing
+		dataType: string
+		lineageTag: 5361304b-2998-52ec-8177-968d87292c50
+		summarizeBy: none
+		sourceColumn: routing
+
+	column description
+		dataType: string
+		lineageTag: ae7311ed-667e-5718-b9cb-768542e81e47
+		summarizeBy: none
+		sourceColumn: description
+
+	partition 'Anomaly Type' = m
+		mode: import
+		source =
+				// Power Query M — table 'Anomaly Type'. Parameters: pServer, pDatabase, pSourceMode ("PostgreSQL" | "CsvFolder"), pCsvFolder
+				let
+				    Source = if pSourceMode = "PostgreSQL" then
+				        PostgreSQL.Database(pServer, pDatabase, [Query = "SELECT reason_code, reason_label, reason_group, is_exception, routing, description FROM mart.dim_anomaly_type", CreateNavigationProperties = false])
+				    else
+				        Csv.Document(Binary.Decompress(File.Contents(pCsvFolder & "\anomaly_type.csv.gz"), Compression.GZip), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = if pSourceMode = "PostgreSQL" then Source else Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"reason_code", type text}, {"reason_label", type text}, {"reason_group", type text}, {"is_exception", type logical}, {"routing", type text}, {"description", type text}}, "en-IN")
+				in
+				    Typed
+

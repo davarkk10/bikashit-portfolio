@@ -1,0 +1,1290 @@
+cultureInfo en-IN
+
+	linguisticMetadata =
+			{
+			  "Version": "2.0.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "category.category_name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Category",
+			          "ConceptualProperty": "category_name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Category": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "anomaly_type.reason_label": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Anomaly Type",
+			          "ConceptualProperty": "reason_label"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Reason": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "realized_spend.net_spend_cr": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Realized Spend",
+			          "ConceptualProperty": "Net Spend Cr"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Net spend": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "realized_spend.offcontract_spend_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Realized Spend",
+			          "ConceptualProperty": "Off-Contract Spend %"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Off-contract": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "supplier.supplier_name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Supplier",
+			          "ConceptualProperty": "supplier_name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Supplier": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "supplier_risk.supplier_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Supplier Risk",
+			          "ConceptualProperty": "supplier_id"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Supplier": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "supplier_risk.composite_score": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Supplier Risk",
+			          "ConceptualProperty": "composite_score"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Risk score": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "supplier_risk.supplier_risk_band": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Supplier Risk",
+			          "ConceptualProperty": "supplier_risk_band"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Band": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "supplier_risk.confidence": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Supplier Risk",
+			          "ConceptualProperty": "confidence"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Confidence": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "supplier_risk.small_sample_flag": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Supplier Risk",
+			          "ConceptualProperty": "small_sample_flag"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Small sample": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "invoice_exceptions.invoice_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Invoice Exceptions",
+			          "ConceptualProperty": "invoice_id"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Invoice": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "invoice_exceptions.exception_status": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Invoice Exceptions",
+			          "ConceptualProperty": "exception_status"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Status": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "invoice_exceptions.risk_band": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Invoice Exceptions",
+			          "ConceptualProperty": "risk_band"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Risk band": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "invoice_exceptions.exception_age_days": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Invoice Exceptions",
+			          "ConceptualProperty": "exception_age_days"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Age (days)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "invoice_exceptions.exception_value_cr": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Invoice Exceptions",
+			          "ConceptualProperty": "Exception Value Cr"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Exception value": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "invoice_exceptions.supplier_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Invoice Exceptions",
+			          "ConceptualProperty": "supplier_id"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Supplier": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "invoice_exceptions.invoice_gross_amount": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Invoice Exceptions",
+			          "ConceptualProperty": "invoice_gross_amount"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Gross amount (₹)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "contract_expiry.contract_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Contract Expiry",
+			          "ConceptualProperty": "contract_id"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Contract": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "contract_expiry.expiry_bucket": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Contract Expiry",
+			          "ConceptualProperty": "expiry_bucket"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Expires in": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "contract_expiry.days_to_expiry": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Contract Expiry",
+			          "ConceptualProperty": "days_to_expiry"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Days left": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "contract_expiry.auto_renewal_flag": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Contract Expiry",
+			          "ConceptualProperty": "auto_renewal_flag"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Auto-renews": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "contract_expiry.notice_window_passed": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Contract Expiry",
+			          "ConceptualProperty": "notice_window_passed"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Notice passed": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "contract_expiry.trailing_12m_spend": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Contract Expiry",
+			          "ConceptualProperty": "trailing_12m_spend"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Trailing 12m spend (₹)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "contract_expiry.document_path": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Contract Expiry",
+			          "ConceptualProperty": "document_path"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Source PDF": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "data_quality.metric_group": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Data Quality",
+			          "ConceptualProperty": "metric_group"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Group": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "data_quality.metric_name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Data Quality",
+			          "ConceptualProperty": "metric_name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Metric": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "data_quality.metric_value": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Data Quality",
+			          "ConceptualProperty": "metric_value"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Value": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "data_quality.threshold_warn": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Data Quality",
+			          "ConceptualProperty": "threshold_warn"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Warn at": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "data_quality.threshold_fail": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Data Quality",
+			          "ConceptualProperty": "threshold_fail"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Fail at": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "data_quality.status": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Data Quality",
+			          "ConceptualProperty": "status"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Status": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "data_quality.failed_check_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Data Quality",
+			          "ConceptualProperty": "Failed Check %"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Failed checks": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "invoice_reasons.invoice_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Invoice Reasons",
+			          "ConceptualProperty": "invoice_id"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Invoice": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "invoice_reasons.reason_code": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Invoice Reasons",
+			          "ConceptualProperty": "reason_code"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Reason": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "invoice_reasons.evidence_text": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Invoice Reasons",
+			          "ConceptualProperty": "evidence_text"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Evidence": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "invoice_risk_scores.invoice_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Invoice Risk Scores",
+			          "ConceptualProperty": "invoice_id"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Invoice": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "invoice_risk_scores.invoice_date": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Invoice Risk Scores",
+			          "ConceptualProperty": "invoice_date"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Date": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "invoice_risk_scores.gross_amount": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Invoice Risk Scores",
+			          "ConceptualProperty": "gross_amount"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Gross": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "invoice_risk_scores.model_score": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Invoice Risk Scores",
+			          "ConceptualProperty": "model_score"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Score": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "invoice_risk_scores.condition": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Invoice Risk Scores",
+			          "ConceptualProperty": "condition"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Condition": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "invoice_risk_scores.rules_say": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Invoice Risk Scores",
+			          "ConceptualProperty": "Rules Say"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Rules": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "invoice_risk_scores.rules_caught_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Invoice Risk Scores",
+			          "ConceptualProperty": "Rules Caught %"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Best rules": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "invoice_risk_scores.model_caught_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Invoice Risk Scores",
+			          "ConceptualProperty": "Model Caught %"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Model": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "invoice_condition_catch.condition": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Invoice Condition Catch",
+			          "ConceptualProperty": "condition"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Condition": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "po_delay_scores.supplier_load_band": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "PO Delay Scores",
+			          "ConceptualProperty": "Supplier Load Band"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Supplier load": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "po_delay_scores.po_late_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "PO Delay Scores",
+			          "ConceptualProperty": "PO Late %"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Late rate": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Actual late rate": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "po_delay_scores.po_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "PO Delay Scores",
+			          "ConceptualProperty": "po_id"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "PO": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "po_delay_scores.route_type": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "PO Delay Scores",
+			          "ConceptualProperty": "route_type"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "po_delay_scores.promised_date": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "PO Delay Scores",
+			          "ConceptualProperty": "promised_date"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Promised": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "po_delay_scores.p_pre": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "PO Delay Scores",
+			          "ConceptualProperty": "p_pre"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Risk": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "po_delay_scores.delivery_outcome": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "PO Delay Scores",
+			          "ConceptualProperty": "Delivery Outcome"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Outcome": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "po_delay_scores.avg_predicted_late_risk": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "PO Delay Scores",
+			          "ConceptualProperty": "Avg Predicted Late Risk"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Predicted risk": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "po_delay_scores.delay_driver_importance": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "PO Delay Scores",
+			          "ConceptualProperty": "Delay Driver Importance"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "PR-AUC lost": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "warehouse.warehouse_name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Warehouse",
+			          "ConceptualProperty": "warehouse_name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Warehouse": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "date.month_start": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Date",
+			          "ConceptualProperty": "month_start"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Month": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "delay_drivers.driver": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Delay Drivers",
+			          "ConceptualProperty": "driver"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Driver": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "contract_qa.question": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Contract QA",
+			          "ConceptualProperty": "question"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Question": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "contract_qa.result": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Contract QA",
+			          "ConceptualProperty": "result"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Result": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "contract_qa.answer": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Contract QA",
+			          "ConceptualProperty": "answer"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Answer": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "contract_qa.citation": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Contract QA",
+			          "ConceptualProperty": "citation"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Citation": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "contract_qa.question_type": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Contract QA",
+			          "ConceptualProperty": "question_type"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Type": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "contract_qa.contract_accuracy": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Contract QA",
+			          "ConceptualProperty": "Contract Accuracy"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Accuracy": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    }
+			  }
+			}
+		contentType: json
+

@@ -1,0 +1,141 @@
+table 'Supplier Delivery'
+	lineageTag: 3614c49c-952f-5b05-acbc-90f4831c8fd5
+
+	/// OTIF rate, blank for the partial last month.
+	measure 'OTIF % (complete months)' = IF ( MAX ( 'Date'[month_start] ) < DATE ( 2026, 2, 1 ), [OTIF %] )
+		formatString: 0.0%
+		displayFolder: Presentation
+		lineageTag: 7018b0b9-c423-559a-8640-a4c0a4d1aaea
+
+	/// Service-eligible PO lines in context.
+	measure 'Eligible Delivery Lines' = COUNTROWS ( 'Supplier Delivery' )
+		formatString: #,##0
+		displayFolder: Delivery
+		lineageTag: c8096e2e-682f-54a2-9af6-85019a3ac6a7
+
+	/// Final receipt on/before ORIGINAL promise date ÷ eligible lines.
+	measure 'On-Time Rate' = DIVIDE ( SUM ( 'Supplier Delivery'[on_time] ), [Eligible Delivery Lines] )
+		formatString: 0.0%
+		displayFolder: Delivery
+		lineageTag: 5535e4a2-8596-5c87-96ab-c7d65f6408bb
+
+	/// Accepted qty ≥ ordered qty ÷ eligible lines.
+	measure 'In-Full Rate' = DIVIDE ( SUM ( 'Supplier Delivery'[in_full] ), [Eligible Delivery Lines] )
+		formatString: 0.0%
+		displayFolder: Delivery
+		lineageTag: 8fc6f8f4-6b29-5b7c-81ea-856626d7bb7c
+
+	/// On-time AND in-full ÷ eligible lines.
+	measure 'OTIF %' = DIVIDE ( SUM ( 'Supplier Delivery'[otif] ), [Eligible Delivery Lines] )
+		formatString: 0.0%
+		displayFolder: Delivery
+		lineageTag: 40c88983-b288-5433-9a89-c77bcad4a262
+
+	/// OTIF by ORDER date (inactive relationship activated).
+	measure 'OTIF % by Order Date' = CALCULATE ( [OTIF %], USERELATIONSHIP ( 'Supplier Delivery'[order_date_key], 'Date'[date_key] ) )
+		formatString: 0.0%
+		displayFolder: Delivery
+		lineageTag: fc63c7a8-0b58-533d-b13b-76ede212624b
+
+	column po_line_id
+		dataType: string
+		isHidden
+		lineageTag: 79b2eb24-394d-5e0b-8014-8b7594e27415
+		summarizeBy: none
+		sourceColumn: po_line_id
+
+	column supplier_id
+		dataType: string
+		isHidden
+		lineageTag: f036715c-7061-5bd2-8bfe-46d41392ffbb
+		summarizeBy: none
+		sourceColumn: supplier_id
+
+	column warehouse_id
+		dataType: string
+		isHidden
+		lineageTag: 343bade2-3775-539e-bd2a-6880880fb64a
+		summarizeBy: none
+		sourceColumn: warehouse_id
+
+	column category_id
+		dataType: string
+		isHidden
+		lineageTag: b3bb4024-4dc6-5aa6-a03e-e6bdeca0cbf5
+		summarizeBy: none
+		sourceColumn: category_id
+
+	column material_id
+		dataType: string
+		isHidden
+		lineageTag: 04088a4e-5a09-54fd-ba4e-3dbf87491e28
+		summarizeBy: none
+		sourceColumn: material_id
+
+	column business_unit_id
+		dataType: string
+		isHidden
+		lineageTag: 97f882e3-00c7-52ab-82ae-b25cbe465efb
+		summarizeBy: none
+		sourceColumn: business_unit_id
+
+	column order_date_key
+		dataType: int64
+		isHidden
+		lineageTag: c5ba4063-0da3-5512-8513-c6787719d447
+		summarizeBy: none
+		sourceColumn: order_date_key
+
+	column promised_date_key
+		dataType: int64
+		isHidden
+		lineageTag: aba718cf-2797-5e70-858d-69d8d60eb342
+		summarizeBy: none
+		sourceColumn: promised_date_key
+
+	column receipt_date_key
+		dataType: int64
+		isHidden
+		lineageTag: fb698da8-21fe-5ef8-b81e-7c75d9e7f08f
+		summarizeBy: none
+		sourceColumn: receipt_date_key
+
+	column on_time
+		dataType: int64
+		lineageTag: 81c63457-341e-563e-ab09-96202e5fd643
+		sourceColumn: on_time
+
+	column in_full
+		dataType: int64
+		lineageTag: b3f31973-0b46-550c-83e1-3022d6970010
+		sourceColumn: in_full
+
+	column otif
+		dataType: int64
+		lineageTag: fd6cc3b5-e813-58bd-93ff-d9cfd989ae9c
+		sourceColumn: otif
+
+	column days_late
+		dataType: int64
+		lineageTag: ec3b435f-1340-5170-bd01-c08a3e5b2758
+		sourceColumn: days_late
+
+	column line_net_amount
+		dataType: double
+		lineageTag: 8ebefcc1-d66d-5713-b12c-013e9e5fc7d9
+		sourceColumn: line_net_amount
+
+	partition 'Supplier Delivery' = m
+		mode: import
+		source =
+				// Power Query M — table 'Supplier Delivery'. Parameters: pServer, pDatabase, pSourceMode ("PostgreSQL" | "CsvFolder"), pCsvFolder
+				let
+				    Source = if pSourceMode = "PostgreSQL" then
+				        PostgreSQL.Database(pServer, pDatabase, [Query = "SELECT po_line_id, supplier_id, warehouse_id, category_id, material_id, business_unit_id, order_date_key, promised_date_key, receipt_date_key, on_time, in_full, otif, days_late, line_net_amount FROM mart.fct_supplier_delivery", CreateNavigationProperties = false])
+				    else
+				        Csv.Document(Binary.Decompress(File.Contents(pCsvFolder & "\supplier_delivery.csv.gz"), Compression.GZip), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = if pSourceMode = "PostgreSQL" then Source else Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"po_line_id", type text}, {"supplier_id", type text}, {"warehouse_id", type text}, {"category_id", type text}, {"material_id", type text}, {"business_unit_id", type text}, {"order_date_key", Int64.Type}, {"promised_date_key", Int64.Type}, {"receipt_date_key", Int64.Type}, {"on_time", Int64.Type}, {"in_full", Int64.Type}, {"otif", Int64.Type}, {"days_late", Int64.Type}, {"line_net_amount", type number}}, "en-IN")
+				in
+				    Typed
+

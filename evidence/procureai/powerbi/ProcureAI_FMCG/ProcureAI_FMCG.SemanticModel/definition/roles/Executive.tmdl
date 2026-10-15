@@ -1,0 +1,7 @@
+role Executive
+	modelPermission: read
+
+	tablePermission 'Business Unit' = TRUE()
+
+	annotation PBI_Id = 1424043f4ae940f7b3f85ba1d15c145c
+

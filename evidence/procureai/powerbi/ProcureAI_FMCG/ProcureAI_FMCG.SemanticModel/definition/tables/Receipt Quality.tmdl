@@ -1,0 +1,80 @@
+table 'Receipt Quality'
+	lineageTag: 130b133e-f9c7-507c-827e-656e50c1c1d6
+
+	/// Rejected ÷ received quantity on posted receipt lines.
+	measure 'Defect Rate' = DIVIDE ( SUM ( 'Receipt Quality'[rejected_quantity] ), SUM ( 'Receipt Quality'[received_quantity] ) )
+		formatString: 0.000%
+		displayFolder: Quality
+		lineageTag: e18cbe3c-1dfd-5ce9-b6d0-f426e2979c98
+
+	column grn_line_id
+		dataType: string
+		isHidden
+		lineageTag: 1084ceec-91f1-59ee-8a3a-461123886f3e
+		summarizeBy: none
+		sourceColumn: grn_line_id
+
+	column supplier_id
+		dataType: string
+		isHidden
+		lineageTag: 87fca75f-356e-51d0-a09b-d138cdee8e3c
+		summarizeBy: none
+		sourceColumn: supplier_id
+
+	column warehouse_id
+		dataType: string
+		isHidden
+		lineageTag: e822af9f-7c04-580f-94be-76c303bfa19c
+		summarizeBy: none
+		sourceColumn: warehouse_id
+
+	column material_id
+		dataType: string
+		isHidden
+		lineageTag: 3770785e-14c5-57da-a150-106031fa045d
+		summarizeBy: none
+		sourceColumn: material_id
+
+	column category_id
+		dataType: string
+		isHidden
+		lineageTag: 22c2a391-bd31-50ac-ab2e-3803b48a6321
+		summarizeBy: none
+		sourceColumn: category_id
+
+	column receipt_date_key
+		dataType: int64
+		isHidden
+		lineageTag: 5430872a-8229-5bab-b40d-71d66c1dcdbe
+		summarizeBy: none
+		sourceColumn: receipt_date_key
+
+	column received_quantity
+		dataType: int64
+		lineageTag: 80cdd03e-7325-5698-9aa0-a9e4c6cf3046
+		sourceColumn: received_quantity
+
+	column rejected_quantity
+		dataType: int64
+		lineageTag: 89b8bdd7-7f73-523c-889a-2998f183fbab
+		sourceColumn: rejected_quantity
+
+	column inspected
+		dataType: boolean
+		lineageTag: 1bfc2c85-a5b8-5649-8613-c999e2869a54
+		sourceColumn: inspected
+
+	partition 'Receipt Quality' = m
+		mode: import
+		source =
+				// Power Query M — table 'Receipt Quality'. Parameters: pServer, pDatabase, pSourceMode ("PostgreSQL" | "CsvFolder"), pCsvFolder
+				let
+				    Source = if pSourceMode = "PostgreSQL" then
+				        PostgreSQL.Database(pServer, pDatabase, [Query = "SELECT grn_line_id, supplier_id, warehouse_id, material_id, category_id, receipt_date_key, received_quantity, rejected_quantity, inspected FROM mart.fct_receipt_quality", CreateNavigationProperties = false])
+				    else
+				        Csv.Document(Binary.Decompress(File.Contents(pCsvFolder & "\receipt_quality.csv.gz"), Compression.GZip), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = if pSourceMode = "PostgreSQL" then Source else Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"grn_line_id", type text}, {"supplier_id", type text}, {"warehouse_id", type text}, {"material_id", type text}, {"category_id", type text}, {"receipt_date_key", Int64.Type}, {"received_quantity", Int64.Type}, {"rejected_quantity", Int64.Type}, {"inspected", type logical}}, "en-IN")
+				in
+				    Typed
+
