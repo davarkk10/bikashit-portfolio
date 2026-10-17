@@ -43,25 +43,25 @@ table 'Invoice Risk Scores'
 		displayFolder: Model results
 		lineageTag: c4fc8c5e-725e-5746-a47b-bc244c6b8dcb
 
-	/// Test invoices the best hand-written rules flag.
-	measure 'Rules Flagged Invoices' = CALCULATE ( COUNTROWS ( 'Invoice Risk Scores' ), 'Invoice Risk Scores'[split] = "Test", 'Invoice Risk Scores'[rules_refined] = 1 )
+	/// Invoices the best hand-written rules send for review: the same capacity as the model (one per real condition in test).
+	measure 'Rules Flagged Invoices' = [Invoice Test Conditions]
 		formatString: #,##0
 		displayFolder: Model results
 		lineageTag: 0441dd45-cb14-5d57-8e28-60fb178b8fdf
 
-	/// Rule flags that carry a real condition.
-	measure 'Rules Hits' = CALCULATE ( COUNTROWS ( 'Invoice Risk Scores' ), 'Invoice Risk Scores'[split] = "Test", 'Invoice Risk Scores'[rules_refined] = 1, 'Invoice Risk Scores'[is_condition] = 1 )
+	/// Real conditions among the invoices the rules rank highest, at the same review capacity as the model.
+	measure 'Rules Hits' = ROUND ( [Rules Precision] * [Rules Flagged Invoices], 0 )
 		formatString: #,##0
 		displayFolder: Model results
 		lineageTag: c9827e75-cebd-5aab-b25e-62f1fd41cc33
 
-	/// Share of rule flags that are real.
-	measure 'Rules Precision' = DIVIDE ( [Rules Hits], [Rules Flagged Invoices] )
+	/// Share of the invoices the best rules rank highest that are real, at the same review capacity as the model (from the model run; the rule score is not in the scored rows).
+	measure 'Rules Precision' = CALCULATE ( MAX ( 'Model Results'[value] ), 'Model Results'[area] = "Invoice risk", 'Model Results'[metric] = "precision_at_capacity", 'Model Results'[method] = "Best hand-written rules" )
 		formatString: 0.0%
 		displayFolder: Model results
 		lineageTag: 8f17e5d4-8fdb-5880-90e2-26c45090a0a0
 
-	/// Share of real conditions the rules flag.
+	/// Share of real conditions the rules catch at the same review capacity (equals precision, since capacity = number of conditions).
 	measure 'Rules Recall' = DIVIDE ( [Rules Hits], [Invoice Test Conditions] )
 		formatString: 0.0%
 		displayFolder: Model results

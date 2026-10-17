@@ -92,8 +92,9 @@ exp = {
     "Test Invoices": len(ti), "Test Conditions": int(ti.is_condition.sum()),
     "Model Flagged (test)": int(ti.model_flag.sum()), "Model Precision (test)": round(ti[ti.model_flag == 1].is_condition.mean(), 4),
     "Model Recall (test)": round(ti[ti.model_flag == 1].is_condition.sum() / ti.is_condition.sum(), 4),
-    "Rules Flagged (test)": int(ti.rules_refined.sum()), "Rules Precision (test)": round(ti[ti.rules_refined == 1].is_condition.mean(), 4),
-    "Rules Recall (test)": round(ti[ti.rules_refined == 1].is_condition.sum() / ti.is_condition.sum(), 4),
+    # rules judged at the same review capacity as the model (top-ranked by rule score), as in the invoice v2 results
+    "Rules Flagged (test)": int(ti.is_condition.sum()), "Rules Precision (test)": round(t["refined rules"]["precision_at_k"], 4),
+    "Rules Recall (test)": round(t["refined rules"]["precision_at_k"], 4),
     "POs Modelled": len(fp), "Test POs": len(tp), "Test Late %": round(tp.late.mean(), 4),
     "Flagged Late % (order time)": round(tp[tp.flag_order == 1].late.mean(), 4),
     "Flagged Late % (3 days before)": round(tp[tp.flag_pre == 1].late.mean(), 4),

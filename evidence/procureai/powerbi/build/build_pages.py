@@ -152,7 +152,7 @@ def kpi_cards(page, specs):
 PAGES = {}
 # ---------------- 09 Invoice risk model ----------------
 k9 = [('PR-AUC · HARD CASES', 'best rules 0.19 · guessing ≈ 0.04', LIME), ('MODEL PRECISION', 'share of 1,546 model flags that are real', TEAL),
-      ('RULES PRECISION', 'share of 1,707 rule flags that are real', AMBER), ('CONDITIONS IN TEST', '14,570 invoices from Jul 2025', BLUE)]
+      ('RULES PRECISION', 'share of the top 1,546 by rule score that are real', AMBER), ('CONDITIONS IN TEST', '14,570 invoices from Jul 2025', BLUE)]
 main9 = (header('09 · MODEL RESULTS · INVOICE RISK', 'Which invoices should the model send for review?',
                 'Gradient-boosted model vs hand-written audit rules, tested once on invoices from Jul 2025 onward.',
                 'Hard cases were designed for this test; real scores would be lower. ' + DATA_NOTE)
