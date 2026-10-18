@@ -329,8 +329,8 @@
           <p class="delay-built"><span>BUILT WITH</span>Gradient-boosted decision trees in Python (scikit-learn) · features include a supplier's price drift over 120 days and invoices on the same PO near the approval limit · compared with hand-written audit rules · PR-AUC, where guessing scores about 0.04 on the hard cases and 1.0 is perfect</p>
         </div>
         <div class="delay-steps">
-          <article><small>POLICY RULES AS WRITTEN</small><strong>0.196</strong><em>PR-AUC · 23% precision at capacity</em><p>Flags every quantity billed ahead of acceptance and every exact duplicate, so most flags are noise.</p></article>
-          <article><small>BEST HAND-WRITTEN RULES</small><strong>0.812</strong><em>PR-AUC · 78% precision at capacity</em><p>Tolerance-aware match plus near-duplicate, over-billing, split and creep checks. Catches 30% of price creep and 46% of split bills.</p></article>
+          <article><small>POLICY RULES AS WRITTEN</small><strong>0.196</strong><em>PR-AUC on all invoices · 23% precision at capacity</em><p>Flags every quantity billed ahead of acceptance and every exact duplicate, so most flags are noise.</p></article>
+          <article><small>BEST HAND-WRITTEN RULES</small><strong>0.812</strong><em>PR-AUC on all invoices · 78% precision at capacity</em><p>Tolerance-aware match plus near-duplicate, over-billing, split and creep checks. Catches 30% of price creep and 46% of split bills.</p></article>
           <article class="headline"><small>GRADIENT-BOOSTED MODEL</small><strong>0.858</strong><em>PR-AUC on the three hard cases · best rules 0.188</em><p>Overall 0.980 with 93% precision at capacity. Catches 69% of price creep and 88% of split bills. Rules still edge it on near-duplicates (100% vs 98%).</p></article>
         </div>
         <div class="delay-notes">
@@ -552,7 +552,7 @@
             <p>What is the termination notice period?</p>
             <strong>45 days <small>[CTR00142.pdf, p. 1]</small></strong>
           </div>
-          <ul><li>128 evaluation questions</li><li>100% citation precision</li><li>94% on unseen questions</li><li>Injection refused</li></ul>
+          <ul><li>128 questions (60 dev + 68 held-out)</li><li>0 wrong answers</li><li>94% on unseen questions</li><li>Injection refused</li></ul>
         </article>
 
         <article class="work-card agent reveal">
@@ -601,7 +601,7 @@
             <span><i>✓</i> Workflow sequence</span>
             <span><i>✓</i> Ground-truth integrity</span>
             <span><i>✓</i> PDF text extraction</span>
-            <span><i>✓</i> 128 contract questions</span>
+            <span><i>✓</i> 128 contract questions (60 dev + 68 held-out)</span>
             <span><i>✓</i> 27 API tests</span>
             <span><i>✓</i> 67 workflow fixtures</span>
             <span><i>✓</i> 0 secrets in source</span>
